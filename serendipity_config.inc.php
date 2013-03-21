@@ -6,6 +6,8 @@ if (defined('S9Y_FRAMEWORK')) {
     return;
 }
 
+require_once 'vendor/autoload.php';
+
 @define('S9Y_FRAMEWORK', true);
 
 if (!headers_sent()) {

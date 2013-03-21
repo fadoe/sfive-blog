@@ -1,0 +1,36 @@
+{
+    "name": "fadoe/sfive",
+    "description": "Fork of Serendipity Blogging Engine",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Falk Doering",
+            "homepage": "https://github.com/fadoe/sfive"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "http://pear.php.net",
+            "vendor-alias": "pear-pear"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "smarty/smarty": "3.1.*",
+        "simplepie/simplepie": "1.3.*",
+        "pear-pear/Pear": "1.9.*",
+        "pear-pear/HTTP_Request": "1.4.*",
+        "pear-pear/Xml_Rpc": "1.5.*",
+        "pear-pear/Cache_Lite": "1.7.*",
+        "pear-pear/Net_CheckIP": "1.2.*",
+        "pear-pear/Net_DNSBL": "1.3.*",
+        "pear-pear/Text_Wiki": "1.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "vendor/smarty/smarty/distribution/libs/sysplugins/smarty_security.php"
+        ]
+    }
+
+}
