@@ -14,7 +14,7 @@ if (!headers_sent()) {
         session_name('s9y_' . md5(dirname(__FILE__)));
         session_start();
     }
-    
+
     // Prevent session fixation by only allowing sessions that have been sent by the server.
     // Any session that does not contain our unique token will be regarded as foreign/fixated
     // and be regenerated with a system-generated SID.
@@ -126,36 +126,7 @@ $serendipity['defaultTemplate'] = 'bulletproof';
 /* Availiable languages */
 if (!isset($serendipity['languages'])) {
     $serendipity['languages'] = array('en' => 'English',
-                                  'de' => 'German',
-                                  'da' => 'Danish',
-                                  'es' => 'Spanish',
-                                  'fr' => 'French',
-                                  'fi' => 'Finnish',
-                                  'cs' => 'Czech (Win-1250)',
-                                  'cz' => 'Czech (ISO-8859-2)',
-				  'sk' => 'Slovak',
-                                  'nl' => 'Dutch',
-                                  'is' => 'Icelandic',
-                                  'tr' => 'Turkish',
-                                  'se' => 'Swedish',
-                                  'pt' => 'Portuguese Brazilian',
-                                  'pt_PT' => 'Portuguese European',
-                                  'bg' => 'Bulgarian',
-                                  'hu' => 'Hungarian',
-                                  'no' => 'Norwegian',
-                                  'pl' => 'Polish',
-                                  'ro' => 'Romanian',
-                                  'it' => 'Italian',
-                                  'ru' => 'Russian',
-                                  'fa' => 'Persian',
-                                  'tw' => 'Traditional Chinese (Big5)',
-                                  'tn' => 'Traditional Chinese (UTF-8)',
-                                  'zh' => 'Simplified Chinese (GB2312)',
-                                  'cn' => 'Simplified Chinese (UTF-8)',
-                                  'ja' => 'Japanese',
-                                  'ko' => 'Korean',
-                                  'sa' => 'Arabic',
-                                  'ta' => 'Tamil');
+                                  'de' => 'German');
 }
 
 /* Available Calendars */
@@ -263,7 +234,7 @@ if(is_callable($serendipity['errorhandler'], false, $callable_name)) {
     if ($serendipity['production'] === 'debug') {
         set_error_handler($serendipity['errorhandler'], error_reporting()); // Yes, DEBUG mode should actually report E_STRICT errors! In PHP 5.4s is contained in E_ALL already, but not in PHP 5.2.
     } else {
-    // Caution! If we want to have the same noshow effect as upper set error_reporting(E_ALL) in 'debug' mode, 
+    // Caution! If we want to have the same noshow effect as upper set error_reporting(E_ALL) in 'debug' mode,
     // do not clone it to set_error_handler(E_ALL), else everythimg is haltet to debug, which makes using debug obsolet.
         set_error_handler($serendipity['errorhandler'], E_ALL & ~(E_NOTICE|E_STRICT));
     }
