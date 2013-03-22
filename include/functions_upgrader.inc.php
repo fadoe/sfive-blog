@@ -82,18 +82,11 @@ function serendipity_fixPlugins($case) {
     switch($case) {
         case 'markup_column_names':
             $affected_plugins = array(
-                'serendipity_event_bbcode',
                 'serendipity_event_contentrewrite',
                 'serendipity_event_emoticate',
                 'serendipity_event_geshi',
-                'serendipity_event_nl2br',
-                'serendipity_event_textwiki',
-                'serendipity_event_trackexits',
-                'serendipity_event_xhtmlcleanup',
                 'serendipity_event_markdown',
-                'serendipity_event_s9ymarkup',
-                'serendipity_event_searchhighlight',
-                'serendipity_event_textile'
+                'serendipity_event_searchhighlight'
             );
 
             $elements = array(

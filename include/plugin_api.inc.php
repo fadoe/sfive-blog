@@ -32,7 +32,7 @@ function serendipity_plugin_api_frontend_header($event_name, &$bag, &$eventData,
     // Only execute if current template does not have its own jquery.js file
     // jquery can be disabled if a template's config.inc.php or a plugin sets
     // $serendipity['capabilities']['jquery'] = false
-    
+
     $check = serendipity_getTemplateFile('jquery.js');
     if (!$check && $serendipity['capabilities']['jquery']) {
 ?>
@@ -64,7 +64,7 @@ function serendipity_plugin_api_frontend_header($event_name, &$bag, &$eventData,
  * The user can configure instances of plugins.
  */
 
-class serendipity_plugin_api 
+class serendipity_plugin_api
 {
 
     /**
@@ -82,12 +82,9 @@ class serendipity_plugin_api
         serendipity_plugin_api::create_plugin_instance('@serendipity_categories_plugin');
         serendipity_plugin_api::create_plugin_instance('@serendipity_syndication_plugin');
         serendipity_plugin_api::create_plugin_instance('@serendipity_superuser_plugin');
-        serendipity_plugin_api::create_plugin_instance('@serendipity_plug_plugin');
 
         /* Register default event plugins */
-        serendipity_plugin_api::create_plugin_instance('serendipity_event_s9ymarkup', null, 'event');
         serendipity_plugin_api::create_plugin_instance('serendipity_event_emoticate', null, 'event');
-        serendipity_plugin_api::create_plugin_instance('serendipity_event_nl2br', null, 'event');
         serendipity_plugin_api::create_plugin_instance('serendipity_event_spamblock', null, 'event');
 
         /* Register additional plugins? */
@@ -141,7 +138,7 @@ class serendipity_plugin_api
         // Secure Plugin path. No leading slashes, no backslashes, no "up" directories
         $pluginPath = preg_replace('@^(/)@', '', $pluginPath);
         $pluginPath = str_replace(array('..', "\\"), array('', '/'), serendipity_db_escape_string($pluginPath));
-        
+
         if ($pluginPath == 'online_repository') {
             $pluginPath = $key;
         }
@@ -290,7 +287,7 @@ class serendipity_plugin_api
      * @param   string      The maindir where we started searching from [for recursive use]
      * @return
      */
-    static function traverse_plugin_dir($ppath, &$classes, $event_only, $maindir = '') 
+    static function traverse_plugin_dir($ppath, &$classes, $event_only, $maindir = '')
     {
         $d = @opendir($ppath);
         if ($d) {
@@ -360,7 +357,7 @@ class serendipity_plugin_api
      * @param   string  The filter for plugins (left|right|hide|event|eventh)
      * @return  array   The list of plugins
      */
-    static function get_installed_plugins($filter = '*') 
+    static function get_installed_plugins($filter = '*')
     {
         $plugins = serendipity_plugin_api::enum_plugins($filter);
         $res = array();
@@ -459,7 +456,7 @@ class serendipity_plugin_api
      * @param   string  If an instance ID is passed this means, the plugin to be loaded is internally available
      * @return  string  Returns the filename to include for a specific plugin
      */
-    static function includePlugin($name, $pluginPath = '', $instance_id = '') 
+    static function includePlugin($name, $pluginPath = '', $instance_id = '')
     {
         global $serendipity;
 
@@ -494,7 +491,7 @@ class serendipity_plugin_api
      * @param   boolean     If true, the plugin is a internal plugin (prefixed with '@')
      * @return  string      The classname of the plugin
      */
-    static function getClassByInstanceID($instance_id, &$is_internal) 
+    static function getClassByInstanceID($instance_id, &$is_internal)
     {
         $instance   = explode(':', $instance_id);
         $class_name = ltrim($instance[0], '@');
@@ -511,7 +508,7 @@ class serendipity_plugin_api
      * @return  string      Returns the filename of a plugin to load
      */
     /* Probes for the plugin filename */
-    static function probePlugin($instance_id, &$class_name, &$pluginPath) 
+    static function probePlugin($instance_id, &$class_name, &$pluginPath)
     {
         global $serendipity;
 
@@ -561,7 +558,7 @@ class serendipity_plugin_api
      * @param   string      The filename of a plugin (can be autodetected)
      * @return
      */
-    static function &load_plugin($instance_id, $authorid = null, $pluginPath = '', $pluginFile = null) 
+    static function &load_plugin($instance_id, $authorid = null, $pluginPath = '', $pluginFile = null)
     {
         global $serendipity;
 
@@ -596,7 +593,7 @@ class serendipity_plugin_api
                 $p->serendipity_owner = $owner[0];
             }
         }
-        
+
         $p->pluginPath = $p->act_pluginPath = $pluginPath;
         if (empty($p->act_pluginPath)) {
             $p->act_pluginPath = $class_name;
@@ -615,7 +612,7 @@ class serendipity_plugin_api
      * @param   type        The type of the plugin (local|spartacus|...)
      * @return  array       Information about the plugin
      */
-    static function &getPluginInfo(&$pluginFile, &$class_data, $type) 
+    static function &getPluginInfo(&$pluginFile, &$class_data, $type)
     {
         global $serendipity;
 
@@ -668,7 +665,7 @@ class serendipity_plugin_api
      * @param   string      The location/type of a plugin (local|spartacus)
      * @return
      */
-    static function &setPluginInfo(&$plugin, &$pluginFile, &$bag, &$class_data, $pluginlocation = 'local') 
+    static function &setPluginInfo(&$plugin, &$pluginFile, &$bag, &$class_data, $pluginlocation = 'local')
     {
         global $serendipity;
 
@@ -862,7 +859,7 @@ class serendipity_plugin_api
         if (count($plugins) == 0) {
             $serendipity['prevent_sidebar_plugins_' . $side] = true;
         }
-        
+
         $loggedin = false;
         if (serendipity_userLoggedIn() && serendipity_checkPermission('adminPlugins')) {
             $loggedin = true;
@@ -879,7 +876,7 @@ class serendipity_plugin_api
                 $show_plugin = $plugin->generate_content($title);
                 $content = ob_get_contents();
                 ob_end_clean();
-                
+
                 if ($loggedin) {
                     $content .= '<div class="serendipity_edit_nugget"><a href="' . $serendipity['serendipityHTTPPath'] . 'serendipity_admin.php?serendipity[adminModule]=plugins&amp;serendipity[plugin_to_conf]=' . htmlentities($plugin->instance) . '">' . EDIT . '</a></div>';
                 }
@@ -954,7 +951,7 @@ class serendipity_plugin_api
      * @param   string  Name of a plugin
      * @return  boolean
      */
-    static function is_event_plugin($name) 
+    static function is_event_plugin($name)
     {
         return (strstr($name, '_event_'));
     }
@@ -967,7 +964,7 @@ class serendipity_plugin_api
      * @param  boolean  If set to true, the list of cached event plugins will be refreshed
      * @return mixed    Either returns the whole list of event plugins, or only a specific instance
      */
-    static function &get_event_plugins($getInstance = false, $refresh = false) 
+    static function &get_event_plugins($getInstance = false, $refresh = false)
     {
         static $event_plugins;
         static $false = false;
@@ -1021,7 +1018,7 @@ class serendipity_plugin_api
      * @param   mixed       May contain any type of variables that are passed to an event plugin
      * @return true
      */
-    static function hook_event($event_name, &$eventData, $addData = null) 
+    static function hook_event($event_name, &$eventData, $addData = null)
     {
         global $serendipity;
 
@@ -1045,12 +1042,12 @@ class serendipity_plugin_api
                 $apifunc($event_name, $bag, $eventData, $addData);
             }
         }
-        
+
         if (function_exists('serendipity_plugin_api_pre_event_hook')) {
             $apifunc = 'serendipity_plugin_api_pre_event_hook';
             $apifunc($event_name, $bag, $eventData, $addData);
         }
-        
+
         if (is_array($plugins)) {
             // foreach() operates on copies of values, but we want to operate on references, so we use while()
             @reset($plugins);
@@ -1091,7 +1088,7 @@ class serendipity_plugin_api
      * @param   string      A name (may contain wildcards) of a plugin class to check
      * @return  boolean     True if a plugin was found
      */
-    static function exists($instance_id) 
+    static function exists($instance_id)
     {
         global $serendipity;
 
@@ -1117,7 +1114,7 @@ class serendipity_plugin_api
      * @param   boolean     Indicates if the plugin is an event plugin
      * @return  object      Returns the plugin object or false, if failure
      */
-    static function &autodetect_instance($plugin_name, $authorid, $is_event_plugin = false) 
+    static function &autodetect_instance($plugin_name, $authorid, $is_event_plugin = false)
     {
         if ($is_event_plugin) {
             $side = 'event';
@@ -1149,16 +1146,16 @@ class serendipity_plugin_api
         if (file_exists($probelang)) {
             include $probelang;
         }
-        
+
         include $path . '/lang_en.inc.php';
     }
 }
 
-/** 
- * holds a bunch of properties; since serendipity 0.8 only one value per key is 
- * allowed [was never really useful] 
+/**
+ * holds a bunch of properties; since serendipity 0.8 only one value per key is
+ * allowed [was never really useful]
  */
-class serendipity_property_bag 
+class serendipity_property_bag
 {
     /**
      * @access  private
@@ -1212,9 +1209,9 @@ class serendipity_property_bag
 }
 
 /**
- * A core plugin, with methods that both event and sidebar plugins share 
+ * A core plugin, with methods that both event and sidebar plugins share
  */
-class serendipity_plugin 
+class serendipity_plugin
 {
     var $instance      = null;
     var $protected     = false;
@@ -1350,7 +1347,7 @@ class serendipity_plugin
      * @param   value       The value of a config item
      * @return
      */
-    function validate($config_item, &$cbag, &$value) 
+    function validate($config_item, &$cbag, &$value)
     {
         static $pattern_mail  = '([\.\-\+~@_0-9a-z]+?)';
         static $pattern_url   = '([@!=~\?:&;0-9a-z#\.\-_\/]+?)';
@@ -1379,13 +1376,13 @@ class serendipity_plugin
                     break;
 
                 case 'url':
-                    if (!preg_match('§^' . $pattern_url . '$§', $value)) {
+                    if (!preg_match('ï¿½^' . $pattern_url . '$ï¿½', $value)) {
                         $valid = false;
                     }
                     break;
 
                 case 'mail':
-                    if (!preg_match('§^' . $pattern_mail . '$§', $value)) {
+                    if (!preg_match('ï¿½^' . $pattern_mail . '$ï¿½', $value)) {
                         $valid = false;
                     }
                     break;
@@ -1582,11 +1579,11 @@ class serendipity_plugin
             $serendipity['smarty']->security_settings[@INCLUDE_ANY] = true;
             $content = $serendipity['smarty']->fetch('file:'. $tfile);
             $serendipity['smarty']->security_settings[@INCLUDE_ANY] = $inclusion;
-        } else { 
+        } else {
             $content = $serendipity['smarty']->fetch('file:'. $tfile); // short notation with Smarty3 in S9y 1.7 and up
         }
 
-        return $content;    
+        return $content;
     }
 
 }
@@ -1595,7 +1592,7 @@ class serendipity_plugin
  * Events can be called on several occasions when s9y performs an action.
  * One or multiple plugin can be registered for each of those hooks.
  */
-class serendipity_event extends serendipity_plugin 
+class serendipity_event extends serendipity_plugin
 {
 
     /**
@@ -1625,7 +1622,7 @@ class serendipity_event extends serendipity_plugin
      * @param   array       The entry superarray to get the reference from
      * @return  array       The value of the array for the fieldname (reference)
      */
-    function &getFieldReference($fieldname = 'body', &$eventData) 
+    function &getFieldReference($fieldname = 'body', &$eventData)
     {
         // Get a reference to a content field (body/extended) of
         // $entries input data. This is a unifying function because
@@ -1674,7 +1671,7 @@ class serendipity_event extends serendipity_plugin
      * @param   mixed       Any additional data from the hook_event call
      * @return true
      */
-    function event_hook($event, &$bag, &$eventData, $addData = null) 
+    function event_hook($event, &$bag, &$eventData, $addData = null)
     {
         // Define event hooks here, if you want you plugin to execute those instead of being a sidebar item.
         // Look at external plugins 'serendipity_event_mailer' or 'serendipity_event_weblogping' for usage.
