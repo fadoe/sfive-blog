@@ -333,7 +333,7 @@ function serendipity_load_configuration($author = null) {
     if ((empty($author) || empty($serendipity['baseURL'])) && isset($serendipity['defaultBaseURL'])) {
         $serendipity['baseURL'] = $serendipity['defaultBaseURL'];
     }
-    
+
 
     // Store default language
     $serendipity['default_lang'] = $serendipity['lang'];
@@ -390,7 +390,7 @@ function serendipity_login($use_external = true) {
         if (empty($serendipity['POST']['auto'])) {
             serendipity_deleteCookie('author_information');
             serendipity_deleteCookie('author_information_iv');
-            
+
             return false;
         } else {
             serendipity_issueAutologin(
@@ -415,7 +415,7 @@ function serendipity_login($use_external = true) {
             return false;
         }
     }
-    
+
     $data = array('ext' => $use_external, 'mode' => 2, 'user' => $serendipity['POST']['user'], 'pass' => $serendipity['POST']['pass']);
     serendipity_plugin_api::hook_event('backend_loginfail', $data);
 }
@@ -441,14 +441,9 @@ function serendipity_issueAutologin($array) {
     $rnd = md5(uniqid(time(), true) . $_SERVER['REMOTE_ADDR']);
 
     // Delete possible current cookie. Also delete any autologin keys that smell like 3-week-old, dead fish.
-    if (stristr($serendipity['dbType'], 'sqlite')) {
-        $cast = "name";
-    } else {
-        // Adds explicits casting for mysql, postgresql and others.
-        $cast = "cast(name as integer)";
-    }
+    $cast = "cast(name as integer)";
 
-    serendipity_db_query("DELETE FROM {$serendipity['dbPrefix']}options 
+    serendipity_db_query("DELETE FROM {$serendipity['dbPrefix']}options
                                 WHERE okey = 'l_" . serendipity_db_escape_string($serendipity['COOKIE']['author_information']) . "'
                                    OR (okey LIKE 'l_%' AND $cast < " . (time() - 1814400) . ")");
 
@@ -514,7 +509,7 @@ function serendipity_authenticate_author($username = '', $password = '', $is_has
     global $serendipity;
     static $debug = false;
     static $debugc = 0;
-    
+
     if ($debug) {
         $fp = fopen('login.log', 'a');
         flock($fp, LOCK_EX);
@@ -559,9 +554,9 @@ function serendipity_authenticate_author($username = '', $password = '', $is_has
 
                 // Old MD5 hashing routine. Will convert user.
                 if (empty($row['hashtype']) || $row['hashtype'] == 0) {
-                    
+
                     if (isset($serendipity['hashkey']) && (time() - $serendipity['hashkey']) >= 15768000) {
-                        die('You can no longer login with an old-style MD5 hash to prevent MD5-Hostage abuse. 
+                        die('You can no longer login with an old-style MD5 hash to prevent MD5-Hostage abuse.
                              Please ask the Administrator to set you a new password.');
                     }
 
@@ -576,7 +571,7 @@ function serendipity_authenticate_author($username = '', $password = '', $is_has
                         $is_valid_user = true;
                     } else {
                         continue;
-                    }                    
+                    }
                 } else {
                     if ( ($is_hashed === false && (string)$row['password'] === (string)serendipity_hash($password)) ||
                          ($is_hashed !== false && (string)$row['password'] === (string)$password) ) {
@@ -586,7 +581,7 @@ function serendipity_authenticate_author($username = '', $password = '', $is_has
                     } else {
                         if ($debug) fwrite($fp, date('Y-m-d H:i') . ' - INValidated ' . $row['password'] . ' == ' . ($is_hashed === false ? 'unhash:' . serendipity_hash($password) : 'hash:' . $password) . "\n");
                         continue;
-                    }                    
+                    }
                 }
 
                 // This code is only reached, if the password before is valid.
@@ -606,7 +601,7 @@ function serendipity_authenticate_author($username = '', $password = '', $is_has
                     $_SESSION['serendipityAuthedUser']  = $serendipity['serendipityAuthedUser']   = true;
                     $_SESSION['serendipityRightPublish']= $serendipity['serendipityRightPublish'] = $row['right_publish'];
                     $_SESSION['serendipityHashType']    = $serendipity['serendipityHashType']     = $row['hashtype'];
-                    
+
                     serendipity_load_configuration($serendipity['authorid']);
                     serendipity_setCookie('userDefLang', $serendipity['lang'], false);
                     return true;
@@ -616,7 +611,7 @@ function serendipity_authenticate_author($username = '', $password = '', $is_has
 
         // Only reached, when proper login did not yet return true.
         if ($debug) fwrite($fp, date('Y-m-d H:i') . ' - FAIL.' . "\n");
-        
+
         $_SESSION['serendipityAuthedUser'] = false;
         serendipity_session_destroy();
     }
@@ -702,7 +697,7 @@ function serendipity_setCookie($name, $value, $securebyprot = true) {
     } else {
         $secure = false;
     }
-    
+
     // If HTTP-Hosts like "localhost" are used, current browsers reject cookies.
     // In this case, we disregard the HTTP host to be able to set that cookie.
     if (substr_count($host, '.') < 1) {
@@ -736,7 +731,7 @@ function serendipity_deleteCookie($name) {
     if (substr_count($host, '.') < 1) {
         $host = '';
     }
-                        
+
     setcookie("serendipity[$name]", '', time()-4000, $serendipity['serendipityHTTPPath'], $host);
     unset($_COOKIE[$name]);
     unset($serendipity['COOKIE'][$name]);
@@ -865,7 +860,7 @@ function serendipity_iframe_create($mode, &$entry) {
 
     $_SESSION['save_entry']      = $entry;
     $_SESSION['save_entry_POST'] = $serendipity['POST'];
-    
+
     $attr = '';
     switch($mode) {
         case 'save':
@@ -896,33 +891,8 @@ function serendipity_probeInstallation($item) {
     switch ( $item ) {
         case 'dbType' :
             $res =  array();
-            if (extension_loaded('mysql')) {
-                $res['mysql'] = 'MySQL';
-            }
-            if (extension_loaded('PDO') &&
-                in_array('pgsql', PDO::getAvailableDrivers())) {
-                $res['pdo-postgres'] = 'PDO::PostgreSQL';
-            }
-
-            if (extension_loaded('PDO') &&
-                in_array('sqlite', PDO::getAvailableDrivers())) {
-                $res['pdo-sqlite'] = 'PDO::SQLite';
-            }
-
-            if (extension_loaded('pgsql')) {
-                $res['postgres'] = 'PostgreSQL';
-            }
             if (extension_loaded('mysqli')) {
                 $res['mysqli'] = 'MySQLi';
-            }
-            if (extension_loaded('sqlite') && function_exists('sqlite_open')) {
-                $res['sqlite'] = 'SQLite';
-            }
-            if (extension_loaded('SQLITE3') && function_exists('sqlite3_open')) {
-                $res['sqlite3'] = 'SQLite3';
-            }
-            if (function_exists('sqlrcon_alloc')) {
-                $res['sqlrelay'] = 'SQLRelay';
             }
             break;
 
@@ -1008,7 +978,7 @@ function serendipity_getSessionLanguage() {
                 $lang = $serendipity['COOKIE']['userDefLang'];
             } else {
                 $lang = $serendipity['lang'];
-          	}
+            }
         }
         $serendipity['detected_lang'] = null;
     }
@@ -2086,7 +2056,7 @@ function serendipity_setFormToken($type = 'form') {
  */
 function &serendipity_loadThemeOptions(&$template_config, $okey = '', $bc_bool = false) {
     global $serendipity;
-    
+
     if (empty($okey)) {
         $okey = $serendipity['template'];
     }
@@ -2105,8 +2075,8 @@ function &serendipity_loadThemeOptions(&$template_config, $okey = '', $bc_bool =
             $template_vars[$item['var']] = $item['default'];
         }
     }
-    if($bc_bool) { 
-        foreach($template_vars AS $k => $i) { 
+    if($bc_bool) {
+        foreach($template_vars AS $k => $i) {
             if($i == 'true' || $i == 'false') {
                 $template_vars[$k] = serendipity_db_bool($i);
             }
@@ -2126,7 +2096,7 @@ function &serendipity_loadThemeOptions(&$template_config, $okey = '', $bc_bool =
  */
 function serendipity_loadGlobalThemeOptions(&$template_config, &$template_loaded_config, $supported = array()) {
     global $serendipity;
-    
+
     if ($supported['navigation']) {
         $navlinks = array();
 
@@ -2138,24 +2108,24 @@ function serendipity_loadGlobalThemeOptions(&$template_config, &$template_loaded
                 'scope'         => 'global'
         );
 
-		// This always needs to be present, if not it could happen that the template options do have an older version of this variable
-		$template_config[] = $conf_amount;
+        // This always needs to be present, if not it could happen that the template options do have an older version of this variable
+        $template_config[] = $conf_amount;
 
         if (!isset($template_loaded_config['amount']) || empty($template_loaded_config['amount'])) {
             $template_loaded_config['amount'] = $conf_amount['default'];
         }
-        
-		// Check if we are currently inside the admin interface.
-		if ($serendipity['POST']['adminModule'] == 'templates' && $serendipity['POST']['adminAction'] == 'configure' && !empty($serendipity['POST']['template']['amount'])) {
-			$template_loaded_config['amount'] = (int)$serendipity['POST']['template']['amount'];
-		}
+
+        // Check if we are currently inside the admin interface.
+        if ($serendipity['POST']['adminModule'] == 'templates' && $serendipity['POST']['adminAction'] == 'configure' && !empty($serendipity['POST']['template']['amount'])) {
+            $template_loaded_config['amount'] = (int)$serendipity['POST']['template']['amount'];
+        }
 
         for ($i = 0; $i < $template_loaded_config['amount']; $i++) {
             $navlinks[] = array(
                 'title' => $template_loaded_config['navlink' . $i . 'text'],
                 'href'  => $template_loaded_config['navlink' . $i . 'url']
             );
-    
+
             $template_config[] = array(
                 'var'           => 'navlink' . $i . 'text',
                 'name'          => NAV_LINK_TEXT . ' #' . ($i+1),
@@ -2171,10 +2141,10 @@ function serendipity_loadGlobalThemeOptions(&$template_config, &$template_loaded
                 'scope'         => 'global'
             );
         }
-    
+
         $serendipity['smarty']->assignByRef('navlinks', $navlinks);
     }
-    
+
     // Forward thinking. ;-)
     serendipity_plugin_api::hook_event('backend_templates_globalthemeoptions', $template_config, $supported);
 }
@@ -2198,7 +2168,7 @@ function serendipity_hasPluginPermissions($plugin, $groupid = null) {
 
     if ($forbidden === null || ($groupid !== null && !isset($forbidden[$groupid]))) {
         $forbidden = array();
-        
+
         if ($groupid === null) {
             $groups = serendipity_checkPermission(null, null, 'all');
         } else {
@@ -2226,7 +2196,7 @@ function serendipity_hasPluginPermissions($plugin, $groupid = null) {
 
 function serendipity_hash($string) {
     global $serendipity;
-    
+
     if (empty($serendipity['hashkey'])) {
         serendipity_set_config_var('hashkey', time(), 0);
     }

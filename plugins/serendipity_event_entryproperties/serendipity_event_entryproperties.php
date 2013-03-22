@@ -832,15 +832,7 @@ class serendipity_event_entryproperties extends serendipity_event
                         $eventData['addkey'] .= $cond;
                     }
 
-                    if ($serendipity['dbType'] == 'postgres') {
-                        // PostgreSQL is a bit weird here. Empty columns with NULL or "" content for
-                        // orderkey would get sorted on top when using DESC, and only after those
-                        // the "true" content would be inserted. Thus we order ASC in postgreSQL,
-                        // and silently wonder. Thanks to Nate Johnston for working this out!
-                        $cond = 'orderkey ASC';
-                    } else {
-                        $cond = 'orderkey DESC';
-                    }
+                    $cond = 'orderkey DESC';
 
                     if (empty($eventData['orderby'])) {
                         $eventData['orderby'] = $cond;

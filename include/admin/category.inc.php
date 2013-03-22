@@ -73,26 +73,14 @@ if ($serendipity['GET']['adminAction'] == 'doDelete' && serendipity_checkFormTok
         $remaining_cat = (int)$serendipity['POST']['cat']['remaining_catid'];
         $category_ranges = serendipity_fetchCategoryRange((int)$serendipity['GET']['cid']);
         $category_range  = implode(' AND ', $category_ranges);
-        if ($serendipity['dbType'] == 'postgres' || $serendipity['dbType'] == 'sqlite' || $serendipity['dbType'] == 'sqlite3' || $serendipity['dbType'] == 'pdo-sqlite') {
-            $query = "UPDATE {$serendipity['dbPrefix']}entrycat
-                        SET categoryid={$remaining_cat} WHERE entryid IN
-                        (
-                          SELECT DISTINCT(e.id) FROM {$serendipity['dbPrefix']}entries e,
-                          {$serendipity['dbPrefix']}category c,
-                          {$serendipity['dbPrefix']}entrycat ec
-                          WHERE e.id=ec.entryid AND c.categoryid=ec.categoryid
-                          AND c.category_left BETWEEN {$category_range} {$admin_category}
-                        )";
-        } else {
-            $query = "UPDATE {$serendipity['dbPrefix']}entries e,
-                        {$serendipity['dbPrefix']}entrycat ec,
-                        {$serendipity['dbPrefix']}category c
-                      SET ec.categoryid={$remaining_cat}
-                        WHERE e.id = ec.entryid
-                          AND c.categoryid = ec.categoryid
-                          AND c.category_left BETWEEN {$category_range}
-                          {$admin_category}";
-        }
+        $query = "UPDATE {$serendipity['dbPrefix']}entries e,
+                    {$serendipity['dbPrefix']}entrycat ec,
+                    {$serendipity['dbPrefix']}category c
+                  SET ec.categoryid={$remaining_cat}
+                    WHERE e.id = ec.entryid
+                      AND c.categoryid = ec.categoryid
+                      AND c.category_left BETWEEN {$category_range}
+                      {$admin_category}";
 
         serendipity_db_query($query);
         if (serendipity_deleteCategory($category_range, $admin_category) ) {

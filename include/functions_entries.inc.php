@@ -74,7 +74,7 @@ function serendipity_getMultiCategoriesSQL($cats, $invert = false) {
             $cat_sql_array[] = " (c.category_left " . ($invert ? " NOT " : "") . " BETWEEN " . implode(' AND ', serendipity_fetchCategoryRange($categoryid)) . ')';
         }
     }
-    
+
     if (count($cat_sql_array) < 1) {
         return '';
     }
@@ -331,14 +331,8 @@ function &serendipity_fetchEntries($range = null, $full = true, $limit = '', $fe
         }
     }
 
-    if ($serendipity['dbType'] == 'postgres' ||
-        $serendipity['dbType'] == 'pdo-postgres') {
-        $cond['group']    = '';
-        $cond['distinct'] = 'DISTINCT';
-    } else {
-        $cond['group']    = 'GROUP BY e.id';
-        $cond['distinct'] = '';
-    }
+    $cond['group']    = 'GROUP BY e.id';
+    $cond['distinct'] = '';
 
     if (!is_null($group_by)) {
         $cond['group'] = $group_by;
@@ -386,7 +380,7 @@ function &serendipity_fetchEntries($range = null, $full = true, $limit = '', $fe
                     LEFT JOIN {$serendipity['dbPrefix']}category c
                         ON ec.categoryid = c.categoryid";
     }
-    
+
     if ($joinown) {
         $cond['joins'] .= $joinown;
     }
@@ -399,7 +393,7 @@ function &serendipity_fetchEntries($range = null, $full = true, $limit = '', $fe
         if (isset($serendipity['GET']['page']) && ($serendipity['GET']['page'] > 1 || serendipity_db_bool($serendipity['archiveSortStable'])) && !strstr($limit, ',')) {
             if (serendipity_db_bool($serendipity['archiveSortStable'])) {
                 $totalEntries = serendipity_getTotalEntries();
-                
+
                 $totalPages = ceil($totalEntries / $limit);
                 if ($totalPages <= 0 ) {
                     $totalPages = 1;
@@ -665,14 +659,8 @@ function &serendipity_fetchCategories($authorid = null, $name = null, $order = n
         $where .= " c.category_name = '" . serendipity_db_escape_string($name) . "'";
     }
 
-    if ($serendipity['dbType'] == 'postgres' ||
-        $serendipity['dbType'] == 'pdo-postgres') {
-        $group    = '';
-        $distinct = 'DISTINCT';
-    } else {
-        $group    = 'GROUP BY c.categoryid';
-        $distinct = '';
-    }
+    $group    = 'GROUP BY c.categoryid';
+    $distinct = '';
 
     $querystring = "SELECT $distinct c.categoryid,
                            c.category_name,
@@ -745,7 +733,7 @@ function serendipity_rebuildCategoryTree($parent = 0, $left = 0) {
 function &serendipity_searchEntries($term, $limit = '', $searchresults = '') {
     global $serendipity;
     static $log_queries = false;
-    
+
     if ($log_queries) {
         $fp = fopen($serendipity['serendipityPath'] . '/archives/queries.csv', 'a');
         fwrite($fp, date('Y-m-d H:i') . ';'
@@ -768,43 +756,14 @@ function &serendipity_searchEntries($term, $limit = '', $searchresults = '') {
     $term = serendipity_db_escape_string($term);
     $cond = array();
     $relevance_enabled = false;
-    if ($serendipity['dbType'] == 'postgres' ||
-        $serendipity['dbType'] == 'pdo-postgres') {
-        $cond['group']     = '';
-        $cond['distinct']  = 'DISTINCT';
-            
-        $r = serendipity_db_query("SELECT count(routine_name) AS counter
-                                     FROM information_schema.routines
-                                    WHERE routine_name LIKE 'to_tsvector'
-                                      AND specific_catalog = '" . $serendipity['dbName'] . "'");
-        if (is_array($r) && $r[0]['counter'] > 0) {
-            $term = str_replace('&amp;', '&', $term);
-            $cond['find_part'] = "(
-            to_tsvector('english', title)    @@to_tsquery('$term') OR
-            to_tsvector('english', body)     @@to_tsquery('$term') OR
-            to_tsvector('english', extended) @@to_tsquery('$term')
-            )"; 
-        } else {
-            $cond['find_part'] = "(title ILIKE '%$term%' OR body ILIKE '%$term%' OR extended ILIKE '%$term%')";
-        }
-    } elseif ($serendipity['dbType'] == 'sqlite' || $serendipity['dbType'] == 'sqlite3' || $serendipity['dbType'] == 'pdo-sqlite') {
-        // Very extensive SQLite search. There currently seems no other way to perform fulltext search in SQLite
-        // But it's better than no search at all :-D
-        $term = str_replace('*', '%', $term);
-        $cond['group']     = 'GROUP BY e.id';
-        $cond['distinct']  = '';
-        $term              = serendipity_mb('strtolower', $term);
-        $cond['find_part'] = "(lower(title) LIKE '%$term%' OR lower(body) LIKE '%$term%' OR lower(extended) LIKE '%$term%')";
+    $cond['group']    = 'GROUP BY e.id';
+    $cond['distinct'] = '';
+    $term             = str_replace('&quot;', '"', $term);
+    $relevance_enabled = true;
+    if (preg_match('@["\+\-\*~<>\(\)]+@', $term)) {
+        $cond['find_part'] = "MATCH(title,body,extended) AGAINST('$term' IN BOOLEAN MODE)";
     } else {
-        $cond['group']    = 'GROUP BY e.id';
-        $cond['distinct'] = '';
-        $term             = str_replace('&quot;', '"', $term);
-        $relevance_enabled = true;
-        if (preg_match('@["\+\-\*~<>\(\)]+@', $term)) {
-            $cond['find_part'] = "MATCH(title,body,extended) AGAINST('$term' IN BOOLEAN MODE)";
-        } else {
-            $cond['find_part'] = "MATCH(title,body,extended) AGAINST('$term')";
-        }
+        $cond['find_part'] = "MATCH(title,body,extended) AGAINST('$term')";
     }
 
     switch($serendipity['searchsort']) {
@@ -870,7 +829,7 @@ function &serendipity_searchEntries($term, $limit = '', $searchresults = '') {
         foreach($searchresults AS $idx => $data) {
             $ids_current[$data['id']] = true;
         }
-   
+
         foreach($search AS $idx => $data) {
             if (isset($ids_current[$data['id']])) {
                 unset($search[$idx]);
@@ -883,19 +842,19 @@ function &serendipity_searchEntries($term, $limit = '', $searchresults = '') {
     if ($p == 0) $p = 1;
 
     //if * wasn't already appended and if there are none or not enough
-    //results, search again for entries containing the searchterm as a part  
-    if ($p == 1 && strpos($term, '*') === false && $serendipity['dbType'] != 'sqlite' && $serendipity['dbType'] != 'sqlite3' && $serendipity['dbType'] != 'pdo-sqlite') {
+    //results, search again for entries containing the searchterm as a part
+    if ($p == 1 && strpos($term, '*') === false) {
         if (! is_array($search)) {
             return serendipity_searchEntries($term.'*', $orig_limit);
         }else if (count($search) < 4){
             return serendipity_searchEntries($term.'*', $orig_limit, $search);
         }
     }
-    
+
     if (is_array($search)){
         serendipity_fetchEntryData($search);
     }
-    
+
     return $search;
 }
 
@@ -916,7 +875,7 @@ function serendipity_printEntryFooter($suffix = '.html', $totalEntries = null) {
     if ($totalEntries === null) {
         $totalEntries = serendipity_getTotalEntries();
     }
-    
+
     $limits = explode(',', $serendipity['fetchLimit']);
     if (!empty($limits[1])) {
         $limit = (int)$limits[1];
@@ -980,20 +939,12 @@ function serendipity_getTotalEntries() {
     global $serendipity;
 
     // The unique query condition was built previously in serendipity_fetchEntries()
-    if ($serendipity['dbType'] == 'sqlite' || $serendipity['dbType'] == 'sqlite3' || $serendipity['dbType'] == 'pdo-sqlite') {
-        $querystring  = "SELECT count(e.id) {$serendipity['fullCountQuery']} GROUP BY e.id";
-    } else {
-        $querystring  = "SELECT count(distinct e.id) {$serendipity['fullCountQuery']}";
-    }
+    $querystring  = "SELECT count(distinct e.id) {$serendipity['fullCountQuery']}";
 
     $query =& serendipity_db_query($querystring);
 
     if (is_array($query) && isset($query[0])) {
-        if ($serendipity['dbType'] == 'sqlite' || $serendipity['dbType'] == 'sqlite3' || $serendipity['dbType'] == 'pdo-sqlite') {
-            return count($query);
-        } else {
-            return $query[0][0];
-        }
+        return $query[0][0];
     }
 
     return 0;
@@ -1042,7 +993,7 @@ function serendipity_printEntries($entries, $extended = 0, $preview = false, $sm
             return; // no display of this item
         }
     }
-    
+
     // We shouldn't return here, because we want Smarty to handle the output
     if (!is_array($entries) || $entries[0] == false || !isset($entries[0]['timestamp'])) {
         $entries = array();
@@ -1227,9 +1178,9 @@ function serendipity_printEntries($entries, $extended = 0, $preview = false, $sm
     }
 
     if ($smarty_fetch === 'return') {
-        return $dategroup;    
-    }    
-    
+        return $dategroup;
+    }
+
     $serendipity['smarty']->assignByRef('entries', $dategroup);
     unset($entries, $dategroup);
 
@@ -1489,7 +1440,7 @@ function serendipity_deleteEntry($id) {
 * @param string The character to use for blank indenting
 * @see serendipity_fetchCategories()
 */
-function serendipity_generateCategoryList($cats, $select = array(0), $type = 0, $id = 0, $level = 0, $xmlImg = '', $blank_char = ' ') {
+function serendipity_generateCategoryList($cats, $select = array(0), $type = 0, $id = 0, $level = 0, $xmlImg = '', $blank_char = 'ï¿½') {
     global $serendipity;
 
     if ( !is_array($cats) || !count($cats) )
@@ -1616,12 +1567,7 @@ function serendipity_printArchives() {
         $author_get = '';
     }
 
-    if ($serendipity['dbType'] == 'postgres' ||
-        $serendipity['dbType'] == 'pdo-postgres') {
-        $distinct = 'DISTINCT e.id,';
-    } else {
-        $distinct = '';
-    }
+    $distinct = '';
 
     $q = "SELECT $distinct e.timestamp
             FROM {$serendipity['dbPrefix']}entries e
@@ -1633,7 +1579,7 @@ function serendipity_printArchives() {
            WHERE isdraft = 'false'"
                 . (!serendipity_db_bool($serendipity['showFutureEntries']) ? " AND timestamp <= " . serendipity_db_time() : '')
                 . (!empty($cat_sql) ? ' AND ' . $cat_sql : '')
-                . (!empty($serendipity['GET']['viewAuthor']) ? ' AND e.authorid = ' . (int)$serendipity['GET']['viewAuthor'] : '') 
+                . (!empty($serendipity['GET']['viewAuthor']) ? ' AND e.authorid = ' . (int)$serendipity['GET']['viewAuthor'] : '')
                 . (!empty($cat_sql) ? " GROUP BY e.id, e.timestamp" : '');
     $entries =& serendipity_db_query($q, false, 'assoc');
 

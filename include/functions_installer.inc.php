@@ -80,10 +80,6 @@ function serendipity_updateLocalConfig($dbName, $dbPrefix, $dbHost, $dbUser, $db
         return $errs;
     }
 
-    if (isset($_POST['sqlitedbName']) && !empty($_POST['sqlitedbName'])) {
-        $dbName = $_POST['sqlitedbName'];
-    }
-
     $file_start    = "<?php\n"
                    . "\t/*\n"
                    . "\t  Serendipity configuration file\n";
@@ -182,16 +178,6 @@ function serendipity_query_default($optname, $default, $usertemplate = false, $t
             if (extension_loaded('mysqli')) {
                 $type = 'mysqli';
             }
-            if (extension_loaded('PDO') &&
-                in_array('pgsql', PDO::getAvailableDrivers())) {
-                $type = 'pdo-postgres';
-            }
-            if (extension_loaded('pgsql')) {
-                $type = 'postgres';
-            }
-            if (extension_loaded('mysql')) {
-                $type = 'mysql';
-            }
             return $type;
 
         case 'serendipityPath':
@@ -288,7 +274,7 @@ function serendipity_parseTemplate($filename, $areas = null, $onlyFlags=null) {
 
     $config = @include($filename);
     if (! is_array($config)) {
-    	printf(INCLUDE_ERROR,$filename);
+        printf(INCLUDE_ERROR,$filename);
     }
 
     foreach ( $config as $n => $category ) {
@@ -397,7 +383,7 @@ function serendipity_guessInput($type, $name, $value='', $default='') {
             if ($value === null) {
                 $value = $default;
             }
-            
+
             echo '<input class="input_radio" id="radio_cfg_' . $name . '_yes" type="radio" name="' . $name . '" value="true" ';
             echo (($value == true) ? 'checked="checked"' : ''). ' /><label for="radio_cfg_' . $name . '_yes"> ' . YES . '</label>&nbsp;';
             echo '<input class="input_radio" id="radio_cfg_' . $name . '_no" type="radio" name="' . $name . '" value="false" ';
@@ -578,7 +564,7 @@ function serendipity_printConfigTemplate($config, $from = false, $noForm = false
             if (in_array('hideValue', $item['flags'])) {
                 $value = '';
             }
-            
+
             if (!$showDangerous && $item['view'] == 'dangerous') {
                 continue;
             }
@@ -751,19 +737,12 @@ function serendipity_checkInstallation() {
         $errs[] = sprintf(CANT_EXECUTE_BINARY, 'convert imagemagick');
     }
 
-    if ($_POST['dbType'] == 'sqlite' || $_POST['dbType'] == 'sqlite3' || $_POST['dbType'] == 'pdo-sqlite') {
-        // We don't want that our SQLite db file can be guessed from other applications on a server
-        // and have access to our's. So we randomize the SQLite dbname.
-        $_POST['sqlitedbName'] = $_POST['dbName'] . '_' . md5(time());
-    }
-
     if (empty($_POST['dbPrefix']) && empty($serendipity['dbPrefix'])) {
         $errs[] = sprintf(EMPTY_SETTING, INSTALL_DBPREFIX);
     }
 
     $serendipity['dbType'] = $_POST['dbType'];
     // Probe database
-    // (do it after the dir stuff, as we need to be able to create the sqlite database)
     @include_once($_POST['serendipityPath'] . 'include/db/db.inc.php');
     // For shared installations, probe the file on include path
     include_once(S9Y_INCLUDE_PATH . 'include/db/db.inc.php');
@@ -826,7 +805,7 @@ function serendipity_installFiles($serendipity_core = '') {
         if ($fp) {
             fwrite($fp, 'php_value register_globals off'. "\n" .'php_value session.use_trans_sid 0');
             fclose($fp);
-            
+
             $safeFP = @fopen($serendipity_core . '.installer_detection_failsafe', 'w');
             fclose($safeFP);
             $sock = fsockopen($serendipity_host, $_SERVER['SERVER_PORT'], $errorno, $errorstring, 10);
@@ -985,10 +964,6 @@ function serendipity_updateConfiguration() {
     // Save all basic config variables to the database
     $config = serendipity_parseTemplate(S9Y_CONFIG_TEMPLATE);
 
-    if (isset($_POST['sqlitedbName']) && !empty($_POST['sqlitedbName'])) {
-        $_POST['dbName'] = $_POST['sqlitedbName'];
-    }
-
     // Password can be hidden in re-configuring, but we need to store old password
     if (empty($_POST['dbPass']) && !empty($serendipity['dbPass'])) {
         $_POST['dbPass'] = $serendipity['dbPass'];
@@ -1060,7 +1035,7 @@ function serendipity_httpCoreDir() {
     if (!empty($_SERVER['ORIG_PATH_TRANSLATED'])) {
         return dirname(realpath($_SERVER['ORIG_PATH_TRANSLATED'])) . '/';
     }
-    
+
     return $_SERVER['DOCUMENT_ROOT'] . dirname($_SERVER['PHP_SELF']) . '/';
 }
 
@@ -1218,16 +1193,16 @@ global $serendipity;
  * @param string filename is the path to the file to checksum
  * @param string type forces a particular interpretation of newlines.  Mime
  *    types and strings starting with 'text' will cause newlines to be stripped
- *    before the checksum is calculated (default: null, determine from finfo 
+ *    before the checksum is calculated (default: null, determine from finfo
  *    and extension)
- * @return string An MD5 checksum of the file, with newlines removed if it's 
+ * @return string An MD5 checksum of the file, with newlines removed if it's
  *    an ASCII type; or false if the file cannot be read
  */
 function serendipity_FTPChecksum($filename, $type = null) {
     /** Only read the finfo database once */
     static $debug_exts = array();
 
-    // Must be able to read the file 
+    // Must be able to read the file
     if (!is_readable($filename)) {
         return false;
     }
@@ -1243,16 +1218,16 @@ function serendipity_FTPChecksum($filename, $type = null) {
         // If they're case-insensitive equal, strcasecmp() returns 0, or
         // 'false'.  So I use && to find if any of them are 0, in the
         // most likely fail-fast order.
-        if (strcasecmp($ext, 'php') && 
+        if (strcasecmp($ext, 'php') &&
             strcasecmp($ext, 'tpl') &&
             strcasecmp($ext, 'sql') &&
-            strcasecmp($ext, 'js') && 
-            strcasecmp($ext, 'txt') && 
-            strcasecmp($ext, 'htc') && 
-            strcasecmp($ext, 'css') && 
-            strcasecmp($ext, 'dist') && 
-            strcasecmp($ext, 'lib') && 
-            strcasecmp($ext, 'sh') && 
+            strcasecmp($ext, 'js') &&
+            strcasecmp($ext, 'txt') &&
+            strcasecmp($ext, 'htc') &&
+            strcasecmp($ext, 'css') &&
+            strcasecmp($ext, 'dist') &&
+            strcasecmp($ext, 'lib') &&
+            strcasecmp($ext, 'sh') &&
             strcasecmp($ext, 'html') &&
             strcasecmp($ext, 'htm') &&
             !empty($ext)) {
@@ -1268,7 +1243,7 @@ function serendipity_FTPChecksum($filename, $type = null) {
     // Calculate the checksum
     $md5 = false;
     if (stristr($type, 'text')) {
-        // This is a text-type file.  We need to remove linefeeds before 
+        // This is a text-type file.  We need to remove linefeeds before
         // calculating a checksum, to account for possible FTP conversions
         // that are inconvenient, but still valid.  But we don't want to
         // allow newlines anywhere; just different *kinds* of newlines.
@@ -1286,8 +1261,8 @@ function serendipity_FTPChecksum($filename, $type = null) {
 
 /**
  * Validate checksums for all required files.
- * 
- * @return A list of all files that failed checksum, where keys are the 
+ *
+ * @return A list of all files that failed checksum, where keys are the
  *    relative path of the file, and values are the bad checksum
  */
 function serendipity_verifyFTPChecksums() {
@@ -1297,7 +1272,7 @@ function serendipity_verifyFTPChecksums() {
 
     // Load the checksums
     $f = S9Y_INCLUDE_PATH . 'checksums.inc.php';
-    
+
     if (!file_exists($f) || filesize($f) < 1) {
         return $badsums;
     }
@@ -1314,7 +1289,7 @@ function serendipity_verifyFTPChecksums() {
         $path = $basedir . '/' . $prel;
         // Don't take checksums of directories
         if (is_dir($path)) {
-            // Weird that it's even here. 
+            // Weird that it's even here.
             continue;
         }
 

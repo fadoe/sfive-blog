@@ -186,7 +186,7 @@ class serendipity_plugin_statistics extends serendipity_plugin
                 $lastmonday = date('Ymd', strtotime('today'));
             } else if (date('w', strtotime('today') ) == "0" ) { // now it is sunday
                 $nextsunday = date('Ymd', strtotime('today'));
-            }             
+            }
 
             $content = '';
             if (serendipity_db_bool($this->get_config('show_lastentry'))) {
@@ -231,20 +231,14 @@ class serendipity_plugin_statistics extends serendipity_plugin
                 }
             }
 
-            // This one is MySQL specific. Don't know how postgreSQL does it.
+            // This one is MySQL specific.
             if (serendipity_db_bool($this->get_config('show_currentvisitors'))) {
                 $max = time();
                 $min = $max - (15 * 60);
 
-                if ($serendipity['dbType'] == 'sqlite' || $serendipity['dbType'] == 'sqlite3' || $serendipity['dbType'] == 'pdo-sqlite') {
-                    $max_ts = date('H:i', $max);
-                    $min_ts = date('H:i', $min);
-                    $q   = "SELECT count(counter_id) AS currentvisitors FROM {$serendipity['dbPrefix']}visitors WHERE day LIKE '" . date('Y-m-d') . "' AND (time BETWEEN '$min_ts' AND '$max_ts')";
-                } else {
-                    $max_ts = date('Hi', $max);
-                    $min_ts = date('Hi', $min);
-                    $q   = "SELECT count(counter_id) AS currentvisitors FROM {$serendipity['dbPrefix']}visitors WHERE day LIKE '" . date('Y-m-d') . "' AND (REPLACE(time, ':', '') BETWEEN $min_ts AND $max_ts)";
-                }
+                $max_ts = date('Hi', $max);
+                $min_ts = date('Hi', $min);
+                $q   = "SELECT count(counter_id) AS currentvisitors FROM {$serendipity['dbPrefix']}visitors WHERE day LIKE '" . date('Y-m-d') . "' AND (REPLACE(time, ':', '') BETWEEN $min_ts AND $max_ts)";
                 $res = serendipity_db_query($q, true, 'assoc');
                 if (is_array($res) && isset($res['currentvisitors'])) {
                     $content .= '<div class="stat_currentvisitors">' . sprintf($this->get_config('text_currentvisitors'), '<span class="stat_number">' . $res['currentvisitors'] . '</span>') . "</div>\n";

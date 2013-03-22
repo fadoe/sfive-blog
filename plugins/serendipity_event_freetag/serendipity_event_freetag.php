@@ -28,8 +28,6 @@
  *           to apply a patch to your main serendiptiy file.  The patch is
  *           available here:
  *              http://blog.jonnay.net/uploads/Code/freetag2.1.s9y.patch.txt
- *           If you are using PostgreSQL then this patch wont work for you.
- *           sorry, but thems the breaks.  Maybe you can help fix the query?
  * - Tag Administration
  */
 
@@ -1990,8 +1988,6 @@ class serendipity_event_freetag extends serendipity_event
      * If we do it via an update, the update fails, and our rename doesn't
      * happen.  This way our update does happen, and we can siltenly fail
      * when we hit a duplicate key condition.
-     * Postgres doesnt have an UPDATE IGNORE syntax, so we can't use that
-     * method.  Sux0rz.
      */
     function getRenameTagQuery($tag, &$eventData) {
         global $serendipity;

@@ -344,7 +344,7 @@
 @define('INSTALL_DBTYPE', 'Database type');
 @define('INSTALL_DBTYPE_DESC', 'Database type');
 @define('INSTALL_DBHOST', 'Database host');
-@define('INSTALL_DBHOST_DESC', 'The hostname for your database server. For pgsql you can specify a non-default port with "localhost port=4711" for example; for MySQL you can use "localhost:4711". If you use the default port, never mind this explanation.');
+@define('INSTALL_DBHOST_DESC', 'The hostname for your database server. For MySQL you can specify a non-default port with "localhost:4711" for example.');
 @define('INSTALL_DBUSER', 'Database user');
 @define('INSTALL_DBUSER_DESC', 'The username used to connect to your database');
 @define('INSTALL_DBPASS', 'Database password');
@@ -425,9 +425,9 @@
 @define('INSTALL_THUMBDIM_LARGEST', 'Largest');
 @define('INSTALL_THUMBDIM_WIDTH', 'Width');
 @define('INSTALL_THUMBDIM_HEIGHT', 'Height');
-@define('INSTALL_THUMBDIM_DESC', 'Dimension to be constrained to the thumbnail max size. The default "' . 
-    INSTALL_THUMBDIM_LARGEST .  '" limits both dimensions, so neither can be greater than the max size; "' . 
-    INSTALL_THUMBDIM_WIDTH . '" and "' .  INSTALL_THUMBDIM_HEIGHT . 
+@define('INSTALL_THUMBDIM_DESC', 'Dimension to be constrained to the thumbnail max size. The default "' .
+    INSTALL_THUMBDIM_LARGEST .  '" limits both dimensions, so neither can be greater than the max size; "' .
+    INSTALL_THUMBDIM_WIDTH . '" and "' .  INSTALL_THUMBDIM_HEIGHT .
     '" only limit the chosen dimension, so the other could be larger than the max size.');
 
 /* Personal details */
@@ -921,7 +921,7 @@
 @define('COMMENT_TOKENS_DESC', 'If tokens are used, comments can be approved and deleted by clicking the email links without requiring login access to the blog. Note that this is a convenience feature, and if your mails get hijacked, those people can approve/delete the referenced comment without further authentication.');
 @define('COMMENT_NOTOKENMATCH', 'Moderation link has expired or comment #%s has already been approved or deleted');
 @define('TRACKBACK_NOTOKENMATCH', 'Moderation link has expired or trackback #%s has already been approved or deleted');
-@define('BADTOKEN', 'Invalid Moderation Link'); 
+@define('BADTOKEN', 'Invalid Moderation Link');
 
 @define('CONFIRMATION_MAIL_ALWAYS', "Hello %s,\n\nYou have sent a new comment to \"%s\". Your comment was:\n\n%s\n\nThe owner of the blog has enabled mail verification, so you need to click on the following link to authenticate your comment:\n<%s>\n");
 @define('CONFIRMATION_MAIL_ONCE', "Hello %s,\n\nYou have sent a new comment to \"%s\". Your comment was:\n\n%s\n\nThe owner of the blog has enabled one-time mail verification, so you need to click on the following link to authenticate your comment:\n<%s>\n\nAfter you have done that, you can always post comments on that blog with your username and e-mail address without receiving such notifications.");

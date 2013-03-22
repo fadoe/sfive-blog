@@ -157,14 +157,14 @@ function serendipity_strftime($format, $timestamp = null, $useOffset = true, $us
                 }
                 $out = strftime($format, $timestamp);
                 break;
-    
+
             case 'persian-utf8':
                 if ($timestamp == null) {
                     $timestamp = serendipity_serverOffsetHour();
                 } elseif ($useOffset) {
                     $timestamp = serendipity_serverOffsetHour($timestamp);
                 }
-    
+
                 require_once S9Y_INCLUDE_PATH . 'include/functions_calendars.inc.php';
                 $out = persian_strftime_utf($format, $timestamp);
                 break;
@@ -202,7 +202,7 @@ function serendipity_formatTime($format, $time, $useOffset = true, $useDate = fa
             $cache[$format] = str_replace('%e', '%d', $cache[$format]);
         }
     }
-    
+
     return serendipity_mb('ucfirst', serendipity_strftime($cache[$format], (int)$time, $useOffset, $useDate));
 }
 
@@ -374,15 +374,8 @@ function serendipity_fetchUsers($user = '', $group = null, $is_count = false) {
     }
 
     if ($is_count || $group != null) {
-        if ($serendipity['dbType'] == 'postgres' ||
-            $serendipity['dbType'] == 'pdo-postgres') {
-            // Why does PostgreSQL keep doing this to us? :-)
-            $query_group    = 'GROUP BY a.authorid, a.realname, a.username, a.password, a.hashtype, a.mail_comments, a.mail_trackbacks, a.email, a.userlevel, a.right_publish';
-            $query_distinct = 'DISTINCT';
-        } else {
-            $query_group    = 'GROUP BY a.authorid';
-            $query_distinct = '';
-        }
+        $query_group    = 'GROUP BY a.authorid';
+        $query_distinct = '';
     }
 
 
@@ -739,7 +732,7 @@ function serendipity_track_referrer($entry = 0) {
 
         $ts       = serendipity_db_get_interval('ts');
         $interval = serendipity_db_get_interval('interval', 900);
-        
+
         $url_parts['query'] = substr($url_parts['query'], 0, 255);
 
         $suppressq = "SELECT count(1)
