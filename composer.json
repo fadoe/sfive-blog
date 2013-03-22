@@ -21,11 +21,7 @@
         "simplepie/simplepie": "1.3.*",
         "pear-pear/Pear": "1.9.*",
         "pear-pear/HTTP_Request": "1.4.*",
-        "pear-pear/Xml_Rpc": "1.5.*",
-        "pear-pear/Cache_Lite": "1.7.*",
-        "pear-pear/Net_CheckIP": "1.2.*",
-        "pear-pear/Net_DNSBL": "1.3.*",
-        "pear-pear/Text_Wiki": "1.2.*"
+        "pear-pear/Xml_Rpc": "1.5.*"
     },
     "autoload": {
         "classmap": [

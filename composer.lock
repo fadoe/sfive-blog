@@ -1,5 +1,5 @@
 {
-    "hash": "24a089b4ec429b7ebdfa49aaa8d07192",
+    "hash": "2aca53e18e707b3719c17cbd11e9e4af",
     "packages": [
         {
             "name": "pear-pear.php.net/Archive_Tar",
@@ -26,33 +26,6 @@
                 "/"
             ],
             "description": "This class provides handling of tar files in PHP.\nIt supports creating, listing, extracting and adding to tar files.\nGzip support is available if PHP has the zlib extension built-in or\nloaded. Bz2 compression is also supported with the bz2 extension loaded."
-        },
-        {
-            "name": "pear-pear.php.net/Cache_Lite",
-            "version": "1.7.15",
-            "dist": {
-                "type": "file",
-                "url": "http://pear.php.net/get/Cache_Lite-1.7.15.tgz",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "pear-pear.php.net/pear": "*",
-                "php": ">=4.0.0.0"
-            },
-            "replace": {
-                "pear-pear/cache_lite": "== 1.7.15.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "description": "This package is a little cache system optimized for file containers. It is fast and safe (because it\n        uses file locking and/or anti-corruption tests)."
         },
         {
             "name": "pear-pear.php.net/Console_Getopt",
@@ -109,115 +82,6 @@
             "description": "Supports GET/POST/HEAD/TRACE/PUT/DELETE, Basic authentication, Proxy,\nProxy Authentication, SSL, file uploads etc."
         },
         {
-            "name": "pear-pear.php.net/HTTP_Request2",
-            "version": "2.1.1",
-            "dist": {
-                "type": "file",
-                "url": "http://pear.php.net/get/HTTP_Request2-2.1.1.tgz",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "pear-pear.php.net/net_url2": ">=2.0.0.0",
-                "pear-pear.php.net/pear": ">=1.9.2.0",
-                "php": ">=5.2.0.0"
-            },
-            "replace": {
-                "pear-pear/http_request2": "== 2.1.1.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "description": "PHP5 rewrite of HTTP_Request package (with parts of HTTP_Client). Provides\ncleaner API and pluggable Adapters:\n  * Socket adapter, based on old HTTP_Request code,\n  * Curl adapter, wraps around PHP's cURL extension,\n  * Mock adapter, to use for testing packages dependent on HTTP_Request2.\nSupports POST requests with data and file uploads, basic and digest\nauthentication, cookies, managing cookies across requests, proxies, gzip and\ndeflate encodings, redirects, monitoring the request progress with Observers..."
-        },
-        {
-            "name": "pear-pear.php.net/Net_CheckIP",
-            "version": "1.2.2",
-            "dist": {
-                "type": "file",
-                "url": "http://pear.php.net/get/Net_CheckIP-1.2.2.tgz",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "php": ">=4.0.0.0"
-            },
-            "replace": {
-                "pear-pear/net_checkip": "== 1.2.2.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "description": "This package validates IPv4 addresses."
-        },
-        {
-            "name": "pear-pear.php.net/Net_DNS",
-            "version": "1.0.7",
-            "dist": {
-                "type": "file",
-                "url": "http://pear.php.net/get/Net_DNS-1.0.7.tgz",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "php": ">=4.2.0.0"
-            },
-            "replace": {
-                "pear-pear/net_dns": "== 1.0.7.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "description": "A resolver library used to communicate with a name server to perform DNS queries, zone transfers, dynamic DNS updates, etc.\nCreates an object hierarchy from a DNS server response, which allows you to view all of the information given by the DNS server. It bypasses the system resolver library and communicates directly with the server."
-        },
-        {
-            "name": "pear-pear.php.net/Net_DNSBL",
-            "version": "1.3.7",
-            "dist": {
-                "type": "file",
-                "url": "http://pear.php.net/get/Net_DNSBL-1.3.7.tgz",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "pear-pear.php.net/cache_lite": ">=1.4.1.0",
-                "pear-pear.php.net/http_request2": ">=2.0.0.0",
-                "pear-pear.php.net/net_dns": ">=1.0.0.0",
-                "php": ">=5.2.6.0"
-            },
-            "replace": {
-                "pear-pear/net_dnsbl": "== 1.3.7.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "description": "Checks if a given Host or URL is listed on an DNS-based Blackhole List (DNSBL, Real-time Blackhole List or RBL) or Spam URI Realtime Blocklist (SURBL)"
-        },
-        {
             "name": "pear-pear.php.net/Net_Socket",
             "version": "1.0.10",
             "dist": {
@@ -268,32 +132,6 @@
                 "/"
             ],
             "description": "Provides easy parsing of URLs and their constituent parts."
-        },
-        {
-            "name": "pear-pear.php.net/Net_URL2",
-            "version": "2.0.0",
-            "dist": {
-                "type": "file",
-                "url": "http://pear.php.net/get/Net_URL2-2.0.0.tgz",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "php": ">=5.0.0.0"
-            },
-            "replace": {
-                "pear-pear/net_url2": "== 2.0.0.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "description": "Provides parsing of URLs into their constituent parts (scheme, host, path etc.), URL generation, and resolving of relative URLs."
         },
         {
             "name": "pear-pear.php.net/PEAR",
@@ -356,32 +194,6 @@
                 "/"
             ],
             "description": "Structures_Graph is a package for creating and manipulating graph datastructures. It allows building of directed\nand undirected graphs, with data and metadata stored in nodes. The library provides functions for graph traversing\nas well as for characteristic extraction from the graph topology."
-        },
-        {
-            "name": "pear-pear.php.net/Text_Wiki",
-            "version": "1.2.1",
-            "dist": {
-                "type": "file",
-                "url": "http://pear.php.net/get/Text_Wiki-1.2.1.tgz",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "php": ">=4.0.0.0"
-            },
-            "replace": {
-                "pear-pear/text_wiki": "== 1.2.1.0"
-            },
-            "type": "pear-library",
-            "autoload": {
-                "classmap": [
-                    ""
-                ]
-            },
-            "include-path": [
-                "/"
-            ],
-            "description": "The text transformation is done in 2 steps.\nThe chosen parser uses markup rules to tokenize the tags and content.\nRenderers output the tokens and text into the requested format.\nThe tokenized form replaces the tags by a protected byte value associated to an index in an options table. This form shares up to 50 rules by all parsers and renderers.\nThe package is intented for versatile transformers as well as converters.\nText_Wiki is delivered with its own parser, which is used by Yawiki or Horde's Wicked and three basic renderers: XHTML , LaTeX and plain text.\nStrong sanitizing of XHTML is default.\nParsers (* and Renderers) exist for BBCode, Cowiki (*), Dokuwiki (*), Mediawiki and Tikiwiki (*).\nIt is highly configurable and can be easily extended."
         },
         {
             "name": "pear-pear.php.net/XML_RPC",
