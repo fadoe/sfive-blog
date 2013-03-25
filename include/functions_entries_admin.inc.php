@@ -2,18 +2,7 @@
 # Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
 # All rights reserved.  See LICENSE file for licensing details
 
-if (IN_serendipity !== true) {
-    die ("Don't hack!");
-}
-
-if (defined('S9Y_FRAMEWORK_ENTRIES_ADMIN')) {
-    return;
-}
-@define('S9Y_FRAMEWORK_ENTRIES_ADMIN', true);
-
-if (!defined('S9Y_FRAMEWORK_TRACKBACKS')) {
-    include(S9Y_INCLUDE_PATH . "include/functions_trackbacks.inc.php");
-}
+require_once "include/functions_trackbacks.inc.php";
 
 /**
  * Prints the form for editing/creating new blog entries
@@ -173,7 +162,7 @@ function serendipity_printEntryForm($targetURL, $hiddens = array(), $entry = arr
                                                         'body'      => 'serendipity[body]',
                                                         'extended'  => 'serendipity[extended]'
                                                       );
-        
+
         $template_vars['entry_template'] = serendipity_getTemplateFile('admin/entries.tpl', 'serendipityPath');
 
         $serendipity['smarty']->registerPlugin('modifier', 'emit_htmlarea_code', 'serendipity_emit_htmlarea_code');
@@ -571,7 +560,7 @@ function serendipity_emit_htmlarea_code($item, $jsname, $spawnMulti = false) {
         if (empty($xinha_custom)) {
             $xinha_custom = 'htmlarea/my_custom.js';
         }
-        
+
         if (!$init) {
 ?>
     <script type="text/javascript">
@@ -605,7 +594,7 @@ function serendipity_emit_htmlarea_code($item, $jsname, $spawnMulti = false) {
                    (defined('LANG_DIRECTION') ? LANG_DIRECTION : 'ltr')
                  ),
 
-                 file_get_contents(serendipity_getTemplateFile('style_fallback.css', 'serendipityPath')) . 
+                 file_get_contents(serendipity_getTemplateFile('style_fallback.css', 'serendipityPath')) .
                  file_get_contents(serendipity_getTemplateFile('htmlarea.css', 'serendipityPath'))
         );
 ?>
@@ -616,12 +605,12 @@ function serendipity_emit_htmlarea_code($item, $jsname, $spawnMulti = false) {
     // Thanks to Randall for pointing this out!
 
     // HTMLArea.loadPlugin("SpellChecker"); // [SPELLCHECK]
-	<?php if($spawnMulti) { ?>
-	// when spawning multiple editors at once, keep track of instances in this array
+    <?php if($spawnMulti) { ?>
+    // when spawning multiple editors at once, keep track of instances in this array
     var htmlarea_editors = new Array();
-	<?php } else  { ?>
+    <?php } else  { ?>
     var editor<?php echo $jsname; ?> = null; var config<?php echo $jsname; ?> = null;
-	<?php } // end if ?>
+    <?php } // end if ?>
     <?php if (is_array($eventData['buttons'])) { ?>
     var btn_callbacks = new Array();
     // Serendipity standardized editor functions
@@ -672,15 +661,15 @@ function serendipity_emit_htmlarea_code($item, $jsname, $spawnMulti = false) {
             return editorextended;
         } else if (typeof(htmlarea_editors) != 'undefined') {
             return htmlarea_editors[editor_id];
-        } 
+        }
         return 'undefined';
     }
     <?php } ?>
     function Spawn<?php echo $jsname; ?>(<?php echo $spawnMulti ? 'id' : ''; ?>) {
-		editor<?php echo $jsname; ?> = new HTMLArea("<?php echo $item; ?>"<?php echo $spawnMulti ? ' + id' : ''; ?>);
+        editor<?php echo $jsname; ?> = new HTMLArea("<?php echo $item; ?>"<?php echo $spawnMulti ? ' + id' : ''; ?>);
         <?php if($spawnMulti) { ?>
-		htmlarea_editors["<?php echo $item; ?>"<?php echo $spawnMulti ? ' + id' : ''; ?>] = editor<?php echo $jsname; ?>;
-		<?php } // end if ?>
+        htmlarea_editors["<?php echo $item; ?>"<?php echo $spawnMulti ? ' + id' : ''; ?>] = editor<?php echo $jsname; ?>;
+        <?php } // end if ?>
         config<?php echo $jsname; ?>    = editor<?php echo $jsname; ?>.config;
         config<?php echo $jsname; ?>.registerButton('image_selector', '<?PHP echo MANAGE_IMAGES; ?>', '<?php echo $serendipity['serendipityHTTPPath']; ?>htmlarea/images/ed_s9yimage.gif', false,
             function(editor, id) {
@@ -690,7 +679,7 @@ function serendipity_emit_htmlarea_code($item, $jsname, $spawnMulti = false) {
             }
         );
         config<?php echo $jsname; ?>.toolbar.push([ "image_selector"]);
-        <?php 
+        <?php
             if (is_array($eventData['buttons'])) {
                 foreach($eventData['buttons'] as $button) {
                     echo "btn_callbacks['{$button['id']}'] = {$button['javascript']};\n";
@@ -752,9 +741,9 @@ function serendipity_emit_htmlarea_code($item, $jsname, $spawnMulti = false) {
                       }
                       echo '"separator" ]' . "\n";
                   } ?>
-              
+
         ];
-        
+
         if (typeof('s9y_xinha') != 'undefined') {
             s9y_xinha(editor<?php echo $jsname; ?>);
         }

@@ -1,34 +1,14 @@
-<?php # $Id$
-# Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
-# All rights reserved.  See LICENSE file for licensing details
-
-if (IN_serendipity !== true) {
-    die ("Don't hack!");
-}
-
-if (defined('S9Y_FRAMEWORK_COMPAT')) {
-    return;
-}
-@define('S9Y_FRAMEWORK_COMPAT', true);
+<?php
+/**
+ * Serendipity compat functions
+ *
+ * @copyright 2003-2005 Jannis Hermanns (on behalf the Serendipity Developer Team)
+ * @copyright 2013 Falk Doering
+ * @license New BSD
+ */
 
 $serendipity = array();
 @ini_set('magic_quotes_runtime', 'off');
-
-if (!defined('PATH_SEPARATOR')) {
-    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-        define('PATH_SEPARATOR', ';');
-    } else {
-        define('PATH_SEPARATOR', ':');
-    }
-}
-
-if (!defined('DIRECTORY_SEPARATOR')) {
-    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-        define('DIRECTORY_SEPARATOR', '\\');
-    } else {
-        define('DIRECTORY_SEPARATOR', '/');
-    }
-}
 
 /**
  * Create a snapshot of the current memory usage
@@ -70,7 +50,7 @@ function memSnap($tshow = '') {
 /**
  * Set our own exeption handler to convert all errors into exeptions automatically
  * function_exists() avoids 'cannot redeclare previously declared' fatal errors in XML feed context.
- * 
+ *
  * See Notes about returning false
  *
  * @access public
@@ -80,10 +60,10 @@ function memSnap($tshow = '') {
 if (!function_exists('errorToExceptionHandler')) {
     function errorToExceptionHandler($errNo, $errStr, $errFile = '', $errLine = NULL, $errContext = array()) {
         global $serendipity;
-        
+
         $rep  = ini_get('error_reporting');
         $args = func_get_args();
-        
+
         // respect user has set php error_reporting to not display any errors at all
         if (!($rep & $errStr)) { return false; }
         // user used @ to specify ignoring all errors or $php_errormsg messages returned with error_reporting = 0
@@ -96,8 +76,8 @@ if (!function_exists('errorToExceptionHandler')) {
             return false;
         }
         // any other errors go here - throw errors as exception
-        if ($serendipity['production'] === 'debug') { 
-        
+        if ($serendipity['production'] === 'debug') {
+
             // We don't want the notices - but everything else !
             echo '<p> == FULL DEBUG ERROR MODE == </p>';
             echo '<pre>';
@@ -110,14 +90,14 @@ if (!function_exists('errorToExceptionHandler')) {
             throw new ErrorException($errStr); // tracepath = all, if not ini_set('display_errors', 0);
             echo '</pre>'; // if using throw new ... this ending tag will not be send and displayed, but it still looks better and browsers don't really care
         }
-        if ($serendipity['production'] === false) { 
+        if ($serendipity['production'] === false) {
             echo '<p> == TESTING ERROR MODE == </p>';
             echo '<pre>';
             //print_r($args); // do this in strong test environments only, as containing sensible data! Better use debug!
-            throw new ErrorException("Serendipity error: " . $errStr); // tracepath = all; 
+            throw new ErrorException("Serendipity error: " . $errStr); // tracepath = all;
             echo '</pre>'; // if using throw new ... this ending tag will not be send and displayed, but it still looks better and browsers don't really care
-        } 
-        if ($serendipity['production'] === true) { 
+        }
+        if ($serendipity['production'] === true) {
             // ToDo: enhance for more special serendipity error needs
             $str  = '<p> == SERENDIPITY ERROR == </p>';
             $str .= '<p>Please correct:</p>';
@@ -125,44 +105,6 @@ if (!function_exists('errorToExceptionHandler')) {
             serendipity_die($str); // needs to halt with die() here, else it will path through and gets written underneath blog content.
         }
     }
-}
-
-if (!function_exists('file_get_contents')) {
-    function file_get_contents($filename, $use_include_path = 0) {
-        $file = fopen($filename, 'rb', $use_include_path);
-        $data = '';
-        if ($file) {
-            while (!feof($file)) {
-                $data .= fread($file, 4096);
-            }
-            fclose($file);
-        }
-
-        return $data;
-    }
-}
-
-if (!isset($_REQUEST)) {
-    $_REQUEST = &$HTTP_REQUEST_VARS;
-}
-if (!isset($_POST)) {
-    $_POST = &$HTTP_POST_VARS;
-}
-
-if (!isset($_GET)) {
-    $_GET = &$HTTP_GET_VARS;
-}
-
-if (!isset($_SESSION)) {
-    $_SESSION = &$HTTP_SESSION_VARS;
-}
-
-if (!isset($_COOKIE)) {
-    $_COOKIE = &$HTTP_COOKIE_VARS;
-}
-
-if (!isset($_SERVER)) {
-    $_SERVER = &$HTTP_SERVER_VARS;
 }
 
 if (extension_loaded('filter') && function_exists('input_name_to_filter') && input_name_to_filter(ini_get('filter.default')) !== FILTER_UNSAFE_RAW) {
@@ -338,17 +280,6 @@ function serendipity_detectLang($use_include = false) {
 }
 
 /**
- * Get the current serendipity version, minus the "-alpha", "-beta" or whatever tags
- *
- * @access public
- * @param  string   Serendipity version
- * @return string   Serendipity version, stripped of unneeded parts
- */
-function serendipity_getCoreVersion($version) {
-    return preg_replace('@^([0-9\.]+).*$@', '\1', $version);
-}
-
-/**
  * Make Serendipity emit an error message and terminate the script
  *
  * @access public
@@ -381,5 +312,3 @@ if (function_exists('date_default_timezone_get')) {
     // rely on the OS' timezone.
     @date_default_timezone_set(@date_default_timezone_get());
 }
-
-/* vim: set sts=4 ts=4 expandtab : */

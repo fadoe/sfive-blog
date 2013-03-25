@@ -2,15 +2,6 @@
 # Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
 # All rights reserved.  See LICENSE file for licensing details
 
-if (IN_serendipity !== true) {
-    die ("Don't hack!");
-}
-
-if (defined('S9Y_FRAMEWORK_RSS')) {
-    return;
-}
-@define('S9Y_FRAMEWORK_RSS', true);
-
 /**
  * Parses entries to display them for RSS/Atom feeds to be passed on to generic Smarty templates
  *
@@ -40,7 +31,7 @@ function serendipity_printEntries_rss(&$entries, $version, $comments = false, $f
     if (is_array($entries)) {
         foreach ($entries as $key => $_entry) {
             $entry = &$entries[$key];
-            
+
             if (isset($entry['entrytimestamp'])) {
                 $e_ts = $entry['entrytimestamp'];
             } else {
@@ -60,7 +51,7 @@ function serendipity_printEntries_rss(&$entries, $version, $comments = false, $f
                     $entry['author'] .= ' - ' . $entry['ctitle'];
                 }
                 $entry['title'] = (!empty($entry['author']) ? $entry['author'] : ANONYMOUS) . ': ' . $entry['title'];
-                
+
                 // No HTML allowed here:
                 $entry['body'] = strip_tags($entry['body']);
             }
@@ -155,5 +146,5 @@ function serendipity_printEntries_rss(&$entries, $version, $comments = false, $f
             $entry['per_entry_display_dat'] = $entry['display_dat'];
         }
     }
-    
+
 }

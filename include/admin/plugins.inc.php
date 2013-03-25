@@ -1,6 +1,13 @@
-<?php # $Id$
-# Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
-# All rights reserved.  See LICENSE file for licensing details
+<?php
+use Sfive\Version\Version;
+
+/**
+ * Serendipity Plugins
+ *
+ * @copyright 2003-2005 Jannis Hermanns (on behalf the Serendipity Developer Team)
+ * @copyright 2013 Falk Doering
+ * @license   New BSD
+ */
 
 if (IN_serendipity !== true) {
     die ('Don\'t hack!');
@@ -105,7 +112,7 @@ if (isset($_GET['serendipity']['plugin_to_conf'])) {
                             if (!isset($_POST['serendipity']['plugin']['activate'][$config_item][$out_value])) {
                                 continue;
                             }
-                            
+
                             $out_values[] = $out_value;
                         }
                         $value = implode(',', $out_values);
@@ -250,7 +257,7 @@ if (isset($_GET['serendipity']['plugin_to_conf'])) {
                     $props['local_documentation'] = 'plugins/' . $props['pluginPath'] . '/README';
                 }
             }
-            
+
             $pluginstack[$class_data['true_name']] = $props;
         } else {
             // False is returned if a plugin could not be instantiated
@@ -369,7 +376,7 @@ if (isset($_GET['serendipity']['plugin_to_conf'])) {
                 $plug['customURI'] = '';
             }
 
-            if ( !empty($plug['requirements']['serendipity']) && version_compare($plug['requirements']['serendipity'], serendipity_getCoreVersion($serendipity['version']), '>') ) {
+            if ( !empty($plug['requirements']['serendipity']) && version_compare($plug['requirements']['serendipity'], Version::getCoreVersion($serendipity['version']), '>') ) {
                 $notice['requirements_failures'][] = 's9y ' . $plug['requirements']['serendipity'];
             }
 

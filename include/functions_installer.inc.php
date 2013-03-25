@@ -2,15 +2,6 @@
 # Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
 # All rights reserved.  See LICENSE file for licensing details
 
-if (IN_serendipity !== true) {
-    die ("Don't hack!");
-}
-
-if (defined('S9Y_FRAMEWORK_INSTALLER')) {
-    return;
-}
-@define('S9Y_FRAMEWORK_INSTALLER', true);
-
 /**
  * Convert a PHP Ini setting to a boolean flag
  *

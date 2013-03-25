@@ -13,6 +13,10 @@
             "type": "pear",
             "url": "http://pear.php.net",
             "vendor-alias": "pear-pear"
+        },
+        {
+            "type": "composer",
+            "url": "http://packages.zendframework.com"
         }
     ],
     "require": {
@@ -21,9 +25,17 @@
         "simplepie/simplepie": "1.3.*",
         "pear-pear/Pear": "1.9.*",
         "pear-pear/HTTP_Request": "1.4.*",
-        "pear-pear/Xml_Rpc": "1.5.*"
+        "pear-pear/Xml_Rpc": "1.5.*",
+        "zendframework/zend-filter": "2.1.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
+        "psr-0": {
+            "Sfive": "library/",
+            "SfiveTest": "tests/"
+        },
         "classmap": [
             "vendor/smarty/smarty/distribution/libs/sysplugins/smarty_security.php"
         ]

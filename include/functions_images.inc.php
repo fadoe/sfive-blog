@@ -3,15 +3,6 @@
 # All rights reserved.  See LICENSE file for licensing details
 # Improved by Vladimir Ajgl (vlada@ajgl.cz) 2008-01-26
 
-if (IN_serendipity !== true) {
-    die ("Don't hack!");
-}
-
-if (defined('S9Y_FRAMEWORK_IMAGES')) {
-    return;
-}
-@define('S9Y_FRAMEWORK_IMAGES', true);
-
 /**
  * Check if an uploaded file is "evil"
  *

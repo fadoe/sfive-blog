@@ -1,6 +1,14 @@
-<?php # $Id$
-# Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
-# All rights reserved.  See LICENSE file for licensing details
+<?php
+/**
+ * Serendipity template file
+ *
+ * @copyright 2003-2005 Jannis Hermanns (on behalf the Serendipity Developer Team)
+ * @copyright 2013 Falk Doering
+ * @license   New BSD
+ */
+
+
+use Sfive\Version\Version;
 
 if (IN_serendipity !== true) {
     die ("Don't hack!");
@@ -27,11 +35,11 @@ class template_option {
 
     function set_config($item, $value) {
         global $serendipity;
-        
+
         serendipity_db_query("DELETE FROM {$serendipity['dbPrefix']}options
                                     WHERE okey = 't_" . serendipity_db_escape_string($serendipity['template']) . "'
                                       AND name = '" . serendipity_db_escape_string($item) . "'");
-                                                                                    
+
         if ($this->config[$item]['scope'] == 'global') {
             serendipity_db_query("DELETE FROM {$serendipity['dbPrefix']}options
                                    WHERE okey = 't_global'
@@ -99,7 +107,7 @@ if (is_array($template_config)) {
     include S9Y_INCLUDE_PATH . 'include/functions_plugins_admin.inc.php';
 
     $template_vars =& serendipity_loadThemeOptions($template_config);
-    
+
     $template_options = new template_option();
     $template_options->import($template_config);
     $template_options->values =& $template_vars;
@@ -165,7 +173,7 @@ echo '<h3>' . SELECT_TEMPLATE . '</h3>';
         } else {
             $preview .= '&nbsp;';
         }
-        
+
         if ($preview_link) {
             $preview .= '</a>';
         }
@@ -175,7 +183,7 @@ echo '<h3>' . SELECT_TEMPLATE . '</h3>';
         }
 
         $unmetRequirements = array();
-        if ( isset($info['require serendipity']) && version_compare($info['require serendipity'], serendipity_getCoreVersion($serendipity['version']), '>') ) {
+        if ( isset($info['require serendipity']) && version_compare($info['require serendipity'], Version::getCoreVersion($serendipity['version']), '>') ) {
             $unmetRequirements[] = 'Serendipity '. $info['require serendipity'];
         }
 

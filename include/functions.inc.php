@@ -1,47 +1,24 @@
-<?php # $Id$
-# Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
-# All rights reserved.  See LICENSE file for licensing details
-
-if (IN_serendipity !== true) {
-    die ("Don't hack!");
-}
-
-if (defined('S9Y_FRAMEWORK_FUNCTIONS')) {
-    return;
-}
-@define('S9Y_FRAMEWORK_FUNCTIONS', true);
+<?php
+/**
+ * Serendipity function
+ *
+ * @copyright 2003-2005 Jannis Hermanns (on behalf the Serendipity Developer Team)
+ * @copyright 2013 Falk Doering
+ * @license   New BSD
+ */
 
 $serendipity['imageList'] = array();
-if (!defined('S9Y_FRAMEWORK_DB')) {
-    include(S9Y_INCLUDE_PATH . "include/db/db.inc.php");
-}
-if (!defined('S9Y_FRAMEWORK_COMPAT')) {
-    include(S9Y_INCLUDE_PATH . "include/compat.inc.php");
-}
-if (!defined('S9Y_FRAMEWORK_CONFIG')) {
-    include(S9Y_INCLUDE_PATH . "include/functions_config.inc.php");
-}
-if (!defined('S9Y_FRAMEWORK_PLUGIN_API')) {
-    include(S9Y_INCLUDE_PATH . "include/plugin_api.inc.php");
-}
-if (!defined('S9Y_FRAMEWORK_IMAGES')) {
-    include(S9Y_INCLUDE_PATH . "include/functions_images.inc.php");
-}
-if (!defined('S9Y_FRAMEWORK_INSTALLER')) {
-    include(S9Y_INCLUDE_PATH . "include/functions_installer.inc.php");
-}
-if (!defined('S9Y_FRAMEWORK_ENTRIES')) {
-    include(S9Y_INCLUDE_PATH . "include/functions_entries.inc.php");
-}
-if (!defined('S9Y_FRAMEWORK_COMMENTS')) {
-    include(S9Y_INCLUDE_PATH . "include/functions_comments.inc.php");
-}
-if (!defined('S9Y_FRAMEWORK_PERMALINKS')) {
-    include(S9Y_INCLUDE_PATH . "include/functions_permalinks.inc.php");
-}
-if (!defined('S9Y_FRAMEWORK_SMARTY')) {
-    include(S9Y_INCLUDE_PATH . "include/functions_smarty.inc.php");
-}
+require_once 'include/db/db.inc.php';
+require_once 'include/compat.inc.php';
+require_once 'include/functions_config.inc.php';
+require_once 'include/plugin_api.inc.php';
+require_once 'include/functions_images.inc.php';
+require_once 'include/functions_installer.inc.php';
+require_once 'include/functions_entries.inc.php';
+require_once 'include/functions_comments.inc.php';
+require_once 'include/functions_permalinks.inc.php';
+require_once 'include/functions_smarty.inc.php';
+
 /**
  * Truncate a string to a specific length, multibyte aware. Appends '...' if successfully truncated
  *

@@ -1,14 +1,13 @@
-<?php # $Id$
-# Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
-# All rights reserved.  See LICENSE file for licensing details
+<?php
+/**
+ * Serendipity config file
+ *
+ * @copyright 2003-2005 Jannis Hermanns (on behalf the Serendipity Developer Team)
+ * @copyright 2013 Falk Doering
+ * @license New BSD
+ */
 
-if (defined('S9Y_FRAMEWORK')) {
-    return;
-}
-
-require_once 'vendor/autoload.php';
-
-@define('S9Y_FRAMEWORK', true);
+require 'init_autoloader.php';
 
 if (!headers_sent()) {
     // Only set the session name, if no session has yet been issued.
@@ -41,7 +40,8 @@ if (!defined('IN_serendipity')) {
     define('IN_serendipity', true);
 }
 
-include(S9Y_INCLUDE_PATH . 'include/compat.inc.php');
+require_once 'include/compat.inc.php';
+
 if (defined('USE_MEMSNAP')) {
     memSnap('Framework init');
 }
@@ -247,7 +247,7 @@ define('IS_up2date', version_compare($serendipity['version'], $serendipity['vers
 /*
  *  Include main functions
  */
-include(S9Y_INCLUDE_PATH . 'include/functions.inc.php');
+require_once 'include/functions.inc.php';
 
 if (serendipity_FUNCTIONS_LOADED !== true) {
     $serendipity['lang'] = 'en';

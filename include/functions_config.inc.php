@@ -2,15 +2,6 @@
 # Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
 # All rights reserved.  See LICENSE file for licensing details
 
-if (IN_serendipity !== true) {
-    die ("Don't hack!");
-}
-
-if (defined('S9Y_FRAMEWORK_CONFIG')) {
-    return;
-}
-@define('S9Y_FRAMEWORK_CONFIG', true);
-
 /**
  * Adds a new author account
  *
@@ -649,7 +640,6 @@ function serendipity_userLoggedIn() {
  * @return  boolean True, when $target was not yet set and has been altered. False when no changes where made.
  */
 function serendipity_restoreVar(&$source, &$target) {
-    global $serendipity;
 
     if (isset($source) && !isset($target)) {
         $target = $source;

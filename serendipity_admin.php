@@ -6,14 +6,14 @@ define('IN_installer', true);
 define('IN_upgrader', true);
 define('IN_serendipity', true);
 define('IN_serendipity_admin', true);
-include('serendipity_config.inc.php');
+require_once 'serendipity_config.inc.php';
 
 header('Content-Type: text/html; charset=' . LANG_CHARSET);
 
 if (IS_installed === false) {
-    require(S9Y_INCLUDE_PATH . 'include/functions_permalinks.inc.php');
-    require(S9Y_INCLUDE_PATH . 'include/functions_installer.inc.php');
-    require(S9Y_INCLUDE_PATH . 'include/functions_config.inc.php');
+    require_once 'include/functions_permalinks.inc.php';
+    require_once 'include/functions_installer.inc.php';
+    require_once 'include/functions_config.inc.php';
     $css_file = 'serendipity.css.php?serendipity[css_mode]=serendipity_admin.css';
 } else {
     $css_file = serendipity_rewriteURL('serendipity_admin.css');
@@ -27,7 +27,7 @@ if (isset($serendipity['GET']['adminModule']) && $serendipity['GET']['adminModul
 } else {
     if (IS_installed === true) {
         /* Check author token to insure session not hijacked */
-        if (!isset($_SESSION['author_token']) || !isset($serendipity['COOKIE']['author_token']) || 
+        if (!isset($_SESSION['author_token']) || !isset($serendipity['COOKIE']['author_token']) ||
             ($_SESSION['author_token'] !== $serendipity['COOKIE']['author_token'])) {
             $_SESSION['serendipityAuthedUser'] = false;
             serendipity_session_destroy();
@@ -428,7 +428,7 @@ if ($use_installer) {
                         <li class="serendipitySideBarMenuFoot serendipitySideBarMenuEntryLinks" style="display:none"></li>
                     </ul>
 <?php } ?>
-                    
+
 <?php if (serendipity_checkPermission('adminImages')) { ?>
                     <ul class="serendipitySideBarMenu serendipitySideBarMenuMedia">
                         <li class="serendipitySideBarMenuHead serendipitySideBarMenuMediaLinks"><?php echo MEDIA; ?></li>
@@ -509,7 +509,7 @@ if ($use_installer) {
         </div>
         <div id="serendipityAdminFooter">
             <span>
-            <?php 
+            <?php
             if ($serendipity['expose_s9y']) {
                 echo sprintf(ADMIN_FOOTER_POWERED_BY, $serendipity['versionInstalled'], phpversion());
             } else {

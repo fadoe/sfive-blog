@@ -2,15 +2,6 @@
 # Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
 # All rights reserved.  See LICENSE file for licensing details
 
-if (IN_serendipity !== true) {
-    die ("Don't hack!");
-}
-
-if (defined('S9Y_FRAMEWORK_PLUGINS_ADMIN')) {
-    return;
-}
-@define('S9Y_FRAMEWORK_PLUGINS_ADMIN', true);
-
 /**
  * Returns the name of a usergroup.
  *
@@ -366,7 +357,7 @@ function serendipity_plugin_config(&$plugin, &$bag, &$name, &$desc, &$config_nam
         return false;
     }
 
-    if ($showSubmit && $postKey != 'plugin') { 
+    if ($showSubmit && $postKey != 'plugin') {
 ?>
     <div style="margin: 0px auto 0px 0px; text-align: right">
         <input type="submit" name="SAVECONF" value="<?php echo SAVE; ?>" class="serendipityPrettyButton input_button" />
@@ -381,7 +372,7 @@ function serendipity_plugin_config(&$plugin, &$bag, &$name, &$desc, &$config_nam
 
     $elcount = 0;
     $htmlnugget = array();
-    
+
 
     $out_stack = array();
 
@@ -429,7 +420,7 @@ function serendipity_plugin_config(&$plugin, &$bag, &$name, &$desc, &$config_nam
 
         $is_multi_select = false;
         $ctype    = $cbag->get('type');
-        
+
         ob_start();
         switch ($ctype) {
             case 'seperator':
@@ -642,7 +633,7 @@ function serendipity_plugin_config(&$plugin, &$bag, &$name, &$desc, &$config_nam
 function change_preview(id)
 {
     var text_box = document.getElementById('serendipity[template][' + id + ']');
-    var image_box = document.getElementById(id + '_preview'); 
+    var image_box = document.getElementById(id + '_preview');
     var filename = text_box.value;
     image_box.style.backgroundImage = 'url(' + filename + ')';
     image_box.style.backgroundRepeat = 'no-repeat';
@@ -696,7 +687,7 @@ EOS;
                     echo '<script src="' . serendipity_getTemplateFile('dragdrop.js') . '" type="text/javascript"></script>';
                     $serendipity['sequencejs_output'] = true;
                 }
-                
+
                 // I want this generic sequence widget to hide the ID, but
                 // display a name or description with an optional picture.
                 // (This would allow users to identify choices by thumbnail.)
@@ -737,7 +728,7 @@ EOS;
                     }
 
                     // Make sure all the items are in the order list; new items
-                    // go on the end (new items could have been added without 
+                    // go on the end (new items could have been added without
                     // this config item being updated)
                     // Also fill out thumbnails and display names
                     foreach ($items as $id => $junk) {
@@ -818,7 +809,7 @@ EOS;
                     print '    <li id="'.$id.'" class="sequence_item pluginmanager_item_even">' . "\n";
                     // Make a handle with ID 'g$id'
                     print '      <div id="g'.$id.'" class="pluginmanager_grablet sequence_grablet"><a href="#"></a></div>' . "\n";
-                    
+
                     if ($checkable) {
                         print '         <input type="checkbox" onclick="sort_' . $config_item . '_Sequence();" name="serendipity[' . $postKey . ']' . '[activate][' . $config_item . '][' . $id . ']" ' . (in_array($id, $store_order) ? ' checked="checked" ' : '') . ' value="true" id="activate_' . $id . '" />' . "\n";
                     }
@@ -931,7 +922,7 @@ EOS;
         $out_stack[$config_item] = ob_get_contents();
         ob_end_clean();
     }
-    
+
     if (is_array($config_groups)) {
         $hid = 0;
         $folded = true;
@@ -978,7 +969,7 @@ EOS;
 
         echo '<tr><td colspan="2" style="height: 100px" id="configuration_footer">&nbsp;</td></tr>';
     }
-    
+
     echo implode("\n", $out_stack);
 
     if ($showTable) {

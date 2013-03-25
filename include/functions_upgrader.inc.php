@@ -2,15 +2,6 @@
 # Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
 # All rights reserved.  See LICENSE file for licensing details
 
-if (IN_serendipity !== true) {
-    die ("Don't hack!");
-}
-
-if (defined('S9Y_FRAMEWORK_UPGRADER')) {
-    return;
-}
-@define('S9Y_FRAMEWORK_UPGRADER', true);
-
 /**
  * This is a list of functions that are used by the upgrader. Define functions here that
  * are not used within usual Serendipity control flow
