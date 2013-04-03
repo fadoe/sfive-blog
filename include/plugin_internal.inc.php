@@ -121,43 +121,6 @@ class serendipity_calendar_plugin extends serendipity_plugin {
 
                 break;
 
-            case 'persian-utf8':
-
-                require_once S9Y_INCLUDE_PATH . 'include/functions_calendars.inc.php';
-
-                list(,$jy, $jm, $jd) = $serendipity['uriArguments'];
-
-                if( isset($jd) && $jd ){
-                    list ( $gy, $gm, $gd ) = p2g ($jy, $jm, $jd);
-                }elseif( isset($jm) && $jm ){
-                    list ( $gy, $gm, $gd ) = p2g ( $jy, $jm, 1);
-                }else{
-                    $gy = $year;
-                    $gm = $month;
-                    $gd = (int) date('d');
-                }
-
-                list ( $year, $month, $day ) = g2p ($gy, $gm, $gd);
-
-                // How many days does the month have?
-                $ts              = strtotime($gy . '-' . sprintf('%02d', $gm) . '-' . sprintf('%02d', $gd));
-                $now             = serendipity_serverOffsetHour(time());
-                $nrOfDays = persian_strftime_utf('%m', $ts);
-                $j_days_in_month = array(0, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
-                if ($year%4 == 3 && $nrOfDays == 12) $nrOfDays = $j_days_in_month[(int)$nrOfDays]+1;
-                else $nrOfDays = $j_days_in_month[(int)$nrOfDays];
-
-                // Calculate first timestamp of the month
-                list ($firstgy, $firstgm, $firstgd ) = p2g ( $year, $month, 1);
-                $firstts = mktime (0, 0, 0, $firstgm, $firstgd, $firstgy);
-
-                // Calculate first persian day, week day name
-                $firstDayWeekDay = date('w', $firstts);
-
-                // Calculate end timestamp of the month
-                list ( $end_year, $end_month, $end_day ) = p2g ($year, $month+1, 1);
-                $endts = mktime(0, 0, 0, $end_month, $end_day, $end_year);
-                break;
         } // end switch
 
         // Calculate the first day of the week, based on the beginning of the week ($bow)
@@ -255,19 +218,6 @@ class serendipity_calendar_plugin extends serendipity_plugin {
                 $today_day   = date('j', $now);
                 $today_month = date('m', $now);
                 $today_year  = date('Y', $now);
-                break;
-
-            case 'persian-utf8':
-                $activeDays = array();
-                if (is_array($rows)) {
-                    foreach ($rows as $row) {
-                        $row['timestamp'] = serendipity_serverOffsetHour($row['timestamp']);
-                        $activeDays[(int) persian_date_utf('j', $row['timestamp'])] = $row['timestamp'];
-                    }
-                }
-                $today_day   = persian_date_utf('j', $now);
-                $today_month = persian_date_utf('m', $now);
-                $today_year  = persian_date_utf('Y', $now);
                 break;
 
         } // end switch
@@ -504,12 +454,6 @@ class serendipity_archives_plugin extends serendipity_plugin {
                             $ts_title = serendipity_formatTime("%B %Y", $ts, false);
                             $ts = mktime(0, 0, 0, date('m', $ts)-1, 1, date('Y', $ts)); // Must be last in 'case' statement
                             break;
-                        case 'persian-utf8':
-                            require_once S9Y_INCLUDE_PATH . 'include/functions_calendars.inc.php';
-                            $linkStamp = persian_date_utf('Y/m', $ts);
-                            $ts_title = serendipity_formatTime("%B %Y", $ts, false);
-                            $ts = persian_mktime(0, 0, 0, persian_date_utf('m', $ts)-1, 1, persian_date_utf('Y', $ts)); // Must be last in 'case' statement
-                            break;
                     }
                     break;
                 case 'weeks' :
@@ -520,12 +464,6 @@ class serendipity_archives_plugin extends serendipity_plugin {
                             $ts_title = WEEK . ' '. date('W, Y', $ts);
                             $ts = mktime(0, 0, 0, date('m', $ts), date('d', $ts)-7, date('Y', $ts));
                             break;
-                        case 'persian-utf8':
-                            require_once S9Y_INCLUDE_PATH . 'include/functions_calendars.inc.php';
-                            $linkStamp = persian_date_utf('Y/\WW', $ts);
-                            $ts_title = WEEK . ' '. persian_date_utf('W، Y', $ts);
-                            $ts = persian_mktime(0, 0, 0, persian_date_utf('m', $ts), persian_date_utf('d', $ts)-7, persian_date_utf('Y', $ts));
-                            break;
                     }
                     break;
                 case 'days' :
@@ -535,12 +473,6 @@ class serendipity_archives_plugin extends serendipity_plugin {
                             $linkStamp = date('Y/m/d', $ts);
                             $ts_title = serendipity_formatTime("%B %e. %Y", $ts, false);
                             $ts = mktime(0, 0, 0, date('m', $ts), date('d', $ts)-1, date('Y', $ts)); // Must be last in 'case' statement
-                            break;
-                        case 'persian-utf8':
-                            require_once S9Y_INCLUDE_PATH . 'include/functions_calendars.inc.php';
-                            $linkStamp = persian_date_utf('Y/m/d', $ts);
-                            $ts_title = serendipity_formatTime("%e %B %Y", $ts, false);
-                            $ts = persian_mktime(0, 0, 0, persian_date_utf('m', $ts), persian_date_utf('d', $ts)-1, persian_date_utf('Y', $ts)); // Must be last in 'case' statement
                             break;
                     }
                     break;

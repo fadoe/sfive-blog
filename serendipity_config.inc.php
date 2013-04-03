@@ -7,6 +7,8 @@
  * @license New BSD
  */
 
+@ini_set('magic_quotes_runtime', 'off');
+
 require 'init_autoloader.php';
 
 if (!headers_sent()) {
@@ -41,10 +43,6 @@ if (!defined('IN_serendipity')) {
 }
 
 require_once 'include/compat.inc.php';
-
-if (defined('USE_MEMSNAP')) {
-    memSnap('Framework init');
-}
 
 // The version string
 $serendipity['version']         = '1.7-rc4';
@@ -132,8 +130,7 @@ if (!isset($serendipity['languages'])) {
 }
 
 /* Available Calendars */
-$serendipity['calendars'] = array('gregorian'   => 'Gregorian',
-                                  'persian-utf8' => 'Persian (utf8)');
+$serendipity['calendars'] = array('gregorian'   => 'Gregorian');
 /*
  *   Load main language file
  */
@@ -267,10 +264,6 @@ if (!serendipity_db_connect()) {
 /*
  *   Load Configuration options from the database
  */
-
-if (defined('USE_MEMSNAP')) {
-    memSnap('Framework init');
-}
 
 serendipity_load_configuration();
 $serendipity['lang'] = serendipity_getSessionLanguage();

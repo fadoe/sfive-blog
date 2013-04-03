@@ -134,17 +134,6 @@ function serendipity_strftime($format, $timestamp = null, $useOffset = true, $us
                 }
                 $out = strftime($format, $timestamp);
                 break;
-
-            case 'persian-utf8':
-                if ($timestamp == null) {
-                    $timestamp = serendipity_serverOffsetHour();
-                } elseif ($useOffset) {
-                    $timestamp = serendipity_serverOffsetHour($timestamp);
-                }
-
-                require_once S9Y_INCLUDE_PATH . 'include/functions_calendars.inc.php';
-                $out = persian_strftime_utf($format, $timestamp);
-                break;
         }
     }
 

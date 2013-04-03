@@ -8,44 +8,6 @@
  */
 
 $serendipity = array();
-@ini_set('magic_quotes_runtime', 'off');
-
-/**
- * Create a snapshot of the current memory usage
- *
- * This functions makes use of static function properties to store the last used memory and the intermediate snapshots.
- * @access public
- * @param  string   A label for debugging output
- * @return boolean  Return whether the snapshot could be evaluated
- */
-function memSnap($tshow = '') {
-    static $avail    = null;
-    static $show     = true;
-    static $memUsage = 0;
-
-    if (!$show) {
-        return false;
-    }
-
-    if ($avail === false) {
-        return true;
-    } elseif ($avail === null) {
-        if (function_exists('memory_get_usage')) {
-            $avail = memory_get_usage();
-        } else {
-            $avail = false;
-            return false;
-        }
-    }
-
-    if ($memUsage === 0) {
-        $memUsage = $avail;
-    }
-
-    $current = memory_get_usage();
-    echo '[' . date('d.m.Y H:i') . '] ' . number_format($current - $memUsage, 2, ',', '.') . ' label "' . $tshow . '", totalling ' . number_format($current, 2, ',', '.') . '<br />' . "\n";
-    $memUsage = $current;
-}
 
 /**
  * Set our own exeption handler to convert all errors into exeptions automatically
@@ -144,48 +106,6 @@ if (extension_loaded('filter') && function_exists('filter_id') && function_exist
     */
 }
 
-/*
- *  Avoid magic_quotes_gpc issues
- *  courtesy of iliaa@php.net
- */
-function serendipity_strip_quotes(&$var)
-{
-    if (is_array($var)) {
-        foreach ($var as $k => $v) {
-            if (is_array($v)) {
-                array_walk($var[$k], 'serendipity_strip_quotes');
-            } else {
-                $var[$k] = stripslashes($v);
-            }
-        }
-    } else {
-        $var = stripslashes($var);
-    }
-}
-
-if (ini_get('magic_quotes_gpc')) {
-    if (@count($_REQUEST)) {
-        array_walk($_REQUEST, 'serendipity_strip_quotes');
-    }
-
-    if (@count($_GET)) {
-        array_walk($_GET,     'serendipity_strip_quotes');
-    }
-
-    if (@count($_POST)) {
-        array_walk($_POST,    'serendipity_strip_quotes');
-    }
-
-    if (@count($_COOKIE)) {
-        array_walk($_COOKIE, 'serendipity_strip_quotes');
-    }
-
-    if (@count($_FILES) && strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-        array_walk($_FILES,   'serendipity_strip_quotes');
-    }
-}
-
-
 // Merge get and post into the serendipity array
 $serendipity['GET']    = &$_GET['serendipity'];
 $serendipity['POST']   = &$_POST['serendipity'];
@@ -207,6 +127,7 @@ if (isset($serendipity['GET']['searchTerm'])) {
  * @access public
  * @param   string      input value
  * @return  boolean     boolean output value
+ * @deprecated
  */
 function serendipity_get_bool($item) {
     static $translation = array('true'  => true,

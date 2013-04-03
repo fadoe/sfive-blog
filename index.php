@@ -158,7 +158,7 @@ if (preg_match(PAT_ARCHIVES, $uri, $matches) || isset($serendipity['GET']['range
 
     if (isset($day) && !is_numeric($day)) {
         $day = date('d');
-    }                
+    }
 
     switch($serendipity['calendar']) {
         case 'gregorian':
@@ -186,48 +186,6 @@ if (preg_match(PAT_ARCHIVES, $uri, $matches) || isset($serendipity['GET']['range
             }
             break;
 
-        case 'persian-utf8':
-            require_once S9Y_INCLUDE_PATH . 'include/functions_calendars.inc.php';
-            $gday = 1;
-            if ($week) {
-                --$week;
-                $week *= 7;
-                ++$week;
-                $day = $week;
-
-                // convert day number of year to day number of month AND month number of year
-                $j_days_in_month = array(0, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
-                if(($g_y % 4) == 3) $j_days_in_month[12]++;
-
-                for($i=1; isset($j_days_in_month[$i]); ++$i){
-                    if(($day-$j_days_in_month[$i])>0){
-                        $day -= $j_days_in_month[$i];
-                    }else{
-                        break;
-                    }
-                }
-
-                $tm = persian_mktime(0, 0, 0, $i, $day, $year);
-                $ts = persian_mktime(0, 0, 0, persian_date_utf('m', $tm), persian_date_utf('j', $tm), $year);
-                $te = persian_mktime(23, 59, 59, persian_date_utf('m', $tm), persian_date_utf('j', $tm)+7, $year);
-                $date = serendipity_formatTime(WEEK .' '. $week .'، %Y', $ts, false);
-            } else {
-                if ($day) {
-                    $ts = persian_mktime(0, 0, 0, $month, $day, $year);
-                    $te = persian_mktime(23, 59, 59, $month, $day, $year);
-                    $date = serendipity_formatTime(DATE_FORMAT_ENTRY, $ts, false);
-                } else {
-                    $ts = persian_mktime(0, 0, 0, $month, $gday, $year);
-                    if (!isset($gday2)) {
-                        $gday2 = persian_date_utf('t', $ts);
-                    }
-                    $te = persian_mktime(23, 59, 59, $month, $gday2, $year);
-                    $date = serendipity_formatTime('%B %Y', $ts, false);
-                }
-            }
-
-            list($year, $month, $day) = p2g ($year, $month, $day);
-            break;
     }
 
     $serendipity['range'] = array($ts, $te);
@@ -497,7 +455,7 @@ if (preg_match(PAT_ARCHIVES, $uri, $matches) || isset($serendipity['GET']['range
     }
 
     $uInfo = serendipity_fetchUsers($serendipity['GET']['viewAuthor']);
-    
+
     if (!is_array($uInfo)) {
         $serendipity['view'] = '404';
         $serendipity['viewtype'] = '404_3';

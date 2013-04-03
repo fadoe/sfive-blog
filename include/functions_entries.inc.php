@@ -1534,13 +1534,6 @@ function serendipity_printArchives() {
             $thisYear   = date('Y', serendipity_serverOffsetHour());
             $thisMonth  = date('m', serendipity_serverOffsetHour());
             break;
-        case 'persian-utf8':
-            require_once S9Y_INCLUDE_PATH . 'include/functions_calendars.inc.php';
-            $lastYear   = persian_date_utf('Y', serendipity_serverOffsetHour($f[0][0]));
-            $lastMonth  = persian_date_utf('m', serendipity_serverOffsetHour($f[0][0]));
-            $thisYear   = persian_date_utf('Y', serendipity_serverOffsetHour());
-            $thisMonth  = persian_date_utf('m', serendipity_serverOffsetHour());
-            break;
     }
     $max = 1;
 
@@ -1601,11 +1594,6 @@ function serendipity_printArchives() {
                 default:
                     $s = serendipity_serverOffsetHour(mktime(0, 0, 0, $m, 1, $y), true);
                     $e = serendipity_serverOffsetHour(mktime(23, 59, 59, $m, date('t', $s), $y), true);
-                    break;
-                case 'persian-utf8':
-                    require_once S9Y_INCLUDE_PATH . 'include/functions_calendars.inc.php';
-                    $s = serendipity_serverOffsetHour(persian_mktime(0, 0, 0, $m, 1, $y), true);
-                    $e = serendipity_serverOffsetHour(persian_mktime(23, 59, 59, $m, date('t', $s), $y), true);
                     break;
             }
 
