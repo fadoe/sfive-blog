@@ -520,21 +520,28 @@ if (isset($_GET['serendipity']['plugin_to_conf'])) {
             /* Load the new plugin */
             $plugin = &serendipity_plugin_api::load_plugin($inst);
             if (!is_object($plugin)) {
-                echo "DEBUG: Plugin $inst not an object: " . print_r($plugin, true) . ".<br />Input: " . print_r($serendipity['GET'], true) . ".<br /><br />\n\nThis error can happen if a plugin was not properly downloaded (check your plugins directory if the requested plugin was downloaded) or the inclusion of a file failed (permissions?)<br />\n";
-                echo "Backtrace:<br />\n" . implode("<br />\n", $serendipity['debug']['pluginload']) . "<br />";
+                echo "DEBUG: Plugin " . htmlspecialchars($inst) . " not an object: " . htmlspecialchars(print_r($plugin, true)) 
+                     . ".<br />Input: " . htmlspecialchars(print_r($serendipity['GET'], true)) . ".<br /><br />\n\nThis error 
+                     can happen if a plugin was not properly downloaded (check your plugins directory if the requested plugin 
+                     was downloaded) or the inclusion of a file failed (permissions?)<br />\n";
+                echo "Backtrace:<br />\n" . nl2br(htmlspecialchars(implode("\n", $serendipity['debug']['pluginload']))) . "<br />";
             }
             $bag  = new serendipity_property_bag;
             $plugin->introspect($bag);
 
+            serendipity_plugin_api::hook_event('backend_plugins_install', $serendipity['GET']['install_plugin'], $fetchplugin_data);
+
             if ($bag->is_set('configuration')) {
                 /* Only play with the plugin if there is something to play with */
-                echo '<script type="text/javascript">location.href = \'' . $serendipity['baseurl'] . '?serendipity[adminModule]=plugins&serendipity[plugin_to_conf]=' . $inst . '\';</script>';
+                echo '<script type="text/javascript">location.href = \'' . $serendipity['baseURL'] . 'serendipity_admin.php?serendipity[adminModule]=plugins&serendipity[plugin_to_conf]=' . $inst . '\';</script>';
                 die();
             } else {
                 /* If no config is available, redirect to plugin overview, because we do not want that a user can install the plugin a second time via accidental browser refresh */
-                echo '<script type="text/javascript">location.href = \'' . $serendipity['baseurl'] . '?serendipity[adminModule]=plugins\';</script>';
+                echo '<script type="text/javascript">location.href = \'' . $serendipity['baseURL'] . 'serendipity_admin.php?serendipity[adminModule]=plugins\';</script>';
                 die();
             }
+        } else {
+            serendipity_plugin_api::hook_event('backend_plugins_update', $serendipity['GET']['install_plugin'], $fetchplugin_data);
         }
     }
 

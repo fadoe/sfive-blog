@@ -45,26 +45,55 @@ if (!function_exists('errorToExceptionHandler')) {
             echo '<pre>';
             // trying to be as detailled as possible - but beware using args containing sensibel data like passwords
             if (function_exists('debug_backtrace') && version_compare(PHP_VERSION, '5.3.6') >= 0) {
-                $debugbacktrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+                if ( version_compare(PHP_VERSION, '5.4') >= 0 ) {
+                    $debugbacktrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 8);
+                } else {
+                    $debugbacktrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+                }
                 print_r($debugbacktrace);
             }
-
-            throw new ErrorException($errStr); // tracepath = all, if not ini_set('display_errors', 0);
+            //print_r($args); // debugging
+            // debugbacktrace is nice, but additional it is good to have the verbosity of SPL EXCEPTIONS, except for db connect errors
+            // compare version to not get strange T_NEW parse errors (http://board.s9y.org/viewtopic.php?f=10&t=19436)
+            if (!$serendipity['dbConn'] || version_compare(PHP_VERSION, '5.3', '<')) {
+                echo '<p>' . $errStr . ' in ' . $errFile . ' on line ' . $errLine . '</p>';
+            } else {
+                throw new ErrorException($errStr); // tracepath = all, if not ini_set('display_errors', 0);
+            }
             echo '</pre>'; // if using throw new ... this ending tag will not be send and displayed, but it still looks better and browsers don't really care
+            exit; // make sure to exit in case of database connection errors.
         }
         if ($serendipity['production'] === false) {
             echo '<p> == TESTING ERROR MODE == </p>';
             echo '<pre>';
-            //print_r($args); // do this in strong test environments only, as containing sensible data! Better use debug!
-            throw new ErrorException("Serendipity error: " . $errStr); // tracepath = all;
+            // see notes above
+            if (!$serendipity['dbConn'] || version_compare(PHP_VERSION, '5.3', '<')) {
+                echo '<p>' . $errStr . ' in ' . $errFile . ' on line ' . $errLine . '</p>';
+            } else {
+                throw new ErrorException($errStr); // tracepath = all, if not ini_set('display_errors', 0);
+            }
             echo '</pre>'; // if using throw new ... this ending tag will not be send and displayed, but it still looks better and browsers don't really care
+            exit; // make sure to exit in case of database connection errors.
         }
         if ($serendipity['production'] === true) {
-            // ToDo: enhance for more special serendipity error needs
-            $str  = '<p> == SERENDIPITY ERROR == </p>';
-            $str .= '<p>Please correct:</p>';
-            $str .= '<p>' . $errStr . ' in ' . $errFile . ' on line ' . $errLine . '</p>';
-            serendipity_die($str); // needs to halt with die() here, else it will path through and gets written underneath blog content.
+            if( $serendipity['serendipityUserlevel'] >= USERLEVEL_ADMIN ) {
+                // ToDo: enhance for more special serendipity error needs
+                $str  = " == SERENDIPITY ERROR == ";
+                $str .= '<p>' . $errStr . ' in ' . $errFile . ' on line ' . $errLine . '</p>';
+                #var_dump(headers_list());
+                if (headers_sent()) {
+                    serendipity_die($str); // case HTTP headers: needs to halt with die() here, else it will path through and gets written underneath blog content, which hardly isn't seen by many users
+                } else {
+                    // see global include of function in plugin_api.inc.php
+                    // this also reacts on non eye-displayed errors with following small javascript,
+                    // while being in tags like <select> to push on top of page, else return non javascript use $str just there
+                    // sadly we can not use HEREDOC notation here, since this does not execute the javascript after finished writing
+                    echo "\n".'<script>
+var fragment = window.top.create("Error redirect: '.addslashes($str).'");
+document.body.insertBefore(fragment, document.body.childNodes[0]);
+' . "\n</script>\n<noscript>" . $str . "</noscript>\n";
+                }
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
-<?php # $Id$
+<?php #
 
 /**
- *  @version $Revision$
+ *  @version 
  *  @author Translator Name <yourmail@example.com>
  *  EN-Revision: Revision of lang_en.inc.php
  */
@@ -90,8 +90,6 @@
 @define('PLUGIN_EVENT_SPAMBLOCK_REMOVE_URL', 'Unblock this URL via Spamblock plugin');
 @define('PLUGIN_EVENT_SPAMBLOCK_REMOVE_EMAIL', 'Unblock this E-mail via Spamblock plugin');
 
-@define('PLUGIN_EVENT_SPAMBLOCK_BLOGG_SPAMLIST', 'Activate URL filtering by blogg.de Blacklist');
-@define('PLUGIN_EVENT_SPAMBLOCK_REASON_BLOGG_SPAMLIST', 'Filtered by blogg.de Blacklist');
 
 @define('PLUGIN_EVENT_SPAMBLOCK_REASON_TITLE', 'Entry title equals comment');
 @define('PLUGIN_EVENT_SPAMBLOCK_FILTER_TITLE', 'Reject comments which only contain the entry title');

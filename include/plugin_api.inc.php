@@ -42,6 +42,24 @@ function serendipity_plugin_api_frontend_header($event_name, &$bag, &$eventData,
     </script>
 <?php
     }
+    // add a global available (index.tpl; admin/index.tpl; preview_iframe.tpl) redirect error string function used by errorToExceptionHandler() - hardened by admin only
+    if ($serendipity['production'] === true) {
+        if( $serendipity['serendipityUserlevel'] >= USERLEVEL_ADMIN ) {
+?>
+    <script type="text/javascript">
+    function create(htmlStr) {
+        var frag = document.createDocumentFragment(),
+            temp = document.createElement("div");
+        temp.innerHTML = htmlStr;
+        while (temp.firstChild) {
+            frag.appendChild(temp.firstChild);
+        }
+        return frag;
+    }
+    </script>
+<?php
+        }
+    }
 }
 
 
@@ -82,6 +100,7 @@ class serendipity_plugin_api
         serendipity_plugin_api::create_plugin_instance('@serendipity_categories_plugin');
         serendipity_plugin_api::create_plugin_instance('@serendipity_syndication_plugin');
         serendipity_plugin_api::create_plugin_instance('@serendipity_superuser_plugin');
+        serendipity_plugin_api::create_plugin_instance('@serendipity_plug_plugin');
 
         /* Register default event plugins */
         serendipity_plugin_api::create_plugin_instance('serendipity_event_emoticate', null, 'event');
@@ -134,6 +153,7 @@ class serendipity_plugin_api
         $id = md5(uniqid(''));
 
         $key = $plugin_class_id . ':' . $id;
+        $key = serendipity_db_escape_string($key);
 
         // Secure Plugin path. No leading slashes, no backslashes, no "up" directories
         $pluginPath = preg_replace('@^(/)@', '', $pluginPath);
@@ -153,7 +173,7 @@ class serendipity_plugin_api
 
         $serendipity['debug']['pluginload'][] = "Installing plugin: " . print_r(func_get_args(), true);
 
-        $iq = "INSERT INTO {$serendipity['dbPrefix']}plugins (name, sort_order, placement, authorid, path) values ('$key', $nextidx, '$default_placement', '$authorid', '$pluginPath')";
+        $iq = "INSERT INTO {$serendipity['dbPrefix']}plugins (name, sort_order, placement, authorid, path) values ('" . htmlspecialchars($key) . "', $nextidx, '$default_placement', '$authorid', '" . htmlspecialchars($pluginPath) . "')";
         $serendipity['debug']['pluginload'][] = $iq;
         serendipity_db_query($iq);
         serendipity_plugin_api::hook_event('backend_plugins_new_instance', $key, array('default_placement' => $default_placement));
@@ -168,7 +188,7 @@ class serendipity_plugin_api
             $plugin->install();
         } else {
             $serendipity['debug']['pluginload'][] = "Loading plugin failed painfully. File not found?";
-            echo ERROR . ': ' . $key . ' (' . $pluginPath . ')<br />';
+            echo ERROR . ': ' . htmlspecialchars($key) . ' (' . htmlspecialchars($pluginPath) . ')<br />';
         }
 
         return $key;
@@ -1574,16 +1594,7 @@ class serendipity_plugin
             $tfile = dirname($this->pluginFile) . '/' . $filename;
         }
 
-        if( !defined('Smarty::SMARTY_VERSION') ) {
-            $inclusion = $serendipity['smarty']->security_settings[@INCLUDE_ANY];
-            $serendipity['smarty']->security_settings[@INCLUDE_ANY] = true;
-            $content = $serendipity['smarty']->fetch('file:'. $tfile);
-            $serendipity['smarty']->security_settings[@INCLUDE_ANY] = $inclusion;
-        } else {
-            $content = $serendipity['smarty']->fetch('file:'. $tfile); // short notation with Smarty3 in S9y 1.7 and up
-        }
-
-        return $content;
+        return $serendipity['smarty']->fetch('file:'. $tfile);
     }
 
 }
@@ -1628,7 +1639,7 @@ class serendipity_event extends serendipity_plugin
         // $entries input data. This is a unifying function because
         // several plugins are using similar fields.
 
-        if (is_array($eventData) && isset($eventData[0]) && is_array($eventData[0]['properties'])) {
+        if (is_array($eventData) && isset($eventData[0]) && is_array($eventData[0]) && is_array($eventData[0]['properties'])) {
             if (!empty($eventData[0]['properties']['ep_cache_' . $fieldname])) {
 
                 // It may happen that there is no extended entry to concatenate to. In that case,
@@ -1686,7 +1697,7 @@ class serendipity_event extends serendipity_plugin
 }
 
 if (!defined('S9Y_FRAMEWORK_PLUGIN_INTERNAL')) {
-    include S9Y_INCLUDE_PATH . 'include/plugin_internal.inc.php';
+    include_once S9Y_INCLUDE_PATH . 'include/plugin_internal.inc.php';
 }
 
 /* vim: set sts=4 ts=4 expandtab : */

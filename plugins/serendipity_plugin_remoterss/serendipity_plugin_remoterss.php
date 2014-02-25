@@ -1,4 +1,4 @@
-<?php # $Id$
+<?php #
 
 // Contributed by Udo Gerhards <udo@babyblaue-seiten.de>
 // OPML Contributed by Richard Thomas Harrison <rich@mibnet.plus.com>
@@ -487,6 +487,126 @@ class serendipity_plugin_remoterss extends serendipity_plugin {
                     $this->debug('URLCheck succeeded. Touching ' . $feedcache);
                     // Touching the feedcache file will prevent loops of death when the RSS target is the same URI than our blog.
                     @touch($feedcache);
+
+                    $use_rss_link = serendipity_db_bool($this->get_config('use_rss_link'));
+                    $rss_elements = explode(',', $this->get_config('show_rss_element'));
+                    $escape_rss   = serendipity_db_bool($this->get_config('escape_rss'));
+                    $i = 0;
+                    $content = '';
+                    $smarty_items = array();
+                    while (($showAll || ($i < $number)) && ($item = $c->getNextItem())) {
+                        if (empty($item['title'])) {
+                            continue;
+                        }
+
+                        $content .= '<div class="rss_item">';
+
+                        if ($use_rss_link) {
+                            $content .= '<div class="rss_link"><a href="' . htmlspecialchars($this->decode($item['link'])) . '" ' . (!empty($target) ? 'target="'.$target.'"' : '') . '>';
+                        }
+
+                        if (!empty($bulletimg)) {
+                            $content .= '<img src="' . $bulletimg . '" border="0" alt="*" /> ';
+                        }
+
+                        $is_first = true;
+                        foreach($rss_elements AS $rss_element) {
+                            $rss_element = trim($rss_element);
+
+                            if (!$is_first) {
+                                $content .= '<span class="rss_' . preg_replace('@[^a-z0-9]@imsU', '', $rss_element) . '">';
+                            }
+
+                            if ($escape_rss) {
+                                $content .= $this->decode($item[$rss_element]);
+                            } else {
+                                $content .= htmlspecialchars($this->decode($item[$rss_element]));
+                            }
+
+                            if ($smarty) {
+                                $item['display_elements'][preg_replace('@[^a-z0-9]@imsU', '', $rss_element)] = $this->decode($item[$rss_element]);
+                            }
+
+                            if (!$is_first) {
+                                $content .= '</span>';
+                            }
+
+                            if ($is_first && $use_rss_link) {
+                                $content .= '</a></div>'; // end of first linked element
+                            }
+                            $is_first = false;
+                        }
+
+                        if ($is_first && $use_rss_link) {
+                            // No XML element has been configured.
+                            $content .= '</a></div>';
+                        }
+
+                        $content .= "<br />\n";
+                        $item['timestamp'] = @strtotime(isset($item['pubdate']) ? $item['pubdate'] : $item['dc:date']);
+                        if (!($item['timestamp'] == -1) AND ($displaydate == 'true')) {
+                            $content .= '<div class="serendipitySideBarDate">'
+                                      . htmlspecialchars(serendipity_formatTime($dateformat, $item['timestamp'], false))
+                                      . '</div>';
+
+                        }
+
+                        if ($smarty) {
+                            $smarty_items['items'][$i] = $item;
+                            $smarty_items['items'][$i]['css_class'] = preg_replace('@[^a-z0-9]@imsU', '', $rss_element);
+                            foreach($item AS $key => $val) {
+                                $smarty_items['items'][$i]['decoded_' . str_replace(':', '_', $key)] = $this->decode($key);
+                            }
+                        }
+                        $content .= '</div>'; // end of rss_item
+                        ++$i;
+                    }
+
+                    if ($smarty) {
+                        $smarty_items['use_rss_link'] = $use_rss_link;
+                        $smarty_items['bulletimg']    = $bulletimg;
+                        $smarty_items['escape_rss']   = $escape_rss;
+                        $smarty_items['displaydate']  = $displaydate;
+                        $smarty_items['dateformat']   = $dateformat;
+                        $smarty_items['target']       = $target;
+
+                        $serendipity['smarty']->assign_by_ref('remoterss_items', $smarty_items);
+                        $tpl = $this->get_config('template');
+                        if (empty($tpl)) {
+                            $tpl = 'plugin_remoterss.tpl';
+                        }
+
+                        // Template specifics go here
+                        switch($tpl) {
+                            case 'plugin_remoterss_nasaiotd.tpl':
+                                $smarty_items['nasa_image'] = $c->getData('image');
+                            break;
+                        }
+                        $content = $this->parseTemplate($tpl);
+                    }
+
+                    $this->debug('Caching Feed (' . strlen($content) . ' bytes)');
+                    $fp = @fopen($feedcache, 'w');
+                    if (trim($content) != '' && $fp) {
+                        fwrite($fp, $content);
+                        fclose($fp);
+                        $this->debug('Feed cache written');
+                    } else {
+                        $this->debug('Could not write (empty?) cache.');
+                        echo '<!-- Cache failed to ' . $feedcache . ' in ' . getcwd() . ' --><br />';
+                        if (trim($content) == '') {
+                            $this->debug('Getting old feedcache');
+                            $content = @file_get_contents($feedcache);
+                        }
+                    }
+                    $this->debug('RSS Plugin finished.');
+
+                } elseif ($feedtype == 'atom') {
+                    $this->debug('URLCheck succeeded. Touching ' . $feedcache);
+                    // Touching the feedcache file will prevent loops of death when the RSS target is the same URI than our blog.
+                    @touch($feedcache);
+
+                    require_once S9Y_PEAR_PATH . '/simplepie/simplepie.inc';
 
                     $this->debug('Running simplepie Parser');
 

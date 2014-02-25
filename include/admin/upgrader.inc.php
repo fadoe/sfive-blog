@@ -157,7 +157,7 @@ $tasks = array(array('version'   => '0.5.1',
                      . '<p><strong>function uninstall(&$propbag)</strong><br />'
                         . '<strong>function event_hook($event, &$bag, &$eventData, $addData = null)</strong></p>'
                         . '<p>Older plugins specifically did not always include the <strong>$addData</strong> signature. Make sure this exists.
-                        If after installation you get uncircumventable errors, you can make sure to set <strong>$serendipity[\'product\'] = true;</strong> in your <strong>serendipity_config_local.inc.php</strong> file. This should lower error reporting to a way that will not interfere with incompatible problem. But this is no solution in the long run, you need to update your plugins.
+                        If after installation you get uncircumventable errors, you can make sure to set <strong>$serendipity[\'production\'] = true;</strong> in your <strong>serendipity_config_local.inc.php</strong> file. This should lower error reporting to a way that will not interfere with incompatible problem. But this is no solution in the long run, you need to update your plugins.
                         Also, the serendipity_event_browsercompatibility plugin has been removed, because it\'s functionality was no longer required. You should uninstall that plugin if you are currently using it.</p>'),
 
                array('version'   => '1.7-rc2',
@@ -169,7 +169,22 @@ $tasks = array(array('version'   => '0.5.1',
                      If you have your own custom template, be sure within your {foreach from=$dategroup.entries item="entry"} loop has this line after it:
                      <strong>{assign var="entry" value=$entry scope="parent"}</strong>'),
 
+               array('version'   => '1.7.1',
+                     'function'  => 'serendipity_copyBaseURL',
+                     'title'     => 'Copy baseURL',
+                     'desc'      => 'The baseURL option was moved to the defaultBaseURL-Option in the backend-configuration. To reflect that change in the database and to prevent future bugs, baseURL should copied to defaultBaseURL if that options is not set already.'),
 
+               array('version'   => '1.7.1',
+                     'type'      => 'TEMPLATE_NOTICE',
+                     'function'  => '',
+                     'title'     => '<b>TEMPLATE_NOTICE:</b> The Bulletproof template config has changed, to avoid a backend template view conflict with the "categorytemplates" plugin.',
+                     'desc'      => 'Please check any used <strong>copy</strong> of an old BP template config.inc.php file, in the colorset if(...) conditionals at around line 29 in config.inc.php, to be the same as in the origin bulletproof.'),
+
+               array('version'   => '1.7.1',
+                     'function'  => 'serendipity_killPlugin',
+                     'arguments' => array('serendipity_event_browsercompatibility'),
+                     'title'     => 'Remove obsolete plugin',
+                     'desc'      => 'The "browsercompatibility" plugin is no longer supported (and no longer required with recent browsers), so it will be automatically uninstalled.'),
 
 );
 

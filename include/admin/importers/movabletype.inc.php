@@ -9,7 +9,7 @@
 switch ($serendipity['lang']) {
     case 'de':
         @define('IMPORTER_MT_WARN_PLUGIN',     'Bitte installieren Sie das Plugin "%s"');
-        @define('IMPORTER_MT_NOTE', 'Falls Sie weiter machen, ohne die Plugins zu installieren, werden m�glicherweise Zeilenumbr�che falsch importiert (verdoppelt oder entfernt)');
+        @define('IMPORTER_MT_NOTE', 'Falls Sie weiter machen, ohne die Plugins zu installieren, werden möglicherweise Zeilenumbrüche falsch importiert (verdoppelt oder entfernt)');
         break;
 
     case 'en':
@@ -73,6 +73,9 @@ class Serendipity_Import_MovableType extends Serendipity_Import {
 
     function getImportNotes(){
         $notes = array();
+        if (!class_exists('serendipity_event_nl2br')){
+            $notes[] = sprintf(IMPORTER_MT_WARN_PLUGIN, 'serendipity_event_nl2br');
+        }
         if (!class_exists('serendipity_event_entryproperties')){
             $notes[] = sprintf(IMPORTER_MT_WARN_PLUGIN, 'serendipity_event_entryproperties');
         }

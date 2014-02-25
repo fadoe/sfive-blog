@@ -575,7 +575,7 @@ function serendipity_smarty_refhookPlugin(&$eventData, $hook, $addData = null) {
     // $serendipity['skip_smarty_hook'] = array('entries_header');
     // That would only skip the entries_header event hook, but allow all others.
     // Of course it cannot be used in conjunction with the all-blocking skip_smarty_hooks.
-    if (isset($serendipity['skip_smarty_hook']) && is_array($serendipity['skip_smarty_hook']) && isset($serendipity['skip_smarty_hook'][$params['hook']])) {
+    if (isset($serendipity['skip_smarty_hook']) && is_array($serendipity['skip_smarty_hook']) && isset($serendipity['skip_smarty_hook'][$hook])) {
         return;
     }
 
@@ -894,7 +894,7 @@ function serendipity_smarty_init($vars = array()) {
             #$serendipity['smarty']->testInstall();exit;
 
             /**
-             * pr�fe auf eventuelle API �nderungen in 3.2 [smarty_modifier_foobar, --> [smarty_modifier_foobar, smarty_function_foobar, smarty_block_foobar] (siehe class) ]
+             * check for upcoming API changes in 3.2 [smarty_modifier_foobar, --> [smarty_modifier_foobar, smarty_function_foobar, smarty_block_foobar] (see class) ]
              * smarty_modifier_foobar(Smarty $smarty, $string, �) vs. smarty_modifier_foobar($string, �)
              **/
             $serendipity['smarty']->registerPlugin('modifier', 'makeFilename', 'serendipity_makeFilename');

@@ -1,4 +1,4 @@
-<?php # $Id$
+<?php #
 
 ##########################################################################
 # serendipity - another blogger...                                       #
@@ -64,6 +64,6 @@
               'host' => 'blogsearch.google.com',
               'path' => '/ping/RPC2'
             ),
-                                                                  
+  
         );
 ?>

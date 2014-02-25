@@ -45,7 +45,7 @@ if (!defined('IN_serendipity')) {
 require_once 'include/compat.inc.php';
 
 // The version string
-$serendipity['version']         = '1.7-rc4';
+$serendipity['version']         = '1.7.8';
 
 // Setting this to 'false' will enable debugging output. All alpa/beta/cvs snapshot versions will emit debug information by default. To increase the debug level (to enable Smarty debugging), set this flag to 'debug'.
 if (!isset($serendipity['production'])) {

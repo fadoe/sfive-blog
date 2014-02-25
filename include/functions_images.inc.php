@@ -372,7 +372,7 @@ function serendipity_fetchImages($group = false, $start = 0, $end = 20, $images 
         }
         @closedir($dir);
         sort($aTempArray);
-        foreach($aTempArray AS $f) {
+        foreach($aTempArray as $f) {
             if (strpos($f, $serendipity['thumbSuffix']) !== false) {
                 // This is a s9y thumbnail, skip it.
                 continue;
@@ -1107,7 +1107,7 @@ function serendipity_syncThumbs($deleteThumbs = false) {
                 if ($tdim['noimage']) {
                     // Delete it so it can be regenerated
                     if (@unlink($fthumb)) {
-                        printf(DELETE_THUMBNAIL . "<br />\n", $sthumb);
+                        printf(DELETE_THUMBNAIL . "<br />\n", $sThumb);
                         $i++;
                     }
                 } else {
@@ -1119,7 +1119,7 @@ function serendipity_syncThumbs($deleteThumbs = false) {
                         // This thumbnail is incorrect; delete it so
                         // it can be regenerated
                         if (@unlink($fthumb)) {
-                            printf(DELETE_THUMBNAIL . "<br />\n", $sthumb);
+                            printf(DELETE_THUMBNAIL . "<br />\n", $sThumb);
                             $i++;
                         }
                     }
@@ -1451,7 +1451,7 @@ function serendipity_displayImageList($page = 0, $lineBreak = NULL, $manage = fa
 
     if ($manage && $limit_path == NULL) {
         ## SYNCH START ##
-        $aExclude = array("CVS" => true, ".svn" => true);
+        $aExclude = array("CVS" => true, ".svn" => true, "_vti_cnf" => true); // _vti_cnf to exclude possible added servers frontpage extensions
         serendipity_plugin_api::hook_event('backend_media_path_exclude_directories', $aExclude);
         $paths        = array();
         $aFilesOnDisk = array();
@@ -1770,7 +1770,9 @@ function serendipity_killPath($basedir, $directory = '', $forceDelete = false) {
 function serendipity_traversePath($basedir, $dir='', $onlyDirs = true, $pattern = NULL, $depth = 1, $max_depth = NULL, $apply_ACL = false, $aExcludeDirs = NULL) {
 
     if ($aExcludeDirs === null) {
-        $aExcludeDirs = array("CVS" => true, ".svn" => true);
+        // add _vti_cnf to exclude possible added servers frontpage extensions
+        // add ckeditor/kcfinders .thumb dir to exclude, since no hook
+        $aExcludeDirs = array("CVS" => true, ".svn" => true, ".thumbs" => true, "_vti_cnf" => true);
     }
 
     $odir = serendipity_dirSlash('end', $basedir) . serendipity_dirSlash('end', $dir);
@@ -2232,7 +2234,6 @@ function serendipity_showPropertyForm(&$new_media, $keywordsPerBlock = 3, $is_ed
     $dprops   = explode(';', $serendipity['mediaProperties']);
     $keywords = explode(';', $serendipity['mediaKeywords']);
 
-    $now  = serendipity_serverOffsetHour();
     $show = array();
     foreach($new_media AS $idx => $media) {
         $props =& serendipity_fetchMediaProperties($media['image_id']);
@@ -2262,7 +2263,7 @@ function serendipity_showPropertyForm(&$new_media, $keywordsPerBlock = 3, $is_ed
     return serendipity_showMedia(
         $show,
         $mirror,
-        $url,
+        '',
         false,
         1,
         false,
@@ -2374,7 +2375,7 @@ function serendipity_parseMediaProperties(&$dprops, &$keywords, &$media, &$props
         if (empty($val)) {
             switch($parts[0]) {
                 case 'DATE':
-                    $default_iptc_val = $now;
+                    $default_iptc_val = serendipity_serverOffsetHour();
 
                 case 'RUN_LENGTH':
                     if (!isset($default_iptc_val)) {
@@ -2508,7 +2509,7 @@ function serendipity_mediaTypeCast($key, $val, $invert = false) {
  * @return array    array('image_id') holding the last created thumbnail for immediate processing
  *
  */
-function serendipity_insertMediaProperty($property_group, $property_subgroup = '', $image_id, &$media, $use_cast = true) {
+function serendipity_insertMediaProperty($property_group, $property_subgroup, $image_id, &$media, $use_cast = true) {
     global $serendipity;
 
     serendipity_db_query("DELETE FROM {$serendipity['dbPrefix']}mediaproperties
@@ -2537,7 +2538,7 @@ function serendipity_insertMediaProperty($property_group, $property_subgroup = '
                                    VALUES (%d, '%s', '%s', '%s', '%s')",
                              $image_id,
                              serendipity_db_escape_string($property_group),
-                             serendipity_db_escape_string($useproperty_subgroup),
+                             serendipity_db_escape_string($use_property_subgroup),
                              serendipity_db_escape_string($insert_key),
                              serendipity_db_escape_string($insert_val));
                 serendipity_db_query($q);
@@ -2822,7 +2823,7 @@ function serendipity_showMedia(&$file, &$paths, $url = '', $manage = false, $lin
         'nextIMG'           => serendipity_getTemplateFile('admin/img/next.png'),
         'token'             => serendipity_setFormToken(),
         'form_hidden'       => $form_hidden,
-        'blimit_path'       => basename($limit_path),
+        'blimit_path'       => empty($smarty_vars['limit_path']) ? '':basename($smarty_vars['limit_path']),
         'only_path'         => $serendipity['GET']['only_path'],
         'only_filename'     => $serendipity['GET']['only_filename'],
         'sortorder'         => $serendipity['GET']['sortorder'],
@@ -3467,6 +3468,9 @@ function &serendipity_getMediaPaths() {
     $aExclude = array("CVS" => true, ".svn" => true);
     serendipity_plugin_api::hook_event('backend_media_path_exclude_directories', $aExclude);
     $paths        = array();
+    $aExclude = array("CVS" => true, ".svn" => true, "_vti_cnf" => true); // add _vti_cnf to exclude possible added servers frontpage extensions
+    serendipity_plugin_api::hook_event('backend_media_path_exclude_directories', $aExclude);
+    $paths        = array();
 
     $aResultSet   = serendipity_traversePath(
         $serendipity['serendipityPath'] . $serendipity['uploadPath'],
@@ -3479,7 +3483,7 @@ function &serendipity_getMediaPaths() {
         $aExclude
     );
 
-    foreach ($aResultSet AS $sKey => $sFile) {
+    foreach ($aResultSet as $sKey => $sFile) {
         if ($sFile['directory']) {
             array_push($paths, $sFile);
         }

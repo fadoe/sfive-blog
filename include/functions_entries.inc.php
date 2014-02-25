@@ -837,8 +837,15 @@ function &serendipity_searchEntries($term, $limit = '', $searchresults = '') {
     if ($p == 1 && strpos($term, '*') === false) {
         if (! is_array($search)) {
             return serendipity_searchEntries($term.'*', $orig_limit);
-        }else if (count($search) < 4){
-            return serendipity_searchEntries($term.'*', $orig_limit, $search);
+        } else {
+            $ec = count($search);
+            $checkcount = 4;
+            if ($serendipity['fetchLimit'] < $checkcount) {
+                $checkcount = $serendipity['fetchLimit'];
+            }
+            if ($ec < $checkcount) {
+                return serendipity_searchEntries($term.'*', $orig_limit, $search);
+            }
         }
     }
 

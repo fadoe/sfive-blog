@@ -110,8 +110,11 @@ function _serendipity_send($loc, $data, $contenttype = null) {
         $target['query'] = '?' . str_replace('&amp;', '&', $target['query']);
     }
 
-    if (!is_numeric($target['port'])) {
+    if ($target['scheme'] == 'https' && empty($target['port'])) {
+       $uri = $target['scheme'] . '://' . $target['host'] . $target['path'] . $target['query'];
+    } elseif (!is_numeric($target['port'])) {
        $target['port'] = 80;
+       $uri = $target['scheme'] . '://' . $target['host'] . ':' . $target['port'] . $target['path'] . $target['query'];
     }
 
     $uri = $target['scheme'] . '://' . $target['host'] . ':' . $target['port'] . $target['path'] . $target['query'];

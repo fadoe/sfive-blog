@@ -26,7 +26,7 @@ function serendipity_plugin_api_event_hook($event, &$bag, &$eventData, $addData 
 }
 
 
-if ($serendipity['GET']['adminModule'] == 'templates' || $serendipity['POST']['adminModule'] == 'templates') {
+if ($serendipity['GET']['adminModule'] == 'templates' || $serendipity['POST']['adminModule'] == 'templates' || $serendipity['GET']['adminAction'] == 'cattemplate') {
     $css_files = glob(dirname(__FILE__) . '/*_style.css');
     foreach($css_files AS $css_file) {
         $css_file = str_replace('_style.css', '', basename($css_file));
@@ -312,9 +312,9 @@ $colorset_data = array();  // Maybe we'll want more data later...
 $colorset_data['attribution'] = '';
 $attribution_file = dirname(__FILE__) . '/' . $template_loaded_config['colorset'] . '_license.txt';
 if (is_readable($attribution_file)) {
-	$attribution = file_get_contents($attribution_file);
-	if (!empty($attribution)) {
-		$colorset_data['attribution'] = $attribution;
-	}
+    $attribution = file_get_contents($attribution_file);
+    if (!empty($attribution)) {
+        $colorset_data['attribution'] = $attribution;
+    }
 }
 $template_loaded_config['colorset_data'] = $colorset_data;

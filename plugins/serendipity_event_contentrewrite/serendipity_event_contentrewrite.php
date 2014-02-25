@@ -1,4 +1,4 @@
-<?php # $Id$
+<?php #
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
@@ -149,7 +149,7 @@ class serendipity_event_contentrewrite extends serendipity_event
                     return true;
                 }
             }
-        }    
+        }
 
         preg_match('|^(.+)_([0-9]+)$|msU', $name, $switch);
 

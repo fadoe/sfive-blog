@@ -17,34 +17,34 @@ $errormsg = '';
 
 if ($serendipity['POST']['formAction'] == 'multiDelete' && sizeof($serendipity['POST']['delete']) != 0 && serendipity_checkFormToken()) {
     if ($serendipity['POST']['togglemoderate'] != '') {
-		foreach ( $serendipity['POST']['delete'] as $k => $v ) {
-			$ac = serendipity_approveComment($k, $v, false, 'flip');
-			if ($ac > 0) {
-				$errormsg .= DONE . ': '. sprintf(COMMENT_APPROVED, (int)$k) . '<br />';
-			} else {
-				$errormsg .= DONE . ': '. sprintf(COMMENT_MODERATED, (int)$k) . '<br />';
-			}
-		}
+        foreach ( $serendipity['POST']['delete'] as $k => $v ) {
+            $ac = serendipity_approveComment($k, $v, false, 'flip');
+            if ($ac > 0) {
+                $errormsg .= DONE . ': '. sprintf(COMMENT_APPROVED, (int)$k) . '<br />';
+            } else {
+                $errormsg .= DONE . ': '. sprintf(COMMENT_MODERATED, (int)$k) . '<br />';
+            }
+        }
     } else {
-		foreach ( $serendipity['POST']['delete'] as $k => $v ) {
- 			serendipity_deleteComment($k, $v);
-			$errormsg .= DONE . ': '. sprintf(COMMENT_DELETED, (int)$k) . '<br />';
-		}
-	}
+        foreach ( $serendipity['POST']['delete'] as $k => $v ) {
+            serendipity_deleteComment($k, $v);
+            $errormsg .= DONE . ': '. sprintf(COMMENT_DELETED, (int)$k) . '<br />';
+        }
+    }
 }
 
 
 /* We are asked to save the edited comment, and we are not in preview mode */
 if (isset($serendipity['GET']['adminAction']) && $serendipity['GET']['adminAction'] == 'doEdit' && !isset($serendipity['POST']['preview']) && serendipity_checkFormToken()) {
     $sql = "UPDATE {$serendipity['dbPrefix']}comments
-                    SET
-                        author    = '" . serendipity_db_escape_string($serendipity['POST']['name'])    . "',
-                        email     = '" . serendipity_db_escape_string($serendipity['POST']['email'])   . "',
-                        url       = '" . serendipity_db_escape_string($serendipity['POST']['url'])     . "',
-                        " . ($serendipity['POST']['replyTo'] != $serendipity['GET']['id'] ? "parent_id = '" . serendipity_db_escape_string($serendipity['POST']['replyTo']) . "'," : '') . "
-                        body      = '" . serendipity_db_escape_string($serendipity['POST']['comment']) . "'
-            WHERE id = " . (int)$serendipity['GET']['id'] . " AND
-                  entry_id = " . (int)$serendipity['POST']['entry_id'];
+                SET
+                    author   = '" . serendipity_db_escape_string($serendipity['POST']['name'])    . "',
+                    email    = '" . serendipity_db_escape_string($serendipity['POST']['email'])   . "',
+                    url      = '" . serendipity_db_escape_string($serendipity['POST']['url'])     . "',
+                                " . ($serendipity['POST']['replyTo'] != $serendipity['GET']['id'] ? "parent_id = '" . serendipity_db_escape_string($serendipity['POST']['replyTo']) . "'," : '') . "
+                    body     = '" . serendipity_db_escape_string($serendipity['POST']['comment']) . "'
+                WHERE id     = " . (int)$serendipity['GET']['id'] . " AND
+                    entry_id = " . (int)$serendipity['POST']['entry_id'];
     serendipity_db_query($sql);
     serendipity_plugin_api::hook_event('backend_updatecomment', $serendipity['POST'], $serendipity['GET']['id']);
     $errormsg .= COMMENT_EDITED;
@@ -132,13 +132,13 @@ if (isset($serendipity['GET']['adminAction']) && ($serendipity['GET']['adminActi
                       'parent_id' => $serendipity['GET']['id']
             );
         }
-        
+
         $target_url = '?serendipity[action]=admin&amp;serendipity[adminModule]=comments&amp;serendipity[adminAction]=doReply&amp;serendipity[id]=' . (int)$serendipity['GET']['id'] . '&amp;serendipity[entry_id]=' . (int)$serendipity['GET']['entry_id'] . '&amp;serendipity[noBanner]=true&amp;serendipity[noSidebar]=true&amp;' . serendipity_setFormToken('url');
         $data       = $serendipity['POST'];
         $data['replyTo'] = (int)$serendipity['GET']['id'];
         $out        = serendipity_printComments($c);
         $serendipity['smarty']->display(serendipity_getTemplateFile('comments.tpl', 'serendipityPath'));
-        
+
         if (!isset($data['name'])) {
             $data['name']  = $serendipity['serendipityRealname'];
         }
@@ -157,7 +157,7 @@ if (isset($serendipity['GET']['adminAction']) && ($serendipity['GET']['adminActi
             $data['url']        = $comment[0]['url'];
             $data['replyTo']    = $comment[0]['parent_id'];
             $data['comment']    = $comment[0]['body'];
-    
+
         /* If we are in preview, we get data from our form */
         } elseif (isset($serendipity['POST']['preview'])) {
             $data['name']       = $serendipity['POST']['name'];
@@ -174,7 +174,7 @@ if (isset($serendipity['GET']['adminAction']) && ($serendipity['GET']['adminActi
                       'timestamp' => time()
                     )
                   );
-    
+
             serendipity_printComments($pc_data);
             $serendipity['smarty']->display(serendipity_getTemplateFile('comments.tpl', 'serendipityPath'));
         }
@@ -184,14 +184,14 @@ if (isset($serendipity['GET']['adminAction']) && ($serendipity['GET']['adminActi
          substr($data['url'], 0, 8) != 'https://') {
          $data['url'] = 'http://' . $data['url'];
     }
-                                
+
     serendipity_displayCommentForm(
-      $serendipity['GET']['entry_id'],
-      $target_url,
-      NULL,
-      $data,
-      false,
-      false
+        $serendipity['GET']['entry_id'],
+        $target_url,
+        NULL,
+        $data,
+        false,
+        false
     );
 
     $serendipity['smarty']->display(serendipity_getTemplateFile('commentform.tpl', 'serendipityPath'));
@@ -268,7 +268,7 @@ $linkNext = 'serendipity_admin.php?serendipity[adminModule]=comments&amp;serendi
 
 if ($commentsPerPage == COMMENTS_FILTER_ALL) {
     $limit = '';
-}else {
+} else {
     $limit = serendipity_db_limit_sql(serendipity_db_limit(($page-1)*(int)$commentsPerPage, (int)$commentsPerPage));
 }
 
@@ -309,21 +309,21 @@ var origwidth = '';
 
 function highlightComment(id, checkvalue) {
     var comment = document.getElementById(id);
-    
+
     if (origborder == '') {
         origborder = comment.style.borderColor;
         if (origborder == '') {
             origborder = '#FFFFFF';
         }
     }
-    
+
     if (origwidth == '') {
         origwidth = comment.style.borderWidth;
         if (origwidth == '' || origwidth == 0) {
             origwidth = 1;
         }
     }
-    
+
     if (checkvalue) {
         comment.style.borderColor = '#FF0000';
         comment.style.borderWidth = origwidth;
@@ -457,10 +457,10 @@ foreach ($sql as $rs) {
     serendipity_plugin_api::hook_event('backend_view_comment', $comment, '&amp;serendipity[page]='. $page . $searchString);
     $class = 'serendipity_admin_list_item_' . (($i % 2 == 0 ) ? 'even' : 'uneven');
     if ($comment['status'] == 'pending') {
-        $class .= ' serendipity_admin_comment_pending'; 
+        $class .= ' serendipity_admin_comment_pending';
         $header_class = 'serendipityAdminMsgNote serendipity_admin_comment_pending_header';
     } elseif (strstr($comment['status'], 'confirm')) {
-        $class .= ' serendipity_admin_comment_pending serendipity_admin_comment_confirm'; 
+        $class .= ' serendipity_admin_comment_pending serendipity_admin_comment_confirm';
         $header_class = 'serendipityAdminMsgNote serendipity_admin_comment_pending_header serendipity_admin_comment_confirm_header';
     } else {
         $header_class = '';
@@ -471,13 +471,13 @@ foreach ($sql as $rs) {
          substr($comment['url'], 0, 8) != 'https://') {
          $comment['url'] = 'http://' . $comment['url'];
     }
-                                
+
 ?>
 <tr>
     <td class="<?php echo $header_class; ?>">
 <?php   if (!empty($header_class)) { ?>
             <img style="width: 22px; height: 22px; border: 0px; padding-right: 4px; vertical-align: middle" src="<?php echo serendipity_getTemplateFile('admin/img/admin_msg_note.png'); ?>" alt="" />
-<?php   }?>
+<?php } ?>
         <a name="c<?php echo $comment['id'] ?>"></a>
         <?php echo ($comment['type'] == 'NORMAL' ? COMMENT : ($comment['type'] == 'TRACKBACK' ? TRACKBACK : PINGBACK )) . ' #'. $comment['id'] .', '. IN_REPLY_TO .' <strong><a href="' . $comment['entry_url'] . '">'. htmlspecialchars($comment['title']) .'</a></strong>, '. ON . ' ' . serendipity_formatTime('%b %e %Y, %H:%M', $comment['timestamp'])?>
     </td>
@@ -590,4 +590,6 @@ foreach ($sql as $rs) {
 </tr>
 
 </form>
-<?php } ?>
+<?php 
+}
+?>
