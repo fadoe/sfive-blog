@@ -16,4 +16,5 @@ plugins/additional_plugins*
 .editorconfig
 /vendor/
 .idea
+test/phpunit.xml
 

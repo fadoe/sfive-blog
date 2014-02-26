@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b3946fbdb9daea74c08e727ed7cc2f7f",
+    "hash": "c2efdf22d97d390bf49f1745616f2d17",
     "packages": [
         {
             "name": "pear-pear.php.net/Archive_Tar",
@@ -352,152 +352,151 @@
             "time": "2013-12-17 16:56:58"
         },
         {
-            "name": "zendframework/zendframework",
-            "version": "2.1.3",
+            "name": "zendframework/zend-db",
+            "version": "2.2.5",
+            "target-dir": "Zend/Db",
             "source": {
                 "type": "git",
-                "url": "git://github.com/zendframework/zf2.git",
-                "reference": "release-2.1.3"
+                "url": "https://github.com/zendframework/Component_ZendDb.git",
+                "reference": "f17c80f27c0a071442b64716a46db5e2a047ceee"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://packages.zendframework.com/releases/ZendFramework-2.1.3/ZendFramework-2.1.3.zip",
-                "reference": "release-2.1.3",
-                "shasum": "506246b4bfa78db0d19852b26f0d4e383f10603f"
+                "url": "https://packages.zendframework.com/composer/zendframework-zend-db-f17c80f27c0a071442b64716a46db5e2a047ceee-zip-8e9ed0.zip",
+                "reference": "2.2.5",
+                "shasum": "8c3fe2d48aac1dc7a5ddbf9a8aba3a13e4fe6a3e"
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "replace": {
-                "zendframework/zend-authentication": "self.version",
-                "zendframework/zend-barcode": "self.version",
-                "zendframework/zend-cache": "self.version",
-                "zendframework/zend-captcha": "self.version",
-                "zendframework/zend-code": "self.version",
-                "zendframework/zend-config": "self.version",
-                "zendframework/zend-console": "self.version",
-                "zendframework/zend-crypt": "self.version",
-                "zendframework/zend-db": "self.version",
-                "zendframework/zend-debug": "self.version",
-                "zendframework/zend-di": "self.version",
-                "zendframework/zend-dom": "self.version",
-                "zendframework/zend-escaper": "self.version",
-                "zendframework/zend-eventmanager": "self.version",
-                "zendframework/zend-feed": "self.version",
-                "zendframework/zend-file": "self.version",
-                "zendframework/zend-filter": "self.version",
-                "zendframework/zend-form": "self.version",
-                "zendframework/zend-http": "self.version",
-                "zendframework/zend-i18n": "self.version",
-                "zendframework/zend-inputfilter": "self.version",
-                "zendframework/zend-json": "self.version",
-                "zendframework/zend-ldap": "self.version",
-                "zendframework/zend-loader": "self.version",
-                "zendframework/zend-log": "self.version",
-                "zendframework/zend-mail": "self.version",
-                "zendframework/zend-math": "self.version",
-                "zendframework/zend-memory": "self.version",
-                "zendframework/zend-mime": "self.version",
-                "zendframework/zend-modulemanager": "self.version",
-                "zendframework/zend-mvc": "self.version",
-                "zendframework/zend-navigation": "self.version",
-                "zendframework/zend-paginator": "self.version",
-                "zendframework/zend-permissions-acl": "self.version",
-                "zendframework/zend-permissions-rbac": "self.version",
-                "zendframework/zend-progressbar": "self.version",
-                "zendframework/zend-serializer": "self.version",
-                "zendframework/zend-server": "self.version",
-                "zendframework/zend-servicemanager": "self.version",
-                "zendframework/zend-session": "self.version",
-                "zendframework/zend-soap": "self.version",
-                "zendframework/zend-stdlib": "self.version",
-                "zendframework/zend-tag": "self.version",
-                "zendframework/zend-test": "self.version",
-                "zendframework/zend-text": "self.version",
-                "zendframework/zend-uri": "self.version",
-                "zendframework/zend-validator": "self.version",
-                "zendframework/zend-version": "self.version",
-                "zendframework/zend-view": "self.version",
-                "zendframework/zend-xmlrpc": "self.version"
-            },
-            "require-dev": {
-                "doctrine/common": ">=2.1"
-            },
             "suggest": {
-                "doctrine/common": "Doctrine\\Common >=2.1 for annotation features",
-                "ext-intl": "ext/intl for i18n features",
-                "pecl-weakref": "Implementation of weak references for Zend\\Stdlib\\CallbackHandler",
-                "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
-                "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
+                "zendframework/zend-stdlib": "2.2.5"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev",
+                    "dev-develop": "2.3-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
-                    "Zend\\": "library/",
-                    "ZendTest\\": "tests/"
+                    "Zend\\Db\\": ""
                 }
             },
             "license": [
                 "BSD-3-Clause"
             ],
-            "description": "Zend Framework 2",
+            "description": " ",
             "keywords": [
-                "framework",
+                "db",
                 "zf2"
             ],
             "support": {
-                "email": "fw-general-subscribe@lists.zend.com",
-                "irc": "irc://irc.freenode.net/zftalk",
-                "issues": "https://github.com/zendframework/zf2/issues",
-                "source": "https://github.com/zendframework/zf2"
-            }
+                "source": "https://github.com/zendframework/Component_ZendDb/tree/release-2.2.5"
+            },
+            "time": "2013-10-20 06:00:13"
         },
         {
-            "name": "zf-commons/zfc-base",
-            "version": "0.1.0",
+            "name": "zendframework/zend-filter",
+            "version": "2.2.5",
+            "target-dir": "Zend/Filter",
             "source": {
                 "type": "git",
-                "url": "git://github.com/ZF-Commons/ZfcBase.git",
-                "reference": "0.1.0"
+                "url": "https://github.com/zendframework/Component_ZendFilter.git",
+                "reference": "0dbe1c10822a340a253a99147bb004978915f641"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ZF-Commons/ZfcBase/zipball/0.1.0",
-                "reference": "0.1.0",
-                "shasum": ""
+                "url": "https://packages.zendframework.com/composer/zendframework-zend-filter-0dbe1c10822a340a253a99147bb004978915f641-zip-8a2bc1.zip",
+                "reference": "2.2.5",
+                "shasum": "ba078a81b2b0e194eb3bc27eb2b791ccc00eb6b7"
             },
             "require": {
                 "php": ">=5.3.3",
-                "zendframework/zendframework": "2.*"
+                "zendframework/zend-stdlib": "self.version"
+            },
+            "require-dev": {
+                "zendframework/zend-crypt": "self.version"
+            },
+            "suggest": {
+                "zendframework/zend-crypt": "Zend\\Crypt component",
+                "zendframework/zend-i18n": "Zend\\I18n component",
+                "zendframework/zend-stdlib": "Zend\\Stdlib component",
+                "zendframework/zend-uri": "Zend\\Uri component for UriNormalize filter",
+                "zendframework/zend-validator": "Zend\\Validator component"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev",
+                    "dev-develop": "2.3-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
-                    "ZfcBase": "src/"
-                },
-                "classmap": [
-                    "./Module.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Kyle Spraggs",
-                    "email": "theman@spiffyjr.me",
-                    "homepage": "http://www.spiffyjr.me/"
-                },
-                {
-                    "name": "Evan Coury",
-                    "email": "me@evancoury.com",
-                    "homepage": "http://blog.evan.pro/"
+                    "Zend\\Filter\\": ""
                 }
+            },
+            "license": [
+                "BSD-3-Clause"
             ],
-            "description": "A set of genetic (abstract) classes which are commonly used across multiple modules.",
-            "homepage": "https://github.com/ZF-Commons/ZfcBase",
+            "description": "provides a set of commonly needed data filters",
             "keywords": [
+                "filter",
                 "zf2"
             ],
-            "time": "2012-10-24 17:42:28"
+            "support": {
+                "source": "https://github.com/zendframework/Component_ZendFilter/tree/release-2.2.5"
+            },
+            "time": "2013-10-20 06:00:14"
+        },
+        {
+            "name": "zendframework/zend-stdlib",
+            "version": "2.2.5",
+            "target-dir": "Zend/Stdlib",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/Component_ZendStdlib.git",
+                "reference": "f440ecfc828d61d620662a03987c8287e1e4801e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packages.zendframework.com/composer/zendframework-zend-stdlib-f440ecfc828d61d620662a03987c8287e1e4801e-zip-7e3c9b.zip",
+                "reference": "2.2.5",
+                "shasum": "d142b30e831141bcf5ed77e0d3ebd9356afcf9ce"
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "zendframework/zend-eventmanager": "To support aggregate hydrator usage",
+                "zendframework/zend-servicemanager": "To support hydrator plugin manager usage"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev",
+                    "dev-develop": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Zend\\Stdlib\\": ""
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": " ",
+            "keywords": [
+                "stdlib",
+                "zf2"
+            ],
+            "support": {
+                "source": "https://github.com/zendframework/Component_ZendStdlib/tree/release-2.2.5"
+            },
+            "time": "2013-10-20 06:00:20"
         }
     ],
     "packages-dev": [
