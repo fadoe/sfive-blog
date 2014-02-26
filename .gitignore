@@ -15,3 +15,5 @@ plugins/additional_plugins*
 .DS_Store
 .editorconfig
 /vendor/
+.idea
+
