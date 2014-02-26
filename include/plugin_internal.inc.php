@@ -11,6 +11,8 @@ if (defined('S9Y_FRAMEWORK_PLUGIN_INTERNAL')) {
 }
 @define('S9Y_FRAMEWORK_PLUGIN_INTERNAL', true);
 
+
+if (!class_exists('serendipity_calendar_plugin')) {
 class serendipity_calendar_plugin extends serendipity_plugin {
     var $title = CALENDAR;
 
@@ -309,6 +311,12 @@ class serendipity_calendar_plugin extends serendipity_plugin {
     } // end function
 } // end class
 
+}
+
+if (!class_exists('serendipity_quicksearch_plugin')) {
+
+
+
 class serendipity_quicksearch_plugin extends serendipity_plugin {
     var $title = QUICKSEARCH;
 
@@ -358,6 +366,12 @@ class serendipity_quicksearch_plugin extends serendipity_plugin {
         serendipity_plugin_api::hook_event('quicksearch_plugin', $serendipity);
     }
 }
+
+}
+
+if (!class_exists('serendipity_archives_plugin')) {
+
+
 
 class serendipity_archives_plugin extends serendipity_plugin {
     var $title = ARCHIVES;
@@ -529,6 +543,11 @@ class serendipity_archives_plugin extends serendipity_plugin {
         echo '</ul>' . "\n";
     }
 }
+
+}
+
+if (!class_exists('serendipity_syndication_plugin')) {
+
 
 class serendipity_syndication_plugin extends serendipity_plugin {
     var $title = SYNDICATE_THIS_BLOG;
@@ -1026,6 +1045,10 @@ IMAGE;
     }
 }
 
+}
+
+if (!class_exists('serendipity_superuser_plugin')) {
+
 class serendipity_superuser_plugin extends serendipity_plugin {
     var $title = SUPERUSER;
 
@@ -1072,6 +1095,12 @@ class serendipity_superuser_plugin extends serendipity_plugin {
         return true;
     }
 }
+
+}
+
+if (!class_exists('serendipity_html_nugget_plugin')) {
+
+
 
 class serendipity_html_nugget_plugin extends serendipity_plugin {
     var $title = HTML_NUGGET;
@@ -1182,6 +1211,11 @@ class serendipity_html_nugget_plugin extends serendipity_plugin {
 */
     }
 }
+
+}
+
+if (!class_exists('serendipity_categories_plugin')) {
+
 
 class serendipity_categories_plugin extends serendipity_plugin {
     var $title = CATEGORIES;
@@ -1487,6 +1521,10 @@ class serendipity_categories_plugin extends serendipity_plugin {
     }
 }
 
+}
+
+if (!class_exists('serendipity_authors_plugin')) {
+
 class serendipity_authors_plugin extends serendipity_plugin {
     var $title = AUTHORS;
 
@@ -1620,4 +1658,4 @@ class serendipity_authors_plugin extends serendipity_plugin {
     }
 }
 
-/* vim: set sts=4 ts=4 expandtab : */
+}

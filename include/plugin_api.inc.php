@@ -100,7 +100,6 @@ class serendipity_plugin_api
         serendipity_plugin_api::create_plugin_instance('@serendipity_categories_plugin');
         serendipity_plugin_api::create_plugin_instance('@serendipity_syndication_plugin');
         serendipity_plugin_api::create_plugin_instance('@serendipity_superuser_plugin');
-        serendipity_plugin_api::create_plugin_instance('@serendipity_plug_plugin');
 
         /* Register default event plugins */
         serendipity_plugin_api::create_plugin_instance('serendipity_event_emoticate', null, 'event');
