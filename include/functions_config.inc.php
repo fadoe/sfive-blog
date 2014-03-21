@@ -313,9 +313,10 @@ function serendipity_load_configuration($author = null) {
     }
 
     if (is_array($rows)) {
+        $filter = new \FaDoe\Filter\IniBoolean();
         foreach ($rows as $row) {
             // Convert 'true' and 'false' into booleans
-            $serendipity[$row['name']] = serendipity_get_bool($row['value']);
+            $serendipity[$row['name']] = $filter->filter($row['value']);
         }
     }
     $config_loaded[$author] = true;

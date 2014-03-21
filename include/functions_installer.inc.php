@@ -370,7 +370,8 @@ function serendipity_guessInput($type, $name, $value='', $default='') {
 
     switch ($type) {
         case 'bool':
-            $value = serendipity_get_bool($value);
+            $filter = new \FaDoe\Filter\IniBoolean();
+            $value = $filter->filter($value);
             if ($value === null) {
                 $value = $default;
             }

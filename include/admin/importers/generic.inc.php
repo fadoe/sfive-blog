@@ -64,9 +64,9 @@ class Serendipity_Import_Generic extends Serendipity_Import {
     }
 
     function buildEntry($item, &$entry) {
-        global $serendipity;
 
-        $bodyonly = serendipity_get_bool($this->data['bodyonly']);
+        $filter = new \FaDoe\Filter\IniBoolean();
+        $bodyonly = $filter->filter($this->data['bodyonly']);
 
         if ($item['description']) {
             $entry['body'] = $this->decode($item['description']);

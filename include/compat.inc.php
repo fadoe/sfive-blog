@@ -151,25 +151,6 @@ if (isset($serendipity['GET']['searchTerm'])) {
 }
 
 /**
- * Translate values coming from the Database into native PHP variables to detect boolean values.
- *
- * @access public
- * @param   string      input value
- * @return  boolean     boolean output value
- * @deprecated
- */
-function serendipity_get_bool($item) {
-    static $translation = array('true'  => true,
-                                'false' => false);
-
-    if (isset($translation[$item])) {
-        return $translation[$item];
-    } else {
-        return $item;
-    }
-}
-
-/**
  * Get the current charset
  *
  * @return  string      Empty string or "UTF-8/".
