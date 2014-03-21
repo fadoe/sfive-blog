@@ -321,7 +321,6 @@
 @define('SYNDICATION_PLUGIN_GENERIC_FEED', '%s Feed');
 @define('PERMISSIONS', 'Rechte');
 @define('INTEGRITY', 'Installation prüfen');
-@define('CHECKSUMS_NOT_FOUND', 'Fehler beim Vergleich der Prüfsummen! (Keine Prüfsummendatei checksums.inc.php im Hauptverzeichnis gefunden)');
 @define('CHECKSUMS_PASS', 'Alle erforderlichen Dateien wurden überprüft.');
 @define('CHECKSUM_FAILED', '%s beschädigt oder verändert: Überprüfung fehlgeschlagen');
 @define('XML_IMAGE_TO_DISPLAY', 'XML-Button');
@@ -415,9 +414,9 @@
 @define('INSTALL_THUMBDIM_LARGEST', 'Längste Seite');
 @define('INSTALL_THUMBDIM_WIDTH', 'Breite');
 @define('INSTALL_THUMBDIM_HEIGHT', 'Höhe');
-@define('INSTALL_THUMBDIM_DESC', 'Legt fest, wie die Größe der Thumbnails angepasst werden soll. Der Standard 
+@define('INSTALL_THUMBDIM_DESC', 'Legt fest, wie die Größe der Thumbnails angepasst werden soll. Der Standard
     "' . INSTALL_THUMBDIM_LARGEST .  '" nutzt die größte Seite als Beschränkung, so dass weder Breite noch Höhe die festgelegte Zahl überschreiten dürfen.
-    "' . INSTALL_THUMBDIM_WIDTH . '" und "' .  INSTALL_THUMBDIM_HEIGHT . '" 
+    "' . INSTALL_THUMBDIM_WIDTH . '" und "' .  INSTALL_THUMBDIM_HEIGHT . '"
     legen lediglich die Höhe bzw. Breite als größte Seite fest, so dass die jeweils andere Angabe auch größer als die festgelegte Zahl sein darf.');
 
 /* Personal details */
@@ -919,7 +918,7 @@
 @define('COMMENT_TOKENS_DESC', 'Diese Methode setzt Tokens ein, damit Kommentare direkt aus der Hinweis-E-Mail heraus gelöscht oder akzeptiert werden können. Diese Funktion ist für höheren Komfort gedacht, geht aber zu Lasten der Sicherheit: Wenn jemand die E-Mail abfängt, kann diese Person entsprechende Kommentare ohne weitere Authentifikation löschen oder freischalten.');
 @define('COMMENT_NOTOKENMATCH', 'Der Kommentar-Link ist nicht mehr gültig, oder Kommentar #%s wurde bereits akzeptiert oder gelöscht.');
 @define('TRACKBACK_NOTOKENMATCH', 'Der Kommentar-Link ist nicht mehr gültig, oder Trackback #%s wurde bereits akzeptiert oder gelöscht.');
-@define('BADTOKEN', 'Ungültiger Kommentar-Link'); 
+@define('BADTOKEN', 'Ungültiger Kommentar-Link');
 
 @define('CONFIRMATION_MAIL_ALWAYS', "Hallo %s,\n\nSie haben einen neuen Kommentar zu \"%s\" erstellt. Ihr Kommentar war:\n\n%s\n\nDer Betreiber dieses Blogs hat die Bestätigung per E-Mail gewünscht, daher müssen Sie folgenden Link anklicken:\n<%s>\n");
 @define('CONFIRMATION_MAIL_ONCE', "Hallo %s,\n\nSie haben einen neuen Kommentar zu \"%s\" erstellt. Ihr Kommentar war:\n\n%s\n\nDer Betreiber dieses Blogs hat die Bestätigung per E-Mail gewünscht, daher müssen Sie folgenden Link anklicken:\n<%s>\n\nNachdem Sie dies getan haben, können Sie auf dem Blog jederzeit mit ihrem Namen und E-Mail-Adresse ohne weitere Freischaltung kommentieren.");

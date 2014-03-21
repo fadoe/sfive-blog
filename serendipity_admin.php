@@ -233,26 +233,6 @@ if (!$use_installer && $is_logged_in) {
             echo LOGGEDOUT;
             break;
 
-        case 'integrity':
-            echo '<div class="serendipity_admin_title">' . INTEGRITY . '</div>';
-            $badsums = array();
-            if (!is_readable(S9Y_INCLUDE_PATH . 'checksums.inc.php') || 0 == filesize(S9Y_INCLUDE_PATH . 'checksums.inc.php') ) {
-                echo '<span class="serendipityAdminMsgNote">' . CHECKSUMS_NOT_FOUND . '</span>';
-                break;
-            }
-            $badsums = serendipity_verifyFTPChecksums();
-            if (count($badsums) == 0) {
-                echo '<span class="serendipityAdminMsgSuccess">' . CHECKSUMS_PASS . '</span>';
-            } else {
-                echo '<ul>';
-                foreach ($badsums as $rpath => $calcsum) {
-                    echo '<li class="serendipityAdminMsgError">' . sprintf(CHECKSUM_FAILED, $rpath) . '</li>';
-                }
-                echo '</ul>';
-            }
-            $admin_section = INTEGRITY;
-            break;
-
         default:
             include S9Y_INCLUDE_PATH . 'include/admin/overview.inc.php';
             $admin_section = ADMIN_FRONTPAGE;
