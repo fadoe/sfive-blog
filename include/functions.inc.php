@@ -255,64 +255,6 @@ function serendipity_fetchTemplateInfo($theme, $abspath = null) {
 }
 
 /**
- * Recursively walks an 1-dimensional array to map parent IDs and depths, depending on the nested array set.
- *
- * Used for sorting a list of comments, for example. The list of comment is iterated, and the nesting level is calculated, and the array will be sorted to represent the amount of nesting.
- *
- * @access public
- * @param   array   Input array to investigate [consecutively sliced for recursive calls]
- * @param   string  Array index name to indicate the ID value of an array index
- * @param   string  Array index name to indicate the PARENT ID value of an array index, matched against the $child_name value
- * @param   int     The parent id to check an element against for recursive nesting
- * @param   int     The current depth of the cycled array
- * @return  array   The sorted and shiny polished result array
- */
-function serendipity_walkRecursive($ary, $child_name = 'id', $parent_name = 'parent_id', $parentid = 0, $depth = 0) {
-    global $serendipity;
-    static $_resArray;
-    static $_remain;
-
-    if (!is_array($ary) || sizeof($ary) == 0) {
-        return array();
-    }
-
-    if ($parentid === VIEWMODE_THREADED) {
-        $parentid = 0;
-    }
-
-    if ($depth == 0) {
-        $_resArray = array();
-        $_remain   = $ary;
-    }
-
-    foreach($ary AS $key => $data) {
-        if ($parentid === VIEWMODE_LINEAR || !isset($data[$parent_name]) || $data[$parent_name] == $parentid) {
-            $data['depth'] = $depth;
-            $_resArray[]   = $data;
-            unset($_remain[$key]);
-            if ($data[$child_name] && $parentid !== VIEWMODE_LINEAR ) {
-                serendipity_walkRecursive($ary, $child_name, $parent_name, $data[$child_name], ($depth+1));
-            }
-        }
-    }
-
-    /* We are inside a recusive child, and we need to break out */
-    if ($depth !== 0) {
-        return true;
-    }
-
-    if (count($_remain) > 0) {
-        // Remaining items need to be appended
-        foreach($_remain AS $key => $data) {
-            $data['depth'] = 0;
-            $_resArray[]   = $data;
-        }
-    }
-
-    return $_resArray;
-}
-
-/**
  * Fetch the list of Serendipity Authors
  *
  * @access public

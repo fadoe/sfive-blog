@@ -831,7 +831,9 @@ class serendipity_event_freetag extends serendipity_event
 
                         if (serendipity_db_bool($this->get_config('cat2tag'))) {
                             if (is_array($cats = serendipity_fetchCategories())) {
-                                $cats = serendipity_walkRecursive($cats, 'categoryid', 'parentid', VIEWMODE_THREADED);
+//                                $cats = serendipity_walkRecursive($cats, 'categoryid', 'parentid', VIEWMODE_THREADED);
+                                $filter = new \FaDoe\Filter\ArrayType\BuildTree('parentid', 'categoryid');
+                                $cats = $filter->filter($cats);
                                 foreach ($cats as $cat) {
                                     if ($to_lower) {
                                         if (function_exists("mb_strtolower")) {

@@ -13,6 +13,10 @@
             "type": "pear",
             "url": "http://pear.php.net",
             "vendor-alias": "pear-pear"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/fadoe/fadoe-filter.git"
         }
     ],
     "require": {
@@ -23,7 +27,8 @@
         "pear-pear/HTTP_Request": "1.4.*",
         "pear-pear/Xml_Rpc": "1.5.*",
         "zendframework/zend-filter": "~2.2",
-        "zf-commons/zfc-base": "~0.1"
+        "zf-commons/zfc-base": "~0.1",
+        "fadoe/fadoe-filter": "~0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"

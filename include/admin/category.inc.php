@@ -216,7 +216,9 @@ if ($serendipity['GET']['adminAction'] == 'doDelete' && serendipity_checkFormTok
                 <option value="0"<?php if ( (int)$serendipity['GET']['cid'] == 0 ) echo ' selected="selected"'; ?>>[ <?php echo NO_CATEGORY; ?> ]</option>
 <?php
         $categories = serendipity_fetchCategories('all');
-        $categories = serendipity_walkRecursive($categories, 'categoryid', 'parentid', VIEWMODE_THREADED);
+//        $categories = serendipity_walkRecursive($categories, 'categoryid', 'parentid', VIEWMODE_THREADED);
+        $filter = new \FaDoe\Filter\ArrayType\BuildTree('parentid', 'categoryid');
+        $categories = $filter->filter($categories);
         foreach ( $categories as $cat ) {
             /* We can't be our own parent, the universe will collapse */
             if ( $cat['categoryid'] == $serendipity['GET']['cid'] ) {
@@ -264,7 +266,9 @@ if ( $serendipity['GET']['adminAction'] == 'view' ) {
 <table cellspacing="0" cellpadding="4" width="100%" border=0>
 <?php
             if ( is_array($cats) ) {
-                $categories = serendipity_walkRecursive($cats, 'categoryid', 'parentid', VIEWMODE_THREADED);
+//                $categories = serendipity_walkRecursive($cats, 'categoryid', 'parentid', VIEWMODE_THREADED);
+                $filter = new \FaDoe\Filter\ArrayType\BuildTree('parentid', 'categoryid');
+                $categories = $filter->filter($cats);
                 foreach ( $categories as $category ) {
 ?>
             <tr>

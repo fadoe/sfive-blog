@@ -56,7 +56,9 @@ class serendipity_calendar_plugin extends serendipity_plugin {
                 $cats       = serendipity_fetchCategories();
 
                 if (is_array($cats)) {
-                    $cats = serendipity_walkRecursive($cats, 'categoryid', 'parentid', VIEWMODE_THREADED);
+//                    $cats = serendipity_walkRecursive($cats, 'categoryid', 'parentid', VIEWMODE_THREADED);
+                    $filter = new \FaDoe\Filter\ArrayType\BuildTree('parentid', 'categoryid');
+                    $cats = $filter->filter($cats);
                     foreach($cats as $cat) {
                         $categories[$cat['categoryid']] = str_repeat(' . ', $cat['depth']) . $cat['category_name'];
                     }
@@ -1264,7 +1266,9 @@ class serendipity_categories_plugin extends serendipity_plugin {
                 $cats       = serendipity_fetchCategories();
 
                 if (is_array($cats)) {
-                    $cats = serendipity_walkRecursive($cats, 'categoryid', 'parentid', VIEWMODE_THREADED);
+//                    $cats = serendipity_walkRecursive($cats, 'categoryid', 'parentid', VIEWMODE_THREADED);
+                    $filter = new \FaDoe\Filter\ArrayType\BuildTree('parentid', 'categoryid');
+                    $cats = $filter->filter($cats);
                     foreach($cats as $cat) {
                         $categories[$cat['categoryid']] = str_repeat(' . ', $cat['depth']) . $cat['category_name'];
                     }
@@ -1414,7 +1418,9 @@ class serendipity_categories_plugin extends serendipity_plugin {
         $hidedepth     = 0;
 
         if (is_array($categories) && count($categories)) {
-            $categories = serendipity_walkRecursive($categories, 'categoryid', 'parentid', VIEWMODE_THREADED);
+//            $categories = serendipity_walkRecursive($categories, 'categoryid', 'parentid', VIEWMODE_THREADED);
+            $filter = new \FaDoe\Filter\ArrayType\BuildTree('parentid', 'categoryid');
+            $categories = $filter->filter($categories);
             foreach ($categories as $cid => $cat) {
                 // Hide parents not wanted
                 if ($use_parent && $use_parent != 'all') {

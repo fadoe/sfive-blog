@@ -132,7 +132,9 @@ function serendipity_drawList() {
                     <option value="">--</option>
 <?php
                     $categories = serendipity_fetchCategories();
-                    $categories = serendipity_walkRecursive($categories, 'categoryid', 'parentid', VIEWMODE_THREADED);
+//                    $categories = serendipity_walkRecursive($categories, 'categoryid', 'parentid', VIEWMODE_THREADED);
+                    $filter = new \FaDoe\Filter\ArrayType\BuildTree('parentid', 'categoryid');
+                    $categories = $filter->filter($categories);
                     foreach ( $categories as $cat ) {
                         echo '<option value="'. $cat['categoryid'] .'"'. ($serendipity['GET']['filter']['category'] == $cat['categoryid'] ? ' selected="selected"' : '') .'>'. str_repeat('&nbsp;', $cat['depth']) . htmlspecialchars($cat['category_name']) .'</option>' . "\n";
                     }

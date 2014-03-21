@@ -92,7 +92,9 @@ function serendipity_printEntryForm($targetURL, $hiddens = array(), $entry = arr
     }
 
     if (is_array($cats = serendipity_fetchCategories())) {
-        $cats = serendipity_walkRecursive($cats, 'categoryid', 'parentid', VIEWMODE_THREADED);
+        $filter = new \FaDoe\Filter\ArrayType\BuildTree('parentid', 'categoryid');
+        $cats = $filter->filter($cats);
+//        $cats = serendipity_walkRecursive($cats, 'categoryid', 'parentid', VIEWMODE_THREADED);
         foreach ($cats as $cat) {
 
             if (in_array($cat['categoryid'], $selected)) {
