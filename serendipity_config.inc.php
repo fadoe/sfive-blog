@@ -9,7 +9,7 @@
 
 @ini_set('magic_quotes_runtime', 'off');
 
-require 'init_autoloader.php';
+require 'src/vendor/autoload.php';
 
 if (!headers_sent()) {
     // Only set the session name, if no session has yet been issued.

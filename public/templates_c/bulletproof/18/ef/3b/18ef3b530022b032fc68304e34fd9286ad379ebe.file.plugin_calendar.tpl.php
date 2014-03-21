@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1-DEV, created on 2014-02-26 12:07:12
+<?php /* Smarty version Smarty-3.1-DEV, created on 2014-03-21 20:22:37
          compiled from "/data/falk/apache2/var/www/vhosts/sfive-blog/public/templates/bulletproof/plugin_calendar.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1557299360530dcae0458973-05450939%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:2046200716532c917dd97563-92950200%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1557299360530dcae0458973-05450939',
+  'nocache_hash' => '2046200716532c917dd97563-92950200',
   'function' => 
   array (
   ),
@@ -29,10 +29,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1-DEV',
-  'unifunc' => 'content_530dcae05086d0_00639787',
+  'unifunc' => 'content_532c917de45439_96710811',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_530dcae05086d0_00639787')) {function content_530dcae05086d0_00639787($_smarty_tpl) {?><?php if (!is_callable('smarty_modifier_truncate')) include '/data/falk/Projects/sfive-blog/vendor/smarty/smarty/distribution/libs/plugins/modifier.truncate.php';
-if (!is_callable('smarty_function_cycle')) include '/data/falk/Projects/sfive-blog/vendor/smarty/smarty/distribution/libs/plugins/function.cycle.php';
+<?php if ($_valid && !is_callable('content_532c917de45439_96710811')) {function content_532c917de45439_96710811($_smarty_tpl) {?><?php if (!is_callable('smarty_modifier_truncate')) include '/data/falk/Projects/sfive-blog/src/vendor/smarty/smarty/distribution/libs/plugins/modifier.truncate.php';
+if (!is_callable('smarty_function_cycle')) include '/data/falk/Projects/sfive-blog/src/vendor/smarty/smarty/distribution/libs/plugins/function.cycle.php';
 ?><table cellspacing="0" cellpadding="0" summary="this table is a calendar for the month of <?php echo serendipity_smarty_formatTime(time(),"%B, %Y");?>
 " class="serendipity_calendar">
     <thead>

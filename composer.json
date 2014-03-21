@@ -30,11 +30,14 @@
     },
     "autoload": {
         "psr-0": {
-            "Sfive": "library/",
+            "Sfive": "src/library/",
             "SfiveTest": "test/"
         },
         "classmap": [
         ]
+    },
+    "config": {
+        "vendor-dir": "src/vendor",
+        "bin-dir": "bin"
     }
-
 }
