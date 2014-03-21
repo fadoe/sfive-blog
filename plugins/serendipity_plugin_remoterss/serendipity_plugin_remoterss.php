@@ -606,8 +606,6 @@ class serendipity_plugin_remoterss extends serendipity_plugin {
                     // Touching the feedcache file will prevent loops of death when the RSS target is the same URI than our blog.
                     @touch($feedcache);
 
-                    require_once S9Y_PEAR_PATH . '/simplepie/simplepie.inc';
-
                     $this->debug('Running simplepie Parser');
 
                     $simplefeed = new SimplePie();

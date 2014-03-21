@@ -8,16 +8,16 @@
  */
 
 $serendipity['imageList'] = array();
-require_once 'include/db/db.inc.php';
-require_once 'include/compat.inc.php';
-require_once 'include/functions_config.inc.php';
-require_once 'include/plugin_api.inc.php';
-require_once 'include/functions_images.inc.php';
-require_once 'include/functions_installer.inc.php';
-require_once 'include/functions_entries.inc.php';
-require_once 'include/functions_comments.inc.php';
-require_once 'include/functions_permalinks.inc.php';
-require_once 'include/functions_smarty.inc.php';
+require_once 'db/db.inc.php';
+require_once 'compat.inc.php';
+require_once 'functions_config.inc.php';
+require_once 'plugin_api.inc.php';
+require_once 'functions_images.inc.php';
+require_once 'functions_installer.inc.php';
+require_once 'functions_entries.inc.php';
+require_once 'functions_comments.inc.php';
+require_once 'functions_permalinks.inc.php';
+require_once 'functions_smarty.inc.php';
 
 /**
  * Truncate a string to a specific length, multibyte aware. Appends '...' if successfully truncated

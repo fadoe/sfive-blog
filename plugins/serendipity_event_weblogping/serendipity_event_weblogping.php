@@ -138,12 +138,9 @@ class serendipity_event_weblogping extends serendipity_event
                     break;
 
                 case 'backend_publish':
-                    if (!class_exists('XML_RPC_Base')) {
-                        include_once(S9Y_PEAR_PATH . "XML/RPC.php");
-                    }
 
                     // First cycle through list of services to remove superseding services which may have been checked
-                    foreach ($this->services AS $index => $service) {
+                    foreach ($this->services as $service) {
                         if (!empty($service['supersedes']) && isset($serendipity['POST']['announce_entries_' . $service['name']])) {
                             $supersedes = $service['supersedes'];
                             foreach($supersedes AS $sid => $servicename) {
@@ -152,7 +149,7 @@ class serendipity_event_weblogping extends serendipity_event
                             }
                         }
                     }
-                    foreach ($this->services AS $index => $service) {
+                    foreach ($this->services as $service) {
                         if (isset($serendipity['POST']['announce_entries_' . $service['name']]) || (defined('SERENDIPITY_IS_XMLRPC') && serendipity_db_bool($this->get_config($service['name'])))) {
                             if (!defined('SERENDIPITY_IS_XMLRPC') || defined('SERENDIPITY_XMLRPC_VERBOSE')) {
                                 printf(PLUGIN_EVENT_WEBLOGPING_SENDINGPING . '...', $service['host']);

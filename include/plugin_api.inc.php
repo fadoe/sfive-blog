@@ -12,7 +12,7 @@ if (defined('S9Y_FRAMEWORK_PLUGIN_API')) {
 @define('S9Y_FRAMEWORK_PLUGIN_API', true);
 
 if (!defined('S9Y_FRAMEWORK_FUNCTIONS')) {
-    require_once 'include/functions.inc.php';
+    require_once 'functions.inc.php';
 }
 
 
