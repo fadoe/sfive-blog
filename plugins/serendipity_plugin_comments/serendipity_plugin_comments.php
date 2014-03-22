@@ -2,7 +2,7 @@
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
-class serendipity_plugin_comments extends serendipity_plugin
+class serendipity_plugin_comments extends \Sfive\Plugin\AbstractPlugin
 {
     var $title = COMMENTS;
 

@@ -240,7 +240,7 @@ class s9y_remoterss_OPML {
 
 }
 
-class serendipity_plugin_remoterss extends serendipity_plugin {
+class serendipity_plugin_remoterss extends \Sfive\Plugin\AbstractPlugin {
     var $title = PLUGIN_REMOTERSS_TITLE;
     var $encoding = null;
 

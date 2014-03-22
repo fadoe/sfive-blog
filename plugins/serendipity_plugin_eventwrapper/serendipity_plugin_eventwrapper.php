@@ -2,7 +2,7 @@
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
-class serendipity_plugin_eventwrapper extends serendipity_plugin
+class serendipity_plugin_eventwrapper extends \Sfive\Plugin\AbstractPlugin
 {
 var $rewrite_from, $rewrite_to;
 

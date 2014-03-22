@@ -27,6 +27,7 @@
         "pear-pear/HTTP_Request": "1.4.*",
         "pear-pear/Xml_Rpc": "1.5.*",
         "zendframework/zend-filter": "~2.2",
+        "zendframework/zend-stdlib": "~2.2.",
         "zf-commons/zfc-base": "~0.1",
         "fadoe/fadoe-filter": "~0.1"
     },

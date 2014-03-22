@@ -5,7 +5,7 @@
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
-class serendipity_plugin_recententries extends serendipity_plugin {
+class serendipity_plugin_recententries extends \Sfive\Plugin\AbstractPlugin {
     var $title = PLUGIN_RECENTENTRIES_TITLE;
 
     function introspect(&$propbag) {

@@ -13,7 +13,7 @@ if (file_exists($probelang)) {
 
 include_once dirname(__FILE__) . '/lang_en.inc.php';
 
-class serendipity_plugin_freetag extends serendipity_plugin
+class serendipity_plugin_freetag extends \Sfive\Plugin\AbstractPlugin
 {
     var $title = PLUGIN_FREETAG_NAME;
 
@@ -113,7 +113,7 @@ class serendipity_plugin_freetag extends serendipity_plugin
                 $propbag->add('description', '');
                 $propbag->add('default',     'tag');
                 break;
-            
+
             case 'xml_image':
                  $propbag->add('type',        'string');
                  $propbag->add('name',        PLUGIN_EVENT_FREETAG_XMLIMAGE);
@@ -218,9 +218,9 @@ class serendipity_plugin_freetag extends serendipity_plugin
         $nl      = serendipity_db_bool($this->get_config('show_newline'));
         $scaling = serendipity_db_bool($this->get_config('scale_tag'));
 
-        serendipity_event_freetag::displayTags($tags, $xml, $nl, $scaling, $this->get_config('max_percent', 300), $this->get_config('min_percent', 100), 
-                                               serendipity_db_bool($this->get_config('use_flash')), 
-                                               serendipity_db_bool($this->get_config('flash_bg_trans', true)), 
+        serendipity_event_freetag::displayTags($tags, $xml, $nl, $scaling, $this->get_config('max_percent', 300), $this->get_config('min_percent', 100),
+                                               serendipity_db_bool($this->get_config('use_flash')),
+                                               serendipity_db_bool($this->get_config('flash_bg_trans', true)),
                                                $this->get_config('flash_tag_color', 'ff6600'), $this->get_config('flash_bg_color', 'ffffff'),
                                                $this->get_config('flash_width', 190), $this->get_config('flash_speed', 100),
                                                $this->get_config('taglink'), $this->get_config('template'), $this->get_config('xml_image','img/xml.gif'));

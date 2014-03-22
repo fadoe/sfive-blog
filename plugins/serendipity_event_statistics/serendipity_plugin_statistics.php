@@ -2,7 +2,7 @@
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
-class serendipity_plugin_statistics extends serendipity_plugin
+class serendipity_plugin_statistics extends \Sfive\Plugin\AbstractPlugin
 {
     var $title = PLUGIN_EVENT_STATISTICS_NAME;
 

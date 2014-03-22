@@ -13,7 +13,7 @@ if (defined('S9Y_FRAMEWORK_PLUGIN_INTERNAL')) {
 
 
 if (!class_exists('serendipity_calendar_plugin')) {
-class serendipity_calendar_plugin extends serendipity_plugin {
+class serendipity_calendar_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = CALENDAR;
 
     function introspect(&$propbag)
@@ -319,7 +319,7 @@ if (!class_exists('serendipity_quicksearch_plugin')) {
 
 
 
-class serendipity_quicksearch_plugin extends serendipity_plugin {
+class serendipity_quicksearch_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = QUICKSEARCH;
 
     function introspect(&$propbag)
@@ -375,7 +375,7 @@ if (!class_exists('serendipity_archives_plugin')) {
 
 
 
-class serendipity_archives_plugin extends serendipity_plugin {
+class serendipity_archives_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = ARCHIVES;
 
     function introspect(&$propbag)
@@ -551,7 +551,7 @@ class serendipity_archives_plugin extends serendipity_plugin {
 if (!class_exists('serendipity_syndication_plugin')) {
 
 
-class serendipity_syndication_plugin extends serendipity_plugin {
+class serendipity_syndication_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = SYNDICATE_THIS_BLOG;
 
     function introspect(&$propbag)
@@ -1051,7 +1051,7 @@ IMAGE;
 
 if (!class_exists('serendipity_superuser_plugin')) {
 
-class serendipity_superuser_plugin extends serendipity_plugin {
+class serendipity_superuser_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = SUPERUSER;
 
     function introspect(&$propbag)
@@ -1104,7 +1104,7 @@ if (!class_exists('serendipity_html_nugget_plugin')) {
 
 
 
-class serendipity_html_nugget_plugin extends serendipity_plugin {
+class serendipity_html_nugget_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = HTML_NUGGET;
 
     function introspect(&$propbag)
@@ -1219,7 +1219,7 @@ class serendipity_html_nugget_plugin extends serendipity_plugin {
 if (!class_exists('serendipity_categories_plugin')) {
 
 
-class serendipity_categories_plugin extends serendipity_plugin {
+class serendipity_categories_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = CATEGORIES;
 
     function introspect(&$propbag) {
@@ -1531,7 +1531,7 @@ class serendipity_categories_plugin extends serendipity_plugin {
 
 if (!class_exists('serendipity_authors_plugin')) {
 
-class serendipity_authors_plugin extends serendipity_plugin {
+class serendipity_authors_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = AUTHORS;
 
     function introspect(&$propbag) {

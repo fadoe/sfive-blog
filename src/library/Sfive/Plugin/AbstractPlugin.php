@@ -1,19 +1,19 @@
 <?php
-namespace Sfive\Plugin;
 
+namespace Sfive\Plugin;
 
 abstract class AbstractPlugin
 {
-    private $instance      = null;
-    private $protected     = false;
-    private $wrap_class    = 'serendipitySideBarItem';
-    private $title_class   = 'serendipitySideBarTitle';
-    private $content_class = 'serendipitySideBarContent';
-    private $title         = null;
-    private $pluginPath    = null;
-    private $act_pluginPath= null;
-    private $pluginFile    = null;
-    private $serendipity_owner = null;
+    var $instance      = null;
+    var $protected     = false;
+    var $wrap_class    = 'serendipitySideBarItem';
+    var $title_class   = 'serendipitySideBarTitle';
+    var $content_class = 'serendipitySideBarContent';
+    var $title         = null;
+    var $pluginPath    = null;
+    var $act_pluginPath= null;
+    var $pluginFile    = null;
+    var $serendipity_owner = null;
 
     /**
      * The constructor of a plugin
@@ -22,12 +22,13 @@ abstract class AbstractPlugin
      * Be sure to call this method from your derived classes constructors,
      * otherwise your config data will not be stored or retrieved correctly
      *
+     * @access public
      * @return true
      */
-//    public function serendipity_plugin($instance)
-//    {
-//        $this->instance = $instance;
-//    }
+    function serendipity_plugin($instance)
+    {
+        $this->instance = $instance;
+    }
 
     /**
      * Perform configuration routines
@@ -37,11 +38,10 @@ abstract class AbstractPlugin
      * only need to be available for the global configuration and not
      * on each page request.
      *
-     * @param $bag
-     *
+     * @access public
      * @return true
      */
-    public function performConfig($bag)
+    function performConfig(&$bag)
     {
         return true;
     }
@@ -52,9 +52,10 @@ abstract class AbstractPlugin
      * Called by Serendipity when the plugin is first installed.
      * Can be used to install database tables etc.
      *
+     * @access public
      * @return true
      */
-    public function install()
+    function install()
     {
         return true;
     }
@@ -65,10 +66,11 @@ abstract class AbstractPlugin
      * Called by Serendipity when the plugin is removed/uninstalled.
      * Can be used to drop installed database tables etc.
      *
+     * @access public
      * @param  object   A property bag object
      * @return true
      */
-    public function uninstall($propertyBag)
+    function uninstall(&$propbag)
     {
         return true;
     }
@@ -80,13 +82,14 @@ abstract class AbstractPlugin
      * about your plugin.
      * You need to override this method in your child class.
      *
+     * @access public
      * @param   object  A property bag object you can manipulate
      * @return true
      */
-    public function introspect($propertyBag)
+    public function introspect($propbag)
     {
-        $propertyBag->add('copyright', 'MIT License');
-        $propertyBag->add('name'     , get_class($this));
+        $propbag->add('copyright', 'MIT License');
+        $propbag->add('name'     , get_class($this));
 
         // $propbag->add(
         //   'configuration',
@@ -114,11 +117,12 @@ abstract class AbstractPlugin
      * You need to override this method in your child class if
      * you have configuration options.
      *
+     * @access public
      * @param   string      Name of the config item
      * @param   object      A property bag object you can store the configuration in
-     * @return boolean
+     * @return
      */
-    public function introspect_config_item($name, $propertyBag)
+    public function introspect_config_item($name, $propbag)
     {
         return false;
     }
@@ -210,9 +214,15 @@ abstract class AbstractPlugin
      * capture it and make things work.
      * You need to override this method in your child class.
      *
+     * @access public
      * @param   string       The referenced varaiable that holds the sidebar title of your plugin.
+     * @return null
      */
-    abstract public function generateContent($title);
+    function generate_content(&$title)
+    {
+        $title = 'Sample!';
+        echo     'This is a sample!';
+    }
 
     /**
      * Get a config value of the plugin
@@ -235,7 +245,7 @@ abstract class AbstractPlugin
         }
 
         if (is_null($_res)) {
-            $cbag = new serendipity_property_bag();
+            $cbag = new \serendipity_property_bag();
             $this->introspect_config_item($name, $cbag);
             $_res = $cbag->get('default');
             unset($cbag);
@@ -359,4 +369,3 @@ abstract class AbstractPlugin
     }
 
 }
-

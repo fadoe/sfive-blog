@@ -4,7 +4,7 @@
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
-class serendipity_plugin_shoutbox extends serendipity_plugin
+class serendipity_plugin_shoutbox extends \Sfive\Plugin\AbstractPlugin
 {
     var $title = PLUGIN_SHOUTBOX_NAME;
 
@@ -30,7 +30,7 @@ class serendipity_plugin_shoutbox extends serendipity_plugin
                                              'dateformat',
                                              'box_cols',
                                              'box_rows'));
- 
+
         $propbag->add('groups', array('FRONTEND_FEATURES'));
     }
 

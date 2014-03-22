@@ -73,8 +73,9 @@ function serendipity_serverOffsetHour($timestamp = null, $negative = false) {
  * @access public
  * @param  string  The input date
  * @return int     The output unix timestamp
+ * @deprecated
  */
-function &serendipity_convertToTimestamp($in) {
+function serendipity_convertToTimestamp($in) {
     if (preg_match('@([0-9]+)([/\.-])([0-9]+)([/\.-])([0-9]+)@', $in, $m)) {
         if ($m[2] != $m[4]) {
             return $in;
