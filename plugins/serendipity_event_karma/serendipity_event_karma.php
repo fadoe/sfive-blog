@@ -5,7 +5,7 @@
 
 @define('PLUGIN_KARMA_DB_VERSION', '2.1');
 
-class serendipity_event_karma extends serendipity_event
+class serendipity_event_karma extends \Sfive\Plugin\AbstractEvent
 {
     /** @var string Status of current voting action */
     var $karmaVote    = '';
@@ -114,7 +114,7 @@ class serendipity_event_karma extends serendipity_event
                 $propbag->add('type', 'content');
                 $propbag->add('default', '
 <span class="serendipity_karmaVoting_tabbar">
-<a class="serendipity_karmaVoting_optionstab_link" href="#karmaVoting_options">' . PLUGIN_KARMA_TAB_OPTIONS . '</a> | 
+<a class="serendipity_karmaVoting_optionstab_link" href="#karmaVoting_options">' . PLUGIN_KARMA_TAB_OPTIONS . '</a> |
 <a class="serendipity_karmaVoting_appearancetab_link" href="#karmaVoting_appearance">' . PLUGIN_KARMA_TAB_APPEARANCE . '</a> |
 <a class="serendipity_karmaVoting_texttab_link" href="#karmaVoting_text">' . PLUGIN_KARMA_TAB_TEXT . '</a>
 </span>
@@ -136,7 +136,7 @@ class serendipity_event_karma extends serendipity_event
                 $propbag->add('default', '
     <input class="serendipityPrettyButton input_button" type="submit" value="' . SAVE . '" name="SAVECONF" />
 </div>
-<div class="serendipity_karmaVoting_texttab" style="text-align: center;"><a name="karmaVoting_text"></a> 
+<div class="serendipity_karmaVoting_texttab" style="text-align: center;"><a name="karmaVoting_text"></a>
 <span style="font-size: 10pt; font-weight: bold;">' . PLUGIN_KARMA_TAB_TEXT . '<hr style="width: 80%" />
 ');
                 break;
@@ -527,7 +527,7 @@ class serendipity_event_karma extends serendipity_event
             $this->karmaVoting = (int)$serendipity['GET']['karmaVote'];
         }
 
-        // karmaVote cookie was just set (see name="#1"); this boils down to 
+        // karmaVote cookie was just set (see name="#1"); this boils down to
         // "if check cookie isn't 1, there's no real cookie".
         // The check cookie gets set when a rater is displayed,
         // so you've got no business voting if you haven't even
@@ -563,7 +563,7 @@ class serendipity_event_karma extends serendipity_event
         }
 
         // Voting takes place here.
-        // 
+        //
         // Get voting data from the database (keeps all entries,
         // even if no karma match)
         $q = 'SELECT *
@@ -617,7 +617,7 @@ class serendipity_event_karma extends serendipity_event
 
                 serendipity_db_query($q);
             } else {
-                // Entry was too recently voted upon.  Figure out 
+                // Entry was too recently voted upon.  Figure out
                 // how long until voting will be allowed (in minutes).
                 $this->karmaVote    = 'timeout';
                 $this->karmaTimeOut = abs(ceil(($now - ($row['lastvote'] + $max_votetime)) / 60));
@@ -723,7 +723,7 @@ class serendipity_event_karma extends serendipity_event
                     // get up to 1.0 unless they're 3 times as wide as they
                     // are tall; full-bar images with square segments will
                     // be 1.666; and full-bar images with tall, narrow
-                    // segments will be greater than 1.0 unless they're 
+                    // segments will be greater than 1.0 unless they're
                     // nearly twice as high as they are wide.
                     $this->image_width = $this->image_width * 5;
                 }
@@ -820,13 +820,13 @@ function vote(karmaVote,karmaId) {
                 // CSS generation hooks
                 case 'backend_header':
                     // Generate the CSS for the graphical rating bar selector
-                    // 
-                    // The CSS appears to be generated in a completely 
+                    //
+                    // The CSS appears to be generated in a completely
                     // different instance of Serendipity, as if index.php gets
                     // called separately for the CSS.
                     //
-                    // Note that the css_backend hook adds properties to the 
-                    // serendipity_admin.css, but that file is *always* 
+                    // Note that the css_backend hook adds properties to the
+                    // serendipity_admin.css, but that file is *always*
                     // cached.  We use backend_header and add the CSS to the
                     // HEAD styles to make it dynamic.
 
@@ -855,7 +855,7 @@ function vote(karmaVote,karmaId) {
 ");
                 case 'css':
                     // Some CSS notes:
-                    // 
+                    //
                     // .serendipity_karmaVoting is the class for the karma wrapper/container,
                     //      including the text explanations, messages, and rating bar.
                     //      (currently a div)
@@ -871,11 +871,11 @@ function vote(karmaVote,karmaId) {
                     //      the graphical rating bar
                     // .serendipity_karmaVoting_current-rating is the class for the current
                     //      rating in the graphical rating bar
-                    //  a.serendipity_karmaVoting_link1, _link2, etc are the classes applied 
+                    //  a.serendipity_karmaVoting_link1, _link2, etc are the classes applied
                     //      to the individual voting links
 
                     // Note that there are two possible template types: early
-                    // templates that only handle the text rating bars, and 
+                    // templates that only handle the text rating bars, and
                     // newer templates that understand the graphical raters.
                     // We check for both types and act appropriately.
                     /*--JAM: Let's just skip this whole hassle
@@ -974,12 +974,12 @@ EOS;
                                 break;
 
                         }
-                        // The CSS here is lifted largely from 
+                        // The CSS here is lifted largely from
                         // http://komodomedia.com/blog/index.php/2007/01/20/css-star-rating-redux/
                         //
                         // Note, however that margin has been changed for
-                        // multiple cases and all unitless measurements have 
-                        // been specified in pixels.  Additionally, measures 
+                        // multiple cases and all unitless measurements have
+                        // been specified in pixels.  Additionally, measures
                         // have been taken to align the text.
                         print <<<END_IMG_CSS
 
@@ -1125,13 +1125,13 @@ END_IMG_CSS;
                         $track_clicks  = serendipity_db_bool($this->get_config('visits_active', true)) && $this->track_clicks_allowed_by_user();
                         if ($track_clicks && $_SERVER['REQUEST_METHOD'] == 'GET') {
                             $sql = serendipity_db_query(
-                                "UPDATE {$serendipity['dbPrefix']}karma 
-                                    SET visits = visits + 1 
-                                  WHERE entryid = $entryid", 
+                                "UPDATE {$serendipity['dbPrefix']}karma
+                                    SET visits = visits + 1
+                                  WHERE entryid = $entryid",
                                   true);
                             if (serendipity_db_affected_rows() < 1) {
                                 serendipity_db_query(
-                                        "INSERT INTO {$serendipity['dbPrefix']}karma (entryid, points, votes, lastvote, visits) 
+                                        "INSERT INTO {$serendipity['dbPrefix']}karma (entryid, points, votes, lastvote, visits)
                                               VALUES ('$entryid', 0, 0, 0, 1)"
                                         );
                             }
@@ -1224,19 +1224,19 @@ END_IMG_CSS;
                             // Single-entry URLs should be well-defined.  They can be permalinks,
                             // of course; otherwise they're of the configured pattern.
                             //
-                            // Summary URLs could be a little harder.  The summary pages that 
-                            // include entries are: frontpage, category, author, and archives. 
+                            // Summary URLs could be a little harder.  The summary pages that
+                            // include entries are: frontpage, category, author, and archives.
                             // It's possible a plugin would show entries, but if that's the case
                             // we don't need to allow the user to vote on them.  Still, that's
                             // a lot of URLs to check for.
                             //
-                            // Then there's the problem of the rest of the query.  It could 
-                            // include stuff we really want to keep around, like template 
+                            // Then there's the problem of the rest of the query.  It could
+                            // include stuff we really want to keep around, like template
                             // overrides or something.  One can even add serendipity variables
                             // to the URL in extreme cases.
                             //
                             // It seems that canonicalizing the URL will be quite difficult.
-                            // The only thing we can say for certain is that whatever the 
+                            // The only thing we can say for certain is that whatever the
                             // current URL is, it got us to this page, and we'd like to return
                             // to this page after we cast our vote.
 
@@ -1293,8 +1293,8 @@ END_IMG_CSS;
                             if ($sql && is_array($sql)) {
                                 foreach($sql AS $row) {
                                     $rows[$row['entryid']] = array(
-                                            'votes' => $row['votes'], 
-                                            'points' => $row['points'], 
+                                            'votes' => $row['votes'],
+                                            'points' => $row['points'],
                                             'visits' => $row['visits']
                                             );
                                 }
@@ -1303,7 +1303,7 @@ END_IMG_CSS;
                             $this->prepareExits($entries);
 
                             // Add karma block to the footer of each entry
-                            // 
+                            //
                             // The entries array was populated, above, so its keys match the eventData array,
                             // and overview entries are skipped if "extended only" is enabled
                             foreach (array_keys($entries) as $i) {
@@ -1325,18 +1325,18 @@ END_IMG_CSS;
 
                                 // Where's the footer?  Normally it would be
                                 // in eventData[n]['add_footer'] but if the
-                                // cache plugin is used, it's in 
+                                // cache plugin is used, it's in
                                 // eventData[n]['properties']['ep_cache_add_footer'].
                                 // This method retrieves it either way.
                                 $footer = &$this->getFieldReference('add_footer', $eventData[$i]);
 
                                 // Depending on what existed, $footer could
                                 // be referencing the cached version, the
-                                // uncached version, or even a new empty 
-                                // string.  In particular, if $eventData[$i] 
-                                // has no properties, and no 'add_footer' key, 
+                                // uncached version, or even a new empty
+                                // string.  In particular, if $eventData[$i]
+                                // has no properties, and no 'add_footer' key,
                                 // $footer is referencing a new empty string,
-                                // so adding a karma bar to $footer would do 
+                                // so adding a karma bar to $footer would do
                                 // nothing.
                                 //
                                 // We could be referencing an empty uncached
@@ -1425,7 +1425,7 @@ END_IMG_CSS;
                         && sizeof($serendipity['POST']['delete']) != 0 && serendipity_checkFormToken()) {
                         foreach($serendipity['POST']['delete'] as $d => $i) {
                             $kdata = $serendipity['POST']['karmalog'.$i];
-                            // validate posted variables 
+                            // validate posted variables
                             // posted points
                             $ppoints = $kdata['points'];
                             if (!is_numeric($ppoints) || ((int)$ppoints < -2) || ((int)$ppoints > 2)) {
@@ -1712,7 +1712,7 @@ function invertSelection() {
                             ");
                         if (is_array($sql)) {
                             print("
-<input type='button' name='toggle' value='".INVERT_SELECTIONS."' onclick='invertSelection()' class='serendipityPrettyButton input_button' /> 
+<input type='button' name='toggle' value='".INVERT_SELECTIONS."' onclick='invertSelection()' class='serendipityPrettyButton input_button' />
 <input class='serendipityPrettyButton input_button' type='submit' value='" . PLUGIN_KARMA_DELETE_VOTES . "' name='serendipity[delete_button]' />
 <input class='serendipityPrettyButton input_button' type='submit' value='" . PLUGIN_KARMA_APPROVE_VOTES . "' name='serendipity[approve_button]' />
 </form>
@@ -1838,20 +1838,20 @@ function invertSelection() {
             if ($fname == $cursel) {
                 $checked = 'checked="checked" ';
             }
-            $bar_html = 
+            $bar_html =
 "<td align='center' id='serendipity_karmaVote_select_$css_class'>
     <input type='radio' name='serendipity[plugin][base_image]' value='$fname' $checked/>
-    <span style='font-size: 8pt;'>$fname</span><br />\n" . 
+    <span style='font-size: 8pt;'>$fname</span><br />\n" .
                 $this->createRatingBar('', -1, 2, $css_class) .
 "</td>\n";
             $bar_html = sprintf($bar_html, '', '2.5 of 5', '1');
             $this->select_html .= $bar_html;
             // Add the necessary CSS to the stylesheet (will be added when css hooks are called)
-            // Sorry to interrupt your regularly scheduled HTML; I need to 
+            // Sorry to interrupt your regularly scheduled HTML; I need to
             // use the $css_class while it's still here.
             $this->select_css .= "
 /* Overrides for $css_class */
-.$css_class 
+.$css_class
 {
   width: ${width}px;
   height: ${height}px;
@@ -1881,7 +1881,7 @@ function invertSelection() {
         }
 
         // End the table, with a config-item bottom-border separator
-        $this->select_html .= 
+        $this->select_html .=
 "</tr>\n</table>
 <tr><td colspan='2' style='border-bottom: 1px solid #000000; vertical-align: top'>&nbsp;<td></tr>\n";
         // The config item and row are closed by the core code
@@ -1915,13 +1915,13 @@ function invertSelection() {
     }
 
     /**
-     * Creates the HTML snippet for the currently defined rating bar, with 
+     * Creates the HTML snippet for the currently defined rating bar, with
      * appropriate links (and current rating indication for graphical bars).
      * Automatically detects from $this->image_name whether to create text
      * links or a graphical bar.
      *
      * @param string id optional The ID of the bar we're creating; an empty
-     *     id ('' or 0) creates a bar with dummy links; null creates a bar with 
+     *     id ('' or 0) creates a bar with dummy links; null creates a bar with
      *     no voting links at all (shows only current configuration).
      * @param int karma optional The current total karma (default: 0 points)
      * @param int votes optional The total number of votes (default: 0 votes))
@@ -2064,8 +2064,8 @@ function invertSelection() {
      *
      * @param int points The total karma points
      * @param int votes The total number of votes
-     * 
-     * @return string A string indicating the number of points "of 5", 
+     *
+     * @return string A string indicating the number of points "of 5",
      *     or PLUGIN_KARMA_IMAGE_NONE_RATING if no votes have been recorded.
      */
     function imageRating($points, $votes) {
@@ -2087,11 +2087,11 @@ function invertSelection() {
     }
 
     /* Compute the equivalent word rating for a karma rating.
-     * 
+     *
      * @param mixed points The total karma points
      * @param mixed votes The total number of votes
      *
-     * @return string A word corresponding to the article rating, 
+     * @return string A word corresponding to the article rating,
      *     or PLUGIN_KARMA_IMAGE_NONE_RATING if no votes have been recorded.
      */
     function wordRating($points, $votes) {

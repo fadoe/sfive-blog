@@ -2,7 +2,7 @@
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
-class serendipity_event_weblogping extends serendipity_event
+class serendipity_event_weblogping extends \Sfive\Plugin\AbstractEvent
 {
     var $services;
 

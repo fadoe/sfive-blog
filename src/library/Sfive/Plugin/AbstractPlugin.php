@@ -2,7 +2,7 @@
 
 namespace Sfive\Plugin;
 
-abstract class AbstractPlugin
+abstract class AbstractPlugin implements PluginInterface
 {
     var $instance      = null;
     var $protected     = false;
@@ -14,21 +14,6 @@ abstract class AbstractPlugin
     var $act_pluginPath= null;
     var $pluginFile    = null;
     var $serendipity_owner = null;
-
-    /**
-     * The constructor of a plugin
-     *
-     * Needs to be implemented by your own class.
-     * Be sure to call this method from your derived classes constructors,
-     * otherwise your config data will not be stored or retrieved correctly
-     *
-     * @access public
-     * @return true
-     */
-    function serendipity_plugin($instance)
-    {
-        $this->instance = $instance;
-    }
 
     /**
      * Perform configuration routines

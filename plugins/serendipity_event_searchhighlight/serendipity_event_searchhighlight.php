@@ -6,7 +6,7 @@
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
-class serendipity_event_searchhighlight extends serendipity_event
+class serendipity_event_searchhighlight extends \Sfive\Plugin\AbstractEvent
 {
     var $title = PLUGIN_EVENT_SEARCHHIGHLIGHT_NAME;
 

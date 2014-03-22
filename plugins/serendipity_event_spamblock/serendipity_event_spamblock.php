@@ -2,7 +2,7 @@
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
-class serendipity_event_spamblock extends serendipity_event
+class serendipity_event_spamblock extends \Sfive\Plugin\AbstractEvent
 {
 var $filter_defaults;
 

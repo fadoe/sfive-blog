@@ -2,7 +2,7 @@
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
-class serendipity_event_emoticate extends serendipity_event
+class serendipity_event_emoticate extends \Sfive\Plugin\AbstractEvent
 {
     var $title = PLUGIN_EVENT_EMOTICATE_NAME;
 

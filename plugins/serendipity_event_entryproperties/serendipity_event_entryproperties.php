@@ -2,7 +2,7 @@
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
-class serendipity_event_entryproperties extends serendipity_event
+class serendipity_event_entryproperties extends \Sfive\Plugin\AbstractEvent
 {
     var $services, $showPasswordForm;
     var $title = PLUGIN_EVENT_ENTRYPROPERTIES_TITLE;

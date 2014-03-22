@@ -2,7 +2,7 @@
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
-class serendipity_event_contentrewrite extends serendipity_event
+class serendipity_event_contentrewrite extends \Sfive\Plugin\AbstractEvent
 {
     var $title = PLUGIN_EVENT_CONTENTREWRITE_NAME;
     var $rewrite_from, $rewrite_to;
@@ -263,7 +263,7 @@ class serendipity_event_contentrewrite extends serendipity_event
                             );
 
                             // Build a regular expression (ungreedy, multiline) with our quoted value. $val here is the word needing the replacement
-                            $regex = '°([^\d\w])(' . preg_quote($v_from) . ')([^\d\w])°msU';
+                            $regex = 'ï¿½([^\d\w])(' . preg_quote($v_from) . ')([^\d\w])ï¿½msU';
 
                             // \1 and \3 are the prepend/append strings (usually whitespaces) and $new containing the new value
                             foreach ($this->markup_elements as $temp) {

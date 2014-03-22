@@ -48,7 +48,7 @@ include_once dirname(__FILE__) . '/lang_en.inc.php';
 define('FREETAG_MANAGE_URL','?serendipity[adminModule]=event_display&amp;serendipity[adminAction]=managetags');
 define('FREETAG_EDITENTRY_URL','?serendipity[action]=admin&amp;serendipity[adminModule]=entries&amp;serendipity[adminAction]=edit&amp;serendipity[id]=');
 
-class serendipity_event_freetag extends serendipity_event
+class serendipity_event_freetag extends \Sfive\Plugin\AbstractEvent
 {
     var $tags  = array();
     var $displayTag = false;

@@ -22,7 +22,7 @@ include dirname(__FILE__) . '/lang_en.inc.php';
 // Switch on and off debugging mode of the plugin
 @define('PLUGIN_EVENT_GRAVATAR_DEBUG', false);
 
-class serendipity_event_gravatar extends serendipity_event
+class serendipity_event_gravatar extends \Sfive\Plugin\AbstractEvent
 {
     var $title = PLUGIN_EVENT_GRAVATAR_NAME;
 

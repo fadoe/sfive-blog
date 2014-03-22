@@ -2,7 +2,7 @@
 
 @serendipity_plugin_api::load_language(dirname(__FILE__));
 
-class serendipity_event_statistics extends serendipity_event
+class serendipity_event_statistics extends \Sfive\Plugin\AbstractEvent
 {
     var $title = PLUGIN_EVENT_STATISTICS_NAME;
 
@@ -42,8 +42,8 @@ class serendipity_event_statistics extends serendipity_event
 
 
             case 'ext_vis_stat':
-                $select = array('no'     => PLUGIN_EVENT_STATISTICS_EXT_OPT1, 
-                                'yesBot' => PLUGIN_EVENT_STATISTICS_EXT_OPT2, 
+                $select = array('no'     => PLUGIN_EVENT_STATISTICS_EXT_OPT1,
+                                'yesBot' => PLUGIN_EVENT_STATISTICS_EXT_OPT2,
                                 'yesTop' => PLUGIN_EVENT_STATISTICS_EXT_OPT3);
 
                 $propbag->add('type',          'select');
@@ -55,7 +55,7 @@ class serendipity_event_statistics extends serendipity_event
                 break;
 
             case 'stat_all':
-                $select = array('no' => PLUGIN_EVENT_STATISTICS_EXT_ALL1, 
+                $select = array('no' => PLUGIN_EVENT_STATISTICS_EXT_ALL1,
                                 'yes' => PLUGIN_EVENT_STATISTICS_EXT_ALL2);
 
                 $propbag->add('type',          'select');
@@ -67,7 +67,7 @@ class serendipity_event_statistics extends serendipity_event
                 break;
 
            case 'banned_bots':
-                $select = array('yes' => PLUGIN_EVENT_STATISTICS_BANNED_HOSTS1, 
+                $select = array('yes' => PLUGIN_EVENT_STATISTICS_BANNED_HOSTS1,
                                 'no' => PLUGIN_EVENT_STATISTICS_BANNED_HOSTS2);
 
                 $propbag->add('type',          'select');
@@ -776,7 +776,7 @@ class serendipity_event_statistics extends serendipity_event
                 } ?>
         </tr><tr>
             <?php
-            $mon = array('1' => 'Jan', '2' => 'Feb', '3' => 'Mar', '4' => 'Apr', '5' => 'May', '6' => 'Jun', 
+            $mon = array('1' => 'Jan', '2' => 'Feb', '3' => 'Mar', '4' => 'Apr', '5' => 'May', '6' => 'Jun',
              '7' => 'Jul', '8' => 'Aug', '9' => 'Sep', '10'    => 'Oct', '11' => 'Nov', '12' => 'Dec');
                $color = "col2";
             for ($i = 1; $i < 13; $i++) {
