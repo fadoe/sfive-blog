@@ -2,7 +2,7 @@
 # Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
 # All rights reserved.  See LICENSE file for licensing details
 
-require_once "include/functions_trackbacks.inc.php";
+require_once "functions_trackbacks.inc.php";
 
 /**
  * Prints the form for editing/creating new blog entries
