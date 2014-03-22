@@ -313,7 +313,7 @@ function serendipity_load_configuration($author = null) {
     }
 
     if (is_array($rows)) {
-        $filter = new \FaDoe\Filter\IniBoolean();
+        $filter = new \Sfive\Filter\ConvertToBoolean();
         foreach ($rows as $row) {
             // Convert 'true' and 'false' into booleans
             $serendipity[$row['name']] = $filter->filter($row['value']);

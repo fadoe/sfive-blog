@@ -4,4 +4,4 @@ serendipity_config_local.inc.php
 *~
 plugins/additional_plugins*
 test/phpunit.xml
-public/templates_c
+public/templates_c/*

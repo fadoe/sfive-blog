@@ -15,7 +15,7 @@ class Bootstrap
 
     protected static function initAutoloader()
     {
-        require 'init_autoloader.php';
+        require __DIR__ . '/../src/vendor/autoload.php';
     }
 
 }

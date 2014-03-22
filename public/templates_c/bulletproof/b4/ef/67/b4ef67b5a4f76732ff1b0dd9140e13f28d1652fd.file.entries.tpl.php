@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1-DEV, created on 2014-03-21 20:22:37
+<?php /* Smarty version Smarty-3.1-DEV, created on 2014-03-22 18:16:03
          compiled from "/data/falk/apache2/var/www/vhosts/sfive-blog/public/templates/bulletproof/entries.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1101539981532c917d295e35-83787935%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:808232849532dc5531a2636-58888929%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1101539981532c917d295e35-83787935',
+  'nocache_hash' => '808232849532dc5531a2636-58888929',
   'function' => 
   array (
   ),
@@ -44,9 +44,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1-DEV',
-  'unifunc' => 'content_532c917d922d55_34665657',
+  'unifunc' => 'content_532dc553618c55_41554850',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_532c917d922d55_34665657')) {function content_532c917d922d55_34665657($_smarty_tpl) {?><?php if (!is_callable('smarty_modifier_truncate')) include '/data/falk/Projects/sfive-blog/src/vendor/smarty/smarty/distribution/libs/plugins/modifier.truncate.php';
+<?php if ($_valid && !is_callable('content_532dc553618c55_41554850')) {function content_532dc553618c55_41554850($_smarty_tpl) {?><?php if (!is_callable('smarty_modifier_truncate')) include '/data/falk/Projects/sfive-blog/src/vendor/smarty/smarty/distribution/libs/plugins/modifier.truncate.php';
 if (!is_callable('smarty_modifier_replace')) include '/data/falk/Projects/sfive-blog/src/vendor/smarty/smarty/distribution/libs/plugins/modifier.replace.php';
 ?><!-- ENTRIES START -->
 <?php echo serendipity_smarty_hookPlugin(array('hook'=>"entries_header",'addData'=>((string)$_smarty_tpl->tpl_vars['entry_id']->value)),$_smarty_tpl);?>
