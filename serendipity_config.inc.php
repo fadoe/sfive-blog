@@ -11,6 +11,10 @@
 
 require 'src/vendor/autoload.php';
 
+$serviceManagerConfig = new \Zend\ServiceManager\Config(include 'config/services.php');
+
+$serviceManager = new \Zend\ServiceManager\ServiceManager($serviceManagerConfig);
+
 if (!headers_sent()) {
     // Only set the session name, if no session has yet been issued.
     if (session_id() == '') {
