@@ -11,7 +11,9 @@
 
 require 'src/vendor/autoload.php';
 
-$serviceManagerConfig = new \Zend\ServiceManager\Config(include 'config/services.php');
+$config = include 'config/application.config.php';
+
+$serviceManagerConfig = new \Zend\ServiceManager\Config($config['service_manager']);
 
 $serviceManager = new \Zend\ServiceManager\ServiceManager($serviceManagerConfig);
 
