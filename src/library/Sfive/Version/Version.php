@@ -4,10 +4,8 @@ namespace Sfive\Version;
 
 final class Version
 {
-
-    const VERSION = '1.6.2';
-
     const NAME = 'Sfive';
+    const VERSION = '0.3.0';
 
     public static function getCoreVersion($version)
     {
@@ -18,7 +16,7 @@ final class Version
     {
         $version = strtolower($version);
         $version = preg_replace('/(\d)pr(\d?)/', '$1a$2', $version);
+
         return version_compare($version, strtolower(self::VERSION));
     }
-
 }
