@@ -15,27 +15,27 @@ class serendipity_event_contentrewrite extends \Sfive\Plugin\AbstractEvent
         return true;
     }
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
         $this->title = $this->get_config('title', $this->title);
-        $propbag->add('name',          PLUGIN_EVENT_CONTENTREWRITE_NAME);
-        $propbag->add('description',   PLUGIN_EVENT_CONTENTREWRITE_DESCRIPTION);
-        $propbag->add('stackable',     true);
-        $propbag->add('author',        'Garvin Hicking');
-        $propbag->add('version',       '1.4');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_EVENT_CONTENTREWRITE_NAME);
+        $propBag->add('description',   PLUGIN_EVENT_CONTENTREWRITE_DESCRIPTION);
+        $propBag->add('stackable',     true);
+        $propBag->add('author',        'Garvin Hicking');
+        $propBag->add('version',       '1.4');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('cachable_events', array('frontend_display' => true));
-        $propbag->add('event_hooks',    array(
+        $propBag->add('cachable_events', array('frontend_display' => true));
+        $propBag->add('event_hooks',    array(
             'frontend_display' => true
         ));
 
-        $propbag->add('groups', array('BACKEND_EDITOR'));
+        $propBag->add('groups', array('BACKEND_EDITOR'));
 
         if (!empty($_POST['SAVECONF'])) $this->cleanup();
         $rows = serendipity_db_query("SELECT name, value FROM {$serendipity['dbPrefix']}config WHERE name LIKE '" . $this->instance . "/%' ORDER BY name");
@@ -121,7 +121,7 @@ class serendipity_event_contentrewrite extends \Sfive\Plugin\AbstractEvent
             $values[] = $element['name'];
         }
 
-        $propbag->add('configuration', $values);
+        $propBag->add('configuration', $values);
         $this->counter = $counter;
     }
 

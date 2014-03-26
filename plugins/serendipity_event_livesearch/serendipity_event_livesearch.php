@@ -6,27 +6,27 @@ class serendipity_event_livesearch extends \Sfive\Plugin\AbstractEvent
 {
     var $title = PLUGIN_EVENT_LIVESEARCH_NAME;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
-        $propbag->add('name',          PLUGIN_EVENT_LIVESEARCH_NAME);
-        $propbag->add('description',   PLUGIN_EVENT_LIVESEARCH_DESC);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Christian Stocker, Garvin Hicking');
-        $propbag->add('version',       '1.4');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_EVENT_LIVESEARCH_NAME);
+        $propBag->add('description',   PLUGIN_EVENT_LIVESEARCH_DESC);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Christian Stocker, Garvin Hicking');
+        $propBag->add('version',       '1.4');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('event_hooks',    array(
+        $propBag->add('event_hooks',    array(
             'external_plugin'    => true,
             'frontend_header'    => true,
             'css'                => true,
             'quicksearch_plugin' => true
         ));
-        $propbag->add('groups', array('FRONTEND_ENTRY_RELATED'));
+        $propBag->add('groups', array('FRONTEND_ENTRY_RELATED'));
     }
 
     function generate_content(&$title) {

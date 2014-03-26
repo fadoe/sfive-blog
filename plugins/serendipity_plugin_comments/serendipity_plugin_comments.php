@@ -6,24 +6,24 @@ class serendipity_plugin_comments extends \Sfive\Plugin\AbstractPlugin
 {
     var $title = COMMENTS;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
         $this->title = $this->get_config('title', $this->title);
 
-        $propbag->add('name',          COMMENTS);
-        $propbag->add('description',   PLUGIN_COMMENTS_BLAHBLAH);
-        $propbag->add('stackable',     true);
-        $propbag->add('author',        'Garvin Hicking, Tadashi Jokagi, Judebert, G. Brockhaus');
-        $propbag->add('version',       '1.14');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          COMMENTS);
+        $propBag->add('description',   PLUGIN_COMMENTS_BLAHBLAH);
+        $propBag->add('stackable',     true);
+        $propBag->add('author',        'Garvin Hicking, Tadashi Jokagi, Judebert, G. Brockhaus');
+        $propBag->add('version',       '1.14');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('groups', array('FRONTEND_VIEWS'));
-        $propbag->add('configuration', array(
+        $propBag->add('groups', array('FRONTEND_VIEWS'));
+        $propBag->add('configuration', array(
                                              'title',
                                              'wordwrap',
                                              'max_chars',

@@ -16,15 +16,15 @@ if (!class_exists('serendipity_calendar_plugin')) {
 class serendipity_calendar_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = CALENDAR;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
-        $propbag->add('name',        CALENDAR);
-        $propbag->add('description', QUICKJUMP_CALENDAR);
-        $propbag->add('configuration', array('beginningOfWeek', 'enableExtEvents', 'category'));
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Serendipity Team');
-        $propbag->add('version',       '1.1');
-        $propbag->add('groups',        array('FRONTEND_VIEWS'));
+        $propBag->add('name',        CALENDAR);
+        $propBag->add('description', QUICKJUMP_CALENDAR);
+        $propBag->add('configuration', array('beginningOfWeek', 'enableExtEvents', 'category'));
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Serendipity Team');
+        $propBag->add('version',       '1.1');
+        $propBag->add('groups',        array('FRONTEND_VIEWS'));
     }
 
     function introspect_config_item($name, &$propbag)
@@ -322,15 +322,15 @@ if (!class_exists('serendipity_quicksearch_plugin')) {
 class serendipity_quicksearch_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = QUICKSEARCH;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
-        $propbag->add('name',          QUICKSEARCH);
-        $propbag->add('description',   SEARCH_FOR_ENTRY);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Serendipity Team');
-        $propbag->add('version',       '1.1');
-        $propbag->add('configuration', array('fullentry'));
-        $propbag->add('groups',        array('FRONTEND_ENTRY_RELATED'));
+        $propBag->add('name',          QUICKSEARCH);
+        $propBag->add('description',   SEARCH_FOR_ENTRY);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Serendipity Team');
+        $propBag->add('version',       '1.1');
+        $propBag->add('configuration', array('fullentry'));
+        $propBag->add('groups',        array('FRONTEND_ENTRY_RELATED'));
     }
 
     function introspect_config_item($name, &$propbag)
@@ -378,15 +378,15 @@ if (!class_exists('serendipity_archives_plugin')) {
 class serendipity_archives_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = ARCHIVES;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
-        $propbag->add('name',          ARCHIVES);
-        $propbag->add('description',   BROWSE_ARCHIVES);
-        $propbag->add('stackable',     true);
-        $propbag->add('author',        'Serendipity Team');
-        $propbag->add('version',       '1.0');
-        $propbag->add('configuration', array('title', 'frequency', 'count', 'show_count', 'hide_zero_count'));
-        $propbag->add('groups',        array('FRONTEND_VIEWS'));
+        $propBag->add('name',          ARCHIVES);
+        $propBag->add('description',   BROWSE_ARCHIVES);
+        $propBag->add('stackable',     true);
+        $propBag->add('author',        'Serendipity Team');
+        $propBag->add('version',       '1.0');
+        $propBag->add('configuration', array('title', 'frequency', 'count', 'show_count', 'hide_zero_count'));
+        $propBag->add('groups',        array('FRONTEND_VIEWS'));
     }
 
     function introspect_config_item($name, &$propbag)
@@ -554,14 +554,14 @@ if (!class_exists('serendipity_syndication_plugin')) {
 class serendipity_syndication_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = SYNDICATE_THIS_BLOG;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
-        $propbag->add('name',          SYNDICATION);
-        $propbag->add('description',   SHOWS_RSS_BLAHBLAH);
-        $propbag->add('stackable',     true);
-        $propbag->add('author',        'Serendipity Team');
-        $propbag->add('version',       '1.4');
-        $propbag->add('configuration', array(
+        $propBag->add('name',          SYNDICATION);
+        $propBag->add('description',   SHOWS_RSS_BLAHBLAH);
+        $propBag->add('stackable',     true);
+        $propBag->add('author',        'Serendipity Team');
+        $propBag->add('version',       '1.4');
+        $propBag->add('configuration', array(
                                         'title',
                                         'fullfeed',
                                         'show_0.91',
@@ -594,7 +594,7 @@ class serendipity_syndication_plugin extends \Sfive\Plugin\AbstractPlugin {
                                         'comment_name',
                                        )
         );
-        $propbag->add('groups',        array('FRONTEND_VIEWS'));
+        $propBag->add('groups',        array('FRONTEND_VIEWS'));
     }
 
     function introspect_config_item($name, &$propbag)
@@ -1054,15 +1054,15 @@ if (!class_exists('serendipity_superuser_plugin')) {
 class serendipity_superuser_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = SUPERUSER;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
-        $propbag->add('name',          SUPERUSER);
-        $propbag->add('description',   ALLOWS_YOU_BLAHBLAH);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Serendipity Team');
-        $propbag->add('version',       '1.0');
-        $propbag->add('configuration', array('https'));
-        $propbag->add('groups',        array('FRONTEND_FEATURES'));
+        $propBag->add('name',          SUPERUSER);
+        $propBag->add('description',   ALLOWS_YOU_BLAHBLAH);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Serendipity Team');
+        $propBag->add('version',       '1.0');
+        $propBag->add('configuration', array('https'));
+        $propBag->add('groups',        array('FRONTEND_FEATURES'));
     }
 
     function generate_content(&$title)
@@ -1107,7 +1107,7 @@ if (!class_exists('serendipity_html_nugget_plugin')) {
 class serendipity_html_nugget_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = HTML_NUGGET;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         $this->title = $this->get_config('title', $this->title);
         $subtitle    = $this->get_config('backend_title', '');
@@ -1117,12 +1117,12 @@ class serendipity_html_nugget_plugin extends \Sfive\Plugin\AbstractPlugin {
             $desc        = HOLDS_A_BLAHBLAH;
         }
 
-        $propbag->add('name',          HTML_NUGGET);
-        $propbag->add('description',   $desc);
-        $propbag->add('stackable',     true);
-        $propbag->add('author',        'Serendipity Team');
-        $propbag->add('version',       '1.0');
-        $propbag->add('configuration', array(
+        $propBag->add('name',          HTML_NUGGET);
+        $propBag->add('description',   $desc);
+        $propBag->add('stackable',     true);
+        $propBag->add('author',        'Serendipity Team');
+        $propBag->add('version',       '1.0');
+        $propBag->add('configuration', array(
                                         'title',
                                         'backend_title',
                                         'content',
@@ -1130,7 +1130,7 @@ class serendipity_html_nugget_plugin extends \Sfive\Plugin\AbstractPlugin {
                                         'show_where'
                                        )
         );
-        $propbag->add('groups',        array('FRONTEND_VIEWS'));
+        $propBag->add('groups',        array('FRONTEND_VIEWS'));
 
         $this->protected = TRUE; // If set to TRUE, only allows the owner of the plugin to modify its configuration
     }
@@ -1222,16 +1222,16 @@ if (!class_exists('serendipity_categories_plugin')) {
 class serendipity_categories_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = CATEGORIES;
 
-    function introspect(&$propbag) {
+    function introspect(&$propBag) {
         global $serendipity;
 
-        $propbag->add('name',        CATEGORIES);
-        $propbag->add('description', CATEGORY_PLUGIN_DESC);
-        $propbag->add('stackable',     true);
-        $propbag->add('author',        'Serendipity Team');
-        $propbag->add('version',       '2.03');
-        $propbag->add('configuration', array('title', 'authorid', 'parent_base', 'hide_parent', 'image', 'sort_order', 'sort_method', 'allow_select', 'hide_parallel', 'show_count', 'smarty'));
-        $propbag->add('groups',        array('FRONTEND_VIEWS'));
+        $propBag->add('name',        CATEGORIES);
+        $propBag->add('description', CATEGORY_PLUGIN_DESC);
+        $propBag->add('stackable',     true);
+        $propBag->add('author',        'Serendipity Team');
+        $propBag->add('version',       '2.03');
+        $propBag->add('configuration', array('title', 'authorid', 'parent_base', 'hide_parent', 'image', 'sort_order', 'sort_method', 'allow_select', 'hide_parallel', 'show_count', 'smarty'));
+        $propBag->add('groups',        array('FRONTEND_VIEWS'));
     }
 
     function introspect_config_item($name, &$propbag)
@@ -1534,16 +1534,16 @@ if (!class_exists('serendipity_authors_plugin')) {
 class serendipity_authors_plugin extends \Sfive\Plugin\AbstractPlugin {
     var $title = AUTHORS;
 
-    function introspect(&$propbag) {
+    function introspect(&$propBag) {
         global $serendipity;
 
-        $propbag->add('name',        AUTHORS);
-        $propbag->add('description', AUTHOR_PLUGIN_DESC);
-        $propbag->add('stackable',     true);
-        $propbag->add('author',        'Serendipity Team');
-        $propbag->add('version',       '2.01');
-        $propbag->add('configuration', array('image', 'allow_select', 'title', 'showartcount', 'mincount'));
-        $propbag->add('groups',        array('FRONTEND_VIEWS'));
+        $propBag->add('name',        AUTHORS);
+        $propBag->add('description', AUTHOR_PLUGIN_DESC);
+        $propBag->add('stackable',     true);
+        $propBag->add('author',        'Serendipity Team');
+        $propBag->add('version',       '2.01');
+        $propBag->add('configuration', array('image', 'allow_select', 'title', 'showartcount', 'mincount'));
+        $propBag->add('groups',        array('FRONTEND_VIEWS'));
     }
 
     function introspect_config_item($name, &$propbag)

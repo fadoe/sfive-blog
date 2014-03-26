@@ -6,24 +6,24 @@ class serendipity_plugin_history extends \Sfive\Plugin\AbstractPlugin
 {
     var $title = PLUGIN_HISTORY_NAME;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
         $this->title = $this->get_config('title', $this->title);
 
-        $propbag->add('name',          PLUGIN_HISTORY_NAME);
-        $propbag->add('description',   PLUGIN_HISTORY_DESC);
-        $propbag->add('stackable',     true);
-        $propbag->add('author',        'Jannis Hermanns');
-        $propbag->add('version',       '1.6');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_HISTORY_NAME);
+        $propBag->add('description',   PLUGIN_HISTORY_DESC);
+        $propBag->add('stackable',     true);
+        $propBag->add('author',        'Jannis Hermanns');
+        $propBag->add('version',       '1.6');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('groups', array('FRONTEND_VIEWS'));
-        $propbag->add('configuration', array('title',
+        $propBag->add('groups', array('FRONTEND_VIEWS'));
+        $propBag->add('configuration', array('title',
                                              'intro',
                                              'outro',
                                              'maxlength',

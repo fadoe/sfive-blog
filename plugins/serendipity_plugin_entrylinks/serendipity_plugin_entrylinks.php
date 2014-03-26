@@ -6,24 +6,24 @@ class serendipity_plugin_entrylinks extends \Sfive\Plugin\AbstractPlugin
 {
     var $title = PLUGIN_ENTRYLINKS_NAME;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
         $this->title = $this->get_config('title', $this->title);
 
-        $propbag->add('name',          PLUGIN_ENTRYLINKS_NAME);
-        $propbag->add('description',   PLUGIN_ENTRYLINKS_BLAHBLAH);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Garvin Hicking');
-        $propbag->add('version',       '1.02');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_ENTRYLINKS_NAME);
+        $propBag->add('description',   PLUGIN_ENTRYLINKS_BLAHBLAH);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Garvin Hicking');
+        $propBag->add('version',       '1.02');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('groups', array('FRONTEND_ENTRY_RELATED'));
-        $propbag->add('configuration', array('title', 'newwin', 'markup', 'wordwrap', 'show_exits', 'show_referers', 'maxref', 'orderby'));
+        $propBag->add('groups', array('FRONTEND_ENTRY_RELATED'));
+        $propBag->add('configuration', array('title', 'newwin', 'markup', 'wordwrap', 'show_exits', 'show_referers', 'maxref', 'orderby'));
     }
 
     function introspect_config_item($name, &$propbag)

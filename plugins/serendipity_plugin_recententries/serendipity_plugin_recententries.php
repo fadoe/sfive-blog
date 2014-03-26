@@ -8,21 +8,21 @@
 class serendipity_plugin_recententries extends \Sfive\Plugin\AbstractPlugin {
     var $title = PLUGIN_RECENTENTRIES_TITLE;
 
-    function introspect(&$propbag) {
+    function introspect(&$propBag) {
         $this->title = $this->get_config('title', $this->title);
 
-        $propbag->add('name',          PLUGIN_RECENTENTRIES_TITLE);
-        $propbag->add('description',   PLUGIN_RECENTENTRIES_BLAHBLAH);
-        $propbag->add('stackable',     true);
-        $propbag->add('author',        'Christian Machmeier, Christian Brabandt, Judebert, Don Chambers');
-        $propbag->add('version',       '2.4');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_RECENTENTRIES_TITLE);
+        $propBag->add('description',   PLUGIN_RECENTENTRIES_BLAHBLAH);
+        $propBag->add('stackable',     true);
+        $propBag->add('author',        'Christian Machmeier, Christian Brabandt, Judebert, Don Chambers');
+        $propBag->add('version',       '2.4');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('configuration', array('title', 'number', 'number_from', 'dateformat', 'category', 'randomize', 'show_where'));
-        $propbag->add('groups', array('FRONTEND_VIEWS'));
+        $propBag->add('configuration', array('title', 'number', 'number_from', 'dateformat', 'category', 'randomize', 'show_where'));
+        $propBag->add('groups', array('FRONTEND_VIEWS'));
     }
 
     function introspect_config_item($name, &$propbag) {

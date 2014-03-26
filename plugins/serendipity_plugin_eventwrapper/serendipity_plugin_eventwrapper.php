@@ -6,22 +6,22 @@ class serendipity_plugin_eventwrapper extends \Sfive\Plugin\AbstractPlugin
 {
 var $rewrite_from, $rewrite_to;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
-        $propbag->add('name',          PLUGIN_EVENT_WRAPPER_NAME);
-        $propbag->add('description',   PLUGIN_EVENT_WRAPPER_DESC);
-        $propbag->add('stackable',     true);
-        $propbag->add('author',        'Garvin Hicking');
-        $propbag->add('version',       '1.0');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_EVENT_WRAPPER_NAME);
+        $propBag->add('description',   PLUGIN_EVENT_WRAPPER_DESC);
+        $propBag->add('stackable',     true);
+        $propBag->add('author',        'Garvin Hicking');
+        $propBag->add('version',       '1.0');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('groups', array('FRONTEND_FEATURES'));
-        $propbag->add('configuration', array('event_plugin', 'title'));
+        $propBag->add('groups', array('FRONTEND_FEATURES'));
+        $propBag->add('configuration', array('event_plugin', 'title'));
 
     }
 

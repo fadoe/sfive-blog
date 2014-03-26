@@ -4,16 +4,13 @@ namespace Sfive\Plugin;
 
 abstract class AbstractPlugin implements PluginInterface
 {
-    var $instance      = null;
-    var $protected     = false;
-    var $wrap_class    = 'serendipitySideBarItem';
-    var $title_class   = 'serendipitySideBarTitle';
-    var $content_class = 'serendipitySideBarContent';
-    var $title         = null;
-    var $pluginPath    = null;
-    var $act_pluginPath= null;
-    var $pluginFile    = null;
-    var $serendipity_owner = null;
+    private $instance      = null;
+    private $protected     = false;
+    private $title         = null;
+    private $pluginPath    = null;
+    private $act_pluginPath= null;
+    private $pluginFile    = null;
+    private $serendipity_owner = null;
 
     /**
      * Perform configuration routines
@@ -23,10 +20,11 @@ abstract class AbstractPlugin implements PluginInterface
      * only need to be available for the global configuration and not
      * on each page request.
      *
-     * @access public
+     * @param $bag
+     *
      * @return true
      */
-    function performConfig(&$bag)
+    public function performConfig($bag)
     {
         return true;
     }
@@ -37,10 +35,9 @@ abstract class AbstractPlugin implements PluginInterface
      * Called by Serendipity when the plugin is first installed.
      * Can be used to install database tables etc.
      *
-     * @access public
      * @return true
      */
-    function install()
+    public function install()
     {
         return true;
     }
@@ -51,11 +48,10 @@ abstract class AbstractPlugin implements PluginInterface
      * Called by Serendipity when the plugin is removed/uninstalled.
      * Can be used to drop installed database tables etc.
      *
-     * @access public
      * @param  object   A property bag object
      * @return true
      */
-    function uninstall(&$propbag)
+    public function uninstall($propBag)
     {
         return true;
     }
@@ -67,14 +63,13 @@ abstract class AbstractPlugin implements PluginInterface
      * about your plugin.
      * You need to override this method in your child class.
      *
-     * @access public
      * @param   object  A property bag object you can manipulate
      * @return true
      */
-    public function introspect($propbag)
+    public function introspect($propBag)
     {
-        $propbag->add('copyright', 'MIT License');
-        $propbag->add('name'     , get_class($this));
+        $propBag->add('copyright', 'MIT License');
+        $propBag->add('name'     , get_class($this));
 
         // $propbag->add(
         //   'configuration',
@@ -102,12 +97,11 @@ abstract class AbstractPlugin implements PluginInterface
      * You need to override this method in your child class if
      * you have configuration options.
      *
-     * @access public
      * @param   string      Name of the config item
      * @param   object      A property bag object you can store the configuration in
-     * @return
+     * @return boolean
      */
-    public function introspect_config_item($name, $propbag)
+    public function introspect_config_item($name, $propBag)
     {
         return false;
     }
@@ -117,13 +111,14 @@ abstract class AbstractPlugin implements PluginInterface
      *
      * Called from Plugin Configuration manager. Can be extended by your own plugin, if you need.
      *
-     * @access public
-     * @param   string      Name of the config item to validate
-     * @param   object      Property bag of the config item
-     * @param   value       The value of a config item
-     * @return
+     * @param string $config_item
+     * @param object $cbag
+     * @param The $value
+     *
+     * @deprecated
+     * @return boolean
      */
-    function validate($config_item, &$cbag, &$value)
+    public function validate($config_item, $cbag, $value)
     {
         static $pattern_mail  = '([\.\-\+~@_0-9a-z]+?)';
         static $pattern_url   = '([@!=~\?:&;0-9a-z#\.\-_\/]+?)';
@@ -199,11 +194,10 @@ abstract class AbstractPlugin implements PluginInterface
      * capture it and make things work.
      * You need to override this method in your child class.
      *
-     * @access public
      * @param   string       The referenced varaiable that holds the sidebar title of your plugin.
      * @return null
      */
-    function generate_content(&$title)
+    public function generate_content(&$title)
     {
         $title = 'Sample!';
         echo     'This is a sample!';
@@ -212,13 +206,12 @@ abstract class AbstractPlugin implements PluginInterface
     /**
      * Get a config value of the plugin
      *
-     * @access public
      * @param   string  Name of the config value to fetch
      * @param   mixed   The default value of a configuration item, if not set
      * @param   boolean If true, the default value will only be set if the plugin config item was not set.
      * @return  mixed   The value of the config item
      */
-    function get_config($name, $defaultvalue = null, $empty = true)
+    public function get_config($name, $defaultvalue = null, $empty = true)
     {
         $_res = serendipity_get_config_var($this->instance . '/' . $name, $defaultvalue, $empty);
 
@@ -244,13 +237,12 @@ abstract class AbstractPlugin implements PluginInterface
     /**
      * Sets a configuration value for a plugin
      *
-     * @access public
      * @param   string  Name of the plugin configuration item
      * @param   string  Value of the plugin configuration item
      * @param   string  A concatenation key for imploding arrays
      * @return
      */
-    function set_config($name, $value, $implodekey = '^')
+    public function set_config($name, $value, $implodekey = '^')
     {
         $name = $this->instance . '/' . $name;
 
@@ -270,10 +262,9 @@ abstract class AbstractPlugin implements PluginInterface
      * Called by serendipity after insertion of a config item. If you want to kick out certain
      * elements based on contents, create the corresponding function here.
      *
-     * @access public
      * @return true
      */
-    function cleanup()
+    public function cleanup()
     {
         // Cleanup. Remove all empty configs on SAVECONF-Submit.
         // serendipity_plugin_api::remove_plugin_value($this->instance, array('configname1', 'configname2'));
@@ -285,15 +276,12 @@ abstract class AbstractPlugin implements PluginInterface
      *
      * This method evaluates the "dependencies" member variable to check which plugins need to be installed.
      *
-     * @access public
      * @param   boolean     If true, a depending plugin will be removed when this plugin is uninstalled
      * @param   int         The owner id of the current plugin
      * @return true
      */
-    function register_dependencies($remove = false, $authorid = '0')
+    public function register_dependencies($remove = false, $authorid = '0')
     {
-        global $serendipity;
-
         if (isset($this->dependencies) && is_array($this->dependencies)) {
 
             if ($remove) {
@@ -301,7 +289,7 @@ abstract class AbstractPlugin implements PluginInterface
                 $modes        = @explode(';', $this->get_config('dependency_modes'));
 
                 if (!empty($dependencies) && is_array($dependencies)) {
-                    foreach($dependencies AS $idx => $dependency) {
+                    foreach($dependencies as $idx => $dependency) {
                         if ($modes[$idx] == 'remove' && serendipity_plugin_api::exists($dependency)) {
                             serendipity_plugin_api::remove_plugin_instance($dependency);
                         }
@@ -310,7 +298,7 @@ abstract class AbstractPlugin implements PluginInterface
             } else {
                 $keys  = array();
                 $modes = array();
-                foreach($this->dependencies AS $dependency => $mode) {
+                foreach($this->dependencies as $dependency => $mode) {
                     $exists = serendipity_plugin_api::exists($dependency);
                     if (!$exists) {
                         if (serendipity_plugin_api::is_event_plugin($dependency)) {
@@ -337,11 +325,11 @@ abstract class AbstractPlugin implements PluginInterface
      * Parses a smarty template file (which can be stored in either the plugin directory, the user template directory
      * or the default template directory, and return the parsed output.
      *
-     * @access public
      * @param  string   template filename (no directory!)
      * @return string   Parsed Smarty return
      */
-    function &parseTemplate($filename) {
+    public function &parseTemplate($filename)
+    {
         global $serendipity;
 
         $filename = basename($filename);

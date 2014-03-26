@@ -34,22 +34,22 @@ class serendipity_event_gravatar extends \Sfive\Plugin\AbstractEvent
     var $avatarConfiguration        = array();
     var $cache_seconds              = 0;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
-        $propbag->add('name',          PLUGIN_EVENT_GRAVATAR_NAME);
-        $propbag->add('description',   PLUGIN_EVENT_GRAVATAR_DESC);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Garvin Hicking, Grischa Brockhaus');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_EVENT_GRAVATAR_NAME);
+        $propBag->add('description',   PLUGIN_EVENT_GRAVATAR_DESC);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Garvin Hicking, Grischa Brockhaus');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.7',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('version',       PLUGIN_EVENT_GRAVATAR_VERSION);
-        $propbag->add('groups', array('IMAGES'));
-        $propbag->add('event_hooks', array(
+        $propBag->add('version',       PLUGIN_EVENT_GRAVATAR_VERSION);
+        $propBag->add('groups', array('IMAGES'));
+        $propBag->add('event_hooks', array(
             'frontend_display' => true,
             'frontend_comment' => true,
             'external_plugin'  => true,
@@ -62,7 +62,7 @@ class serendipity_event_gravatar extends \Sfive\Plugin\AbstractEvent
         }
 
 
-        $propbag->add('configuration',
+        $propBag->add('configuration',
             array_merge($configuration, $config_methods,
                 array('defaultavatar', 'recent_entries', 'infoline',
                     'autoralt', 'smartyimage', 'align', 'size', 'cache', 'rating',

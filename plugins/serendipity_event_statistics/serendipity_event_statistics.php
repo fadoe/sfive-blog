@@ -6,28 +6,28 @@ class serendipity_event_statistics extends \Sfive\Plugin\AbstractEvent
 {
     var $title = PLUGIN_EVENT_STATISTICS_NAME;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
-        $propbag->add('name',          PLUGIN_EVENT_STATISTICS_NAME);
-        $propbag->add('description',   PLUGIN_EVENT_STATISTICS_DESC);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Arnan de Gans, Garvin Hicking, Fredrik Sandberg, kalkin');
-        $propbag->add('version',       '1.53');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_EVENT_STATISTICS_NAME);
+        $propBag->add('description',   PLUGIN_EVENT_STATISTICS_DESC);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Arnan de Gans, Garvin Hicking, Fredrik Sandberg, kalkin');
+        $propBag->add('version',       '1.53');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('groups', array('STATISTICS'));
-        $propbag->add('event_hooks',    array(
+        $propBag->add('groups', array('STATISTICS'));
+        $propBag->add('event_hooks',    array(
             'backend_sidebar_entries' => true,
             'backend_sidebar_entries_event_display_statistics' => true,
             'frontend_configure' => true
         ));
 
-        $propbag->add('configuration', array('max_items','ext_vis_stat','stat_all','banned_bots'));
+        $propBag->add('configuration', array('max_items','ext_vis_stat','stat_all','banned_bots'));
     }
 
     function introspect_config_item($name, &$propbag)

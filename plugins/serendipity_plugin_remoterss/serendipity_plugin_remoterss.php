@@ -244,21 +244,21 @@ class serendipity_plugin_remoterss extends \Sfive\Plugin\AbstractPlugin {
     var $title = PLUGIN_REMOTERSS_TITLE;
     var $encoding = null;
 
-    function introspect(&$propbag) {
+    function introspect(&$propBag) {
         $this->title = $this->get_config('sidebartitle', $this->title);
 
-        $propbag->add('name',          PLUGIN_REMOTERSS_TITLE);
-        $propbag->add('description',   PLUGIN_REMOTERSS_BLAHBLAH);
-        $propbag->add('stackable',     true);
-        $propbag->add('author',        'Udo Gerhards, Richard Thomas Harrison');
-        $propbag->add('version',       '1.20');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_REMOTERSS_TITLE);
+        $propBag->add('description',   PLUGIN_REMOTERSS_BLAHBLAH);
+        $propBag->add('stackable',     true);
+        $propBag->add('author',        'Udo Gerhards, Richard Thomas Harrison');
+        $propBag->add('version',       '1.20');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('configuration', array('sidebartitle', 'feedtype', 'template', 'rssuri', 'show_rss_element', 'smarty', 'number', 'use_rss_link', 'escape_rss', 'displaydate', 'dateformat', 'charset', 'target', 'cachetime', 'bulletimg', 'markup'));
-        $propbag->add('groups', array('FRONTEND_EXTERNAL_SERVICES'));
+        $propBag->add('configuration', array('sidebartitle', 'feedtype', 'template', 'rssuri', 'show_rss_element', 'smarty', 'number', 'use_rss_link', 'escape_rss', 'displaydate', 'dateformat', 'charset', 'target', 'cachetime', 'bulletimg', 'markup'));
+        $propBag->add('groups', array('FRONTEND_EXTERNAL_SERVICES'));
     }
 
     function introspect_config_item($name, &$propbag) {

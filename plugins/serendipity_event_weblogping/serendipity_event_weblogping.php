@@ -6,21 +6,21 @@ class serendipity_event_weblogping extends \Sfive\Plugin\AbstractEvent
 {
     var $services;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
-        $propbag->add('name',          PLUGIN_EVENT_WEBLOGPING_TITLE);
-        $propbag->add('description',   PLUGIN_EVENT_WEBLOGPING_DESC);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Serendipity Team');
-        $propbag->add('version',       '1.08');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_EVENT_WEBLOGPING_TITLE);
+        $propBag->add('description',   PLUGIN_EVENT_WEBLOGPING_DESC);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Serendipity Team');
+        $propBag->add('version',       '1.08');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('event_hooks',    array(
+        $propBag->add('event_hooks',    array(
             'backend_display' => true,
             'frontend_display' => true,
             'backend_insert' => true,
@@ -29,7 +29,7 @@ class serendipity_event_weblogping extends \Sfive\Plugin\AbstractEvent
             'backend_draft' => true,
             'external_plugin' => true
         ));
-        $propbag->add('groups', array('BACKEND_EDITOR'));
+        $propBag->add('groups', array('BACKEND_EDITOR'));
 
         $servicesdb = array();
         $servicesdb_file = dirname(__FILE__) . '/servicesdb_' . $serendipity['lang'] . '.inc.php';
@@ -68,7 +68,7 @@ class serendipity_event_weblogping extends \Sfive\Plugin\AbstractEvent
 
         $conf_array[] = 'manual_services';
 
-        $propbag->add('configuration', $conf_array);
+        $propBag->add('configuration', $conf_array);
     }
 
     function introspect_config_item($name, &$propbag)

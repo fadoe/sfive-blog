@@ -7,21 +7,21 @@ class serendipity_event_entryproperties extends \Sfive\Plugin\AbstractEvent
     var $services, $showPasswordForm;
     var $title = PLUGIN_EVENT_ENTRYPROPERTIES_TITLE;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
-        $propbag->add('name',          PLUGIN_EVENT_ENTRYPROPERTIES_TITLE);
-        $propbag->add('description',   PLUGIN_EVENT_ENTRYPROPERTIES_DESC);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Garvin Hicking');
-        $propbag->add('version',       '1.33');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_EVENT_ENTRYPROPERTIES_TITLE);
+        $propBag->add('description',   PLUGIN_EVENT_ENTRYPROPERTIES_DESC);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Garvin Hicking');
+        $propBag->add('version',       '1.33');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('event_hooks',    array(
+        $propBag->add('event_hooks',    array(
             'frontend_fetchentries'                             => true,
             'frontend_fetchentry'                               => true,
             'backend_publish'                                   => true,
@@ -41,8 +41,8 @@ class serendipity_event_entryproperties extends \Sfive\Plugin\AbstractEvent
             'backend_entry_presave'                             => true,
             'frontend_configure'                                => true
         ));
-        $propbag->add('groups', array('BACKEND_EDITOR'));
-        $propbag->add('configuration', array('cache', 'sequence', 'use_groups', 'use_users', 'use_ext_joins', 'default_read', 'customfields'));
+        $propBag->add('groups', array('BACKEND_EDITOR'));
+        $propBag->add('configuration', array('cache', 'sequence', 'use_groups', 'use_users', 'use_ext_joins', 'default_read', 'customfields'));
     }
 
     function introspect_config_item($name, &$propbag)

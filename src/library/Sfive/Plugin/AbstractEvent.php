@@ -8,22 +8,6 @@ namespace Sfive\Plugin;
  */
 abstract class AbstractEvent extends \Sfive\Plugin\AbstractPlugin
 {
-
-    /**
-     * The class constructor
-     *
-     * Be sure to call this method from your derived classes constructors,
-     * otherwise your config data will not be stored or retrieved correctly
-     *
-     * @access public
-     * @param   string      The instance name
-     * @return
-     */
-    function serendipity_event($instance)
-    {
-        $this->instance = $instance;
-    }
-
     /**
      * Gets a reference to an $entry / $eventData array pointer, interacting with Cache-Options
      *
@@ -31,18 +15,22 @@ abstract class AbstractEvent extends \Sfive\Plugin\AbstractPlugin
      * to the 'extended' or 'body' field of an entry superarray. If they would immediately operate
      * on the 'body' field, it might get overwritten by other plugins later on.
      *
-     * @access public
      * @param   string      The fieldname to get a reference for
      * @param   array       The entry superarray to get the reference from
+     *
      * @return  array       The value of the array for the fieldname (reference)
      */
-    function &getFieldReference($fieldname = 'body', &$eventData)
+    public function getFieldReference($fieldname = 'body', array $eventData)
     {
         // Get a reference to a content field (body/extended) of
         // $entries input data. This is a unifying function because
         // several plugins are using similar fields.
 
-        if (is_array($eventData) && isset($eventData[0]) && is_array($eventData[0]) && is_array($eventData[0]['properties'])) {
+        if (is_array($eventData)
+            && isset($eventData[0])
+            && is_array($eventData[0])
+            && is_array($eventData[0]['properties'])
+        ) {
             if (!empty($eventData[0]['properties']['ep_cache_' . $fieldname])) {
 
                 // It may happen that there is no extended entry to concatenate to. In that case,
@@ -78,14 +66,13 @@ abstract class AbstractEvent extends \Sfive\Plugin\AbstractPlugin
      * This method is called by the main plugin API for every event, that is executed.
      * You need to implement each actions that shall be performed by your plugin here.
      *
-     * @access public
      * @param   string      The name of the executed event
      * @param   object      A property bag for the current plugin
      * @param   mixed       Any referenced event data from the serendipity_plugin_api::hook_event() function
      * @param   mixed       Any additional data from the hook_event call
      * @return true
      */
-    function event_hook($event, &$bag, &$eventData, $addData = null)
+    public function event_hook($event, $bag, $eventData, $addData = null)
     {
         // Define event hooks here, if you want you plugin to execute those instead of being a sidebar item.
         // Look at external plugins 'serendipity_event_mailer' or 'serendipity_event_weblogping' for usage.

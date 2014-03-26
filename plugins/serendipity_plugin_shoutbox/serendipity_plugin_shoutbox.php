@@ -8,22 +8,22 @@ class serendipity_plugin_shoutbox extends \Sfive\Plugin\AbstractPlugin
 {
     var $title = PLUGIN_SHOUTBOX_NAME;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
-        $propbag->add('name',          PLUGIN_SHOUTBOX_NAME);
-        $propbag->add('description',   PLUGIN_SHOUTBOX_BLAHBLAH);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Matthias Lange');
-        $propbag->add('version',       '1.02');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_SHOUTBOX_NAME);
+        $propBag->add('description',   PLUGIN_SHOUTBOX_BLAHBLAH);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Matthias Lange');
+        $propBag->add('version',       '1.02');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
 
-        $propbag->add('configuration', array(
+        $propBag->add('configuration', array(
                                              'wordwrap',
                                              'max_chars',
                                              'max_entries',
@@ -31,7 +31,7 @@ class serendipity_plugin_shoutbox extends \Sfive\Plugin\AbstractPlugin
                                              'box_cols',
                                              'box_rows'));
 
-        $propbag->add('groups', array('FRONTEND_FEATURES'));
+        $propBag->add('groups', array('FRONTEND_FEATURES'));
     }
 
     function introspect_config_item($name, &$propbag)

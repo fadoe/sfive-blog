@@ -57,21 +57,21 @@ class serendipity_event_freetag extends \Sfive\Plugin\AbstractEvent
     var $supported_properties = array();
     var $dependencies = array();
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
-        $propbag->add('name',          PLUGIN_EVENT_FREETAG_TITLE);
-        $propbag->add('description',   PLUGIN_EVENT_FREETAG_DESC);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Garvin Hicking, Jonathan Arkell, Grischa Brockhaus, Lars Strojny, Malte Paskuda');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_EVENT_FREETAG_TITLE);
+        $propBag->add('description',   PLUGIN_EVENT_FREETAG_DESC);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Garvin Hicking, Jonathan Arkell, Grischa Brockhaus, Lars Strojny, Malte Paskuda');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('version',       '3.44');
-        $propbag->add('event_hooks',    array(
+        $propBag->add('version',       '3.44');
+        $propBag->add('event_hooks',    array(
             'frontend_fetchentries'                             => true,
             'frontend_fetchentry'                               => true,
             'frontend_display:rss-2.0:per_entry'                => true,
@@ -97,10 +97,10 @@ class serendipity_event_freetag extends \Sfive\Plugin\AbstractEvent
             'xmlrpc_deleteEntry'                                => true,
             'css'                                               => true,
         ));
-        $propbag->add('groups', array('BACKEND_EDITOR'));
+        $propBag->add('groups', array('BACKEND_EDITOR'));
         $this->supported_properties = array('freetag_name', 'freetag_tagList');
         $this->dependencies = array('serendipity_plugin_freetag' => 'keep');
-        $propbag->add('configuration', array('cat2tag', 'keyword2tag', 'taglink', 'embed_footer', 'extended_smarty', 'show_tagcloud', 'min_percent', 'max_percent', 'max_tags', 'use_flash', 'flash_tag_color', 'flash_bg_trans', 'flash_bg_color', 'flash_width', 'flash_speed', 'meta_keywords', 'show_related', 'show_related_count', 'lowercase_tags', 'collation', 'send_http_header', 'admin_show_taglist', 'admin_ftayt', 'technorati_tag_link', 'technorati_tag_image'));
+        $propBag->add('configuration', array('cat2tag', 'keyword2tag', 'taglink', 'embed_footer', 'extended_smarty', 'show_tagcloud', 'min_percent', 'max_percent', 'max_tags', 'use_flash', 'flash_tag_color', 'flash_bg_trans', 'flash_bg_color', 'flash_width', 'flash_speed', 'meta_keywords', 'show_related', 'show_related_count', 'lowercase_tags', 'collation', 'send_http_header', 'admin_show_taglist', 'admin_ftayt', 'technorati_tag_link', 'technorati_tag_image'));
     }
 
     function introspect_config_item($name, &$propbag) {

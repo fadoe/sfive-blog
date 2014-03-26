@@ -10,22 +10,22 @@ class serendipity_event_searchhighlight extends \Sfive\Plugin\AbstractEvent
 {
     var $title = PLUGIN_EVENT_SEARCHHIGHLIGHT_NAME;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
-        $propbag->add('name',          PLUGIN_EVENT_SEARCHHIGHLIGHT_NAME);
-        $propbag->add('description',   PLUGIN_EVENT_SEARCHHIGHLIGHT_DESC);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Tom Sommer');
-        $propbag->add('version',       '1.8');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_EVENT_SEARCHHIGHLIGHT_NAME);
+        $propBag->add('description',   PLUGIN_EVENT_SEARCHHIGHLIGHT_DESC);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Tom Sommer');
+        $propBag->add('version',       '1.8');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('event_hooks',   array('frontend_display' => true, 'css' => true));
-        $propbag->add('groups', array('FRONTEND_EXTERNAL_SERVICES'));
+        $propBag->add('event_hooks',   array('frontend_display' => true, 'css' => true));
+        $propBag->add('groups', array('FRONTEND_EXTERNAL_SERVICES'));
 
         $this->markup_elements = array(
             array(
@@ -54,7 +54,7 @@ class serendipity_event_searchhighlight extends \Sfive\Plugin\AbstractEvent
         foreach($this->markup_elements as $element) {
             $conf_array[] = $element['name'];
         }
-        $propbag->add('configuration', $conf_array);
+        $propBag->add('configuration', $conf_array);
     }
 
 

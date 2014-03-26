@@ -6,23 +6,23 @@ class serendipity_event_spamblock extends \Sfive\Plugin\AbstractEvent
 {
 var $filter_defaults;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
         $this->title = PLUGIN_EVENT_SPAMBLOCK_TITLE;
 
-        $propbag->add('name',          PLUGIN_EVENT_SPAMBLOCK_TITLE);
-        $propbag->add('description',   PLUGIN_EVENT_SPAMBLOCK_DESC);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Garvin Hicking, Sebastian Nohn, Grischa Brockhaus, Ian');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_EVENT_SPAMBLOCK_TITLE);
+        $propBag->add('description',   PLUGIN_EVENT_SPAMBLOCK_DESC);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Garvin Hicking, Sebastian Nohn, Grischa Brockhaus, Ian');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('version',       '1.83');
-        $propbag->add('event_hooks',    array(
+        $propBag->add('version',       '1.83');
+        $propBag->add('event_hooks',    array(
             'frontend_saveComment' => true,
             'external_plugin'      => true,
             'frontend_comment'     => true,
@@ -30,7 +30,7 @@ var $filter_defaults;
             'backend_comments_top' => true,
             'backend_view_comment' => true
         ));
-        $propbag->add('configuration', array(
+        $propBag->add('configuration', array(
             'killswitch',
             'hide_for_authors',
             'bodyclone',
@@ -64,8 +64,8 @@ var $filter_defaults;
             'automagic_htaccess',
             'logtype',
             'logfile'));
-        $propbag->add('groups', array('ANTISPAM'));
-        $propbag->add('config_groups', array(
+        $propBag->add('groups', array('ANTISPAM'));
+        $propBag->add('config_groups', array(
                 'Content Filter' => array(
                     'contentfilter_activate',
                     'contentfilter_urls',

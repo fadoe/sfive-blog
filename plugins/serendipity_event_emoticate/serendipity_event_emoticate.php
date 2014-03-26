@@ -6,23 +6,23 @@ class serendipity_event_emoticate extends \Sfive\Plugin\AbstractEvent
 {
     var $title = PLUGIN_EVENT_EMOTICATE_NAME;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
-        $propbag->add('name',          PLUGIN_EVENT_EMOTICATE_NAME);
-        $propbag->add('description',   PLUGIN_EVENT_EMOTICATE_DESC);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Serendipity Team');
-        $propbag->add('version',       '1.7');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_EVENT_EMOTICATE_NAME);
+        $propBag->add('description',   PLUGIN_EVENT_EMOTICATE_DESC);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Serendipity Team');
+        $propBag->add('version',       '1.7');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '5.2.0'
         ));
-        $propbag->add('groups', array('MARKUP'));
-        $propbag->add('cachable_events', array('frontend_display' => true));
-        $propbag->add('event_hooks',   array('frontend_display' => true, 'frontend_comment' => true, 'css_backend' => true, 'css' => true));
+        $propBag->add('groups', array('MARKUP'));
+        $propBag->add('cachable_events', array('frontend_display' => true));
+        $propBag->add('event_hooks',   array('frontend_display' => true, 'frontend_comment' => true, 'css_backend' => true, 'css' => true));
 
         $this->markup_elements = array(
             array(
@@ -47,7 +47,7 @@ class serendipity_event_emoticate extends \Sfive\Plugin\AbstractEvent
             $conf_array[] = $element['name'];
         }
         $conf_array[] = 'extension';
-        $propbag->add('configuration', $conf_array);
+        $propBag->add('configuration', $conf_array);
 
     }
 

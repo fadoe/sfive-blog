@@ -6,24 +6,24 @@ class serendipity_plugin_statistics extends \Sfive\Plugin\AbstractPlugin
 {
     var $title = PLUGIN_EVENT_STATISTICS_NAME;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
         $this->title = $this->get_config('title', $this->title);
 
-        $propbag->add('name',          PLUGIN_EVENT_STATISTICS_NAME);
-        $propbag->add('description',   PLUGIN_EVENT_STATISTICS_NAME);
-        $propbag->add('stackable',     true);
-        $propbag->add('author',        'Arnan de Gans, Garvin Hicking');
-        $propbag->add('version',       '1.5');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_EVENT_STATISTICS_NAME);
+        $propBag->add('description',   PLUGIN_EVENT_STATISTICS_NAME);
+        $propBag->add('stackable',     true);
+        $propBag->add('author',        'Arnan de Gans, Garvin Hicking');
+        $propBag->add('version',       '1.5');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('groups', array('STATISTICS'));
-        $propbag->add('configuration', array(
+        $propBag->add('groups', array('STATISTICS'));
+        $propBag->add('configuration', array(
                                              'title',
                                              'show_lastentry',
                                              'text_lastentry',

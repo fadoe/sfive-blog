@@ -17,24 +17,24 @@ class serendipity_plugin_freetag extends \Sfive\Plugin\AbstractPlugin
 {
     var $title = PLUGIN_FREETAG_NAME;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
         $this->title = $this->get_config('title', $this->title);
 
-        $propbag->add('name',          PLUGIN_FREETAG_NAME);
-        $propbag->add('description',   PLUGIN_FREETAG_BLAHBLAH);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Garvin Hicking, Jonathan Arkell, Grischa Brockhaus, Lars Strojny');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_FREETAG_NAME);
+        $propBag->add('description',   PLUGIN_FREETAG_BLAHBLAH);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Garvin Hicking, Jonathan Arkell, Grischa Brockhaus, Lars Strojny');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('version',       '3.03');
-        $propbag->add('groups',        array('FRONTEND_ENTRY_RELATED'));
-        $propbag->add('configuration', array('title', 'show_xml','xml_image', 'show_newline', 'taglink', 'scale_tag', 'max_tags', 'min_percent', 'max_percent', 'use_flash', 'flash_tag_color', 'flash_bg_trans', 'flash_bg_color', 'flash_width', 'flash_speed', 'treshold_tag_count', 'order_by', 'template'));
+        $propBag->add('version',       '3.03');
+        $propBag->add('groups',        array('FRONTEND_ENTRY_RELATED'));
+        $propBag->add('configuration', array('title', 'show_xml','xml_image', 'show_newline', 'taglink', 'scale_tag', 'max_tags', 'min_percent', 'max_percent', 'use_flash', 'flash_tag_color', 'flash_bg_trans', 'flash_bg_color', 'flash_width', 'flash_speed', 'treshold_tag_count', 'order_by', 'template'));
         $this->dependencies = array('serendipity_event_freetag' => 'keep');
     }
 

@@ -36,21 +36,21 @@ class serendipity_event_karma extends \Sfive\Plugin\AbstractEvent
     /* The max width/height ratio of a single-segment image */
     var $max_segment_ratio = 1.0;
 
-    function introspect(&$propbag)
+    function introspect(&$propBag)
     {
         global $serendipity;
 
-        $propbag->add('name',          PLUGIN_KARMA_NAME);
-        $propbag->add('description',   PLUGIN_KARMA_BLAHBLAH);
-        $propbag->add('stackable',     false);
-        $propbag->add('author',        'Garvin Hicking, Grischa Brockhaus, Judebert, Gregor Voeltz');
-        $propbag->add('version',       '2.9');
-        $propbag->add('requirements',  array(
+        $propBag->add('name',          PLUGIN_KARMA_NAME);
+        $propBag->add('description',   PLUGIN_KARMA_BLAHBLAH);
+        $propBag->add('stackable',     false);
+        $propBag->add('author',        'Garvin Hicking, Grischa Brockhaus, Judebert, Gregor Voeltz');
+        $propBag->add('version',       '2.9');
+        $propBag->add('requirements',  array(
             'serendipity' => '0.8',
             'smarty'      => '2.6.7',
             'php'         => '4.1.0'
         ));
-        $propbag->add('event_hooks',   array(
+        $propBag->add('event_hooks',   array(
             'external_plugin'             => true,
             'frontend_footer'             => true,
             'frontend_configure'          => true,
@@ -61,8 +61,8 @@ class serendipity_event_karma extends \Sfive\Plugin\AbstractEvent
             'backend_sidebar_entries_event_display_karmalog' => true,
             'event_additional_statistics' => true
             ));
-        $propbag->add('groups', array('STATISTICS'));
-        $propbag->add('configuration', array(
+        $propBag->add('groups', array('STATISTICS'));
+        $propBag->add('configuration', array(
             // Functionality options
             'options_tab',
             'karma_active',
