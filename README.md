@@ -1,3 +1,7 @@
-# Serendipity - a PHP Weblog/Blog software
+# Sfive Blog
 
-[Serendipity](http://s9y.org) is a PHP-powered weblog application which gives the user an easy way to maintain an online diary, weblog or even a complete homepage. While the default package is designed for the casual blogger, Serendipity offers a flexible, expandable and easy-to-use framework with the power for professional applications.
+This is a fork of the [Serendipity](http://s9y.org) weblog application. This is application is not for production use.
+You can't use this version for upgrading from a existing Serendipity Blog. I refactor this application to use current
+PHP libraries mainly based on Zend Framework.
+
+If you need a blogging engine for PHP use the stable version of [Serendipity](https://github.com/s9y/Serendipity/releases).
